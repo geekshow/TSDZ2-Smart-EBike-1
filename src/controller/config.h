@@ -80,6 +80,15 @@
 // wheel max speed (km/h)
 #define WHEEL_MAX_SPEED                             45
 
+// --------------------------------------------------------------------------
+// DISPLAY
+// --------------------------------------------------------------------------
+
+// display type
+#define ENABLE_VLCD6                                0
+#define ENABLE_VLCD5                                1
+#define ENABLE_XH18                                 0
+
 #endif // CONFIG_H_
 
 
