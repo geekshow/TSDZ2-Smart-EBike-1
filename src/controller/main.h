@@ -9,10 +9,10 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
+#include "config.h"
+#include "common.h"
 
 //#define DEBUG_UART
-
-
 
 // motor 
 #define PWM_CYCLES_COUNTER_MAX                                    3125    // 5 erps minimum speed -> 1/5 = 200 ms; 200 ms / 64 us = 3125
@@ -72,9 +72,11 @@
 ---------------------------------------------------------*/
 
 
+//#define ADC_10_BIT_BATTERY_CURRENT_MAX                            106     // 18 amps
+//#define ADC_10_BIT_MOTOR_PHASE_CURRENT_MAX                        177     // 30 amps
+#define ADC_10_BIT_BATTERY_CURRENT_MAX                            112     // 18 amps
+#define ADC_10_BIT_MOTOR_PHASE_CURRENT_MAX                        187     // 30 amps
 
-#define ADC_10_BIT_BATTERY_CURRENT_MAX                            106     // 18 amps
-#define ADC_10_BIT_MOTOR_PHASE_CURRENT_MAX                        177     // 30 amps
 
 /*---------------------------------------------------------
   NOTE: regarding ADC battery current max
@@ -86,10 +88,10 @@
 ---------------------------------------------------------*/
 
 
-
+// moved to config.h
 // throttle ADC values
-#define ADC_THROTTLE_MIN_VALUE                                    47
-#define ADC_THROTTLE_MAX_VALUE                                    176
+//#define ADC_THROTTLE_MIN_VALUE                                    47
+//#define ADC_THROTTLE_MAX_VALUE                                    176
 
 /*---------------------------------------------------------
   NOTE: regarding throttle ADC values
@@ -140,7 +142,6 @@
   CADENCE_SENSOR_TICKS_COUNTER_MAX = x / CADENCE_SENSOR_NUMBER_MAGNETS_X2
   
   
-  
   Cadence is calculated by counting how much time passes between two 
   transitions. Depending on if all transitions are measured or simply 
   transitions of the same kind it is important to adjust the calculation of 
@@ -149,23 +150,24 @@
 -------------------------------------------------------------------------------*/
 
 
-
 // Wheel speed sensor
 #define WHEEL_SPEED_SENSOR_TICKS_COUNTER_MAX                      135   // something like 200 m/h with a 6'' wheel
 #define WHEEL_SPEED_SENSOR_TICKS_COUNTER_MIN                      32767 // could be a bigger number but will make for a slow detection of stopped wheel speed
 
 
-
+// deleted for oem display
+/*
 // default values
-#define DEFAULT_VALUE_BATTERY_CURRENT_MAX                         10  // 10 amps
-#define DEFAULT_VALUE_TARGET_BATTERY_MAX_POWER_X10                50  // 500 watts
-#define DEFAULT_VALUE_BATTERY_LOW_VOLTAGE_CUT_OFF_X10_0           134 // 48 V battery, LVC = 39.0 (3.0 * 13): (134 + (1 << 8)) = 390
+#define DEFAULT_VALUE_TARGET_BATTERY_MAX_POWER_X10                50  // (500 watts) NOT USED
+#define DEFAULT_VALUE_BATTERY_CURRENT_MAX                         17  // 17 amps
+#define DEFAULT_VALUE_BATTERY_LOW_VOLTAGE_CUT_OFF_X10_0           44  // 36 V battery, LVC = 30.0 (3.0 * 13): (44 + (1 << 8))
 #define DEFAULT_VALUE_BATTERY_LOW_VOLTAGE_CUT_OFF_X10_1           1
-#define DEFAULT_VALUE_WHEEL_PERIMETER_0                           2   // 26'' wheel: 2050 mm perimeter (2 + (8 << 8))
+#define DEFAULT_VALUE_WHEEL_PERIMETER_0                           232 // 28 inch wheel: 2280 mm perimeter (232 + (8 << 8))
 #define DEFAULT_VALUE_WHEEL_PERIMETER_1                           8
-#define DEFAULT_VALUE_WHEEL_SPEED_MAX                             50  // 50 km/h
-#define DEFAULT_VALUE_MOTOR_TYPE                                  0
+#define DEFAULT_VALUE_WHEEL_SPEED_MAX                             45  // 45 km/h
+#define DEFAULT_VALUE_MOTOR_TYPE                                  1   // 36 volt motor
 #define DEFAULT_VALUE_PEDAL_TORQUE_PER_10_BIT_ADC_STEP_X100       67
+*/
 
 /*---------------------------------------------------------
 
@@ -177,7 +179,6 @@
   
   Force (Nm) = 1 Kg * 9.81 * 0.17 (0.17 = arm cranks size)
 ---------------------------------------------------------*/
-
 
 
 // ADC battery voltage measurement
@@ -196,11 +197,179 @@
 ---------------------------------------------------------*/
 
 
-
 // ADC battery current measurement
-#define BATTERY_CURRENT_PER_10_BIT_ADC_STEP_X512                  102
-#define BATTERY_CURRENT_PER_10_BIT_ADC_STEP_X100                  17  // conversion value verified with a cheap power meter
+//#define BATTERY_CURRENT_PER_10_BIT_ADC_STEP_X512                  102
+#define BATTERY_CURRENT_PER_10_BIT_ADC_STEP_X512                  80 // 1A per 6.4 steps of ADC_10bits (0.156A per each ADC step)
+//#define BATTERY_CURRENT_PER_10_BIT_ADC_STEP_X100                  17 // conversion value verified with a cheap power meter
+#define BATTERY_CURRENT_PER_10_BIT_ADC_STEP_X100                  16 // 15.62 rounded
 
+// --------------------------------------------------------------------------
+// for oem display
+
+// UART
+#define UART_RX_BUFFER_LEN   						7
+#define RX_CHECK_CODE					(UART_RX_BUFFER_LEN - 1)															
+#define UART_TX_BUFFER_LEN							9
+#define TX_CHECK_CODE					(UART_TX_BUFFER_LEN - 1)
+#define TX_STX										0x43
+#define RX_STX										0x59
+	
+// parameters for display data
+#define OEM_WHEEL_FACTOR							143
+#define DATA_INDEX_ARRAY_DIM						6
+#define DATA_VALUE_ARRAY_DIM						8
+
+// delay display mode default (0.1 sec)
+#define DELAY_DISPLAY_MODE_DEFAULT_X10	(uint16_t)(DELAY_DISPLAY_MODE_DEFAULT * 10)
+
+// delay lights function (0.1 sec)
+#define DELAY_LIGHTS_ON					DELAY_MENU_ON
+
+// delay display ready (0.1 sec)
+#define DELAY_DISPLAY_READY				(uint8_t)(DELAY_MENU_ON - 10)
+
+// assist level 
+#define OFF											0
+#define ECO											1
+#define TOUR										2
+#define SPORT										3
+#define TURBO										4
+
+// assist pedal level mask
+#define ASSIST_PEDAL_LEVEL0							0x10
+#define ASSIST_PEDAL_LEVEL1							0x40
+#define ASSIST_PEDAL_LEVEL2							0x02
+#define ASSIST_PEDAL_LEVEL3							0x04
+#define ASSIST_PEDAL_LEVEL4							0x08
+
+// oem display fault & functionn code
+#define CLEAR_DISPLAY								0
+#define NO_FUNCTION									0
+#define NO_FAULT									0
+#define ERROR_OVERTEMPERATURE						6 // E06
+#define ERROR_OVERVOLTAGE							8 // E08
+#define ERROR_WRITE_EEPROM  					  	9 // E09 (E08 blinking for XH18)
+//#define ERROR_MOTOR_BLOCKED                       4 // E04 common.c
+//#define ERROR_TORQUE_SENSOR                       2 // E02 common.c
+//#define ERROR_CADENCE_SENSOR_CALIBRATION          3 // E03 common.c
+//#define ERROR_BRAKE_APPLIED_DURING_POWER_ON       3 // NOT USED common.c
+//#define ERROR_THROTTLE_APPLIED_DURING_POWER_ON    4 // NOT USED common.c
+//#define ERROR_NO_SPEED_SENSOR_DETECTED            5 // NOT USED common.c
+//#define ERROR_LOW_CONTROLLER_VOLTAGE              6 // NOT USED common.c
+
+// optional ADC function
+#if ENABLE_TEMPERATURE_LIMIT  && ENABLE_THROTTLE
+#define OPTIONAL_ADC_FUNCTION                 		NOT_IN_USE
+#elif ENABLE_TEMPERATURE_LIMIT
+#define OPTIONAL_ADC_FUNCTION                 		TEMPERATURE_CONTROL
+#elif ENABLE_THROTTLE && ENABLE_BRAKE_SENSOR
+#define OPTIONAL_ADC_FUNCTION                 		THROTTLE_CONTROL
+#else
+#define OPTIONAL_ADC_FUNCTION                 		NOT_IN_USE
+#endif
+
+// assist without pedal rotation
+#if MOTOR_ASSISTANCE_WITHOUT_PEDAL_ROTATION
+#define ASSIST_WITHOUT_PEDAL_ROTATION_THRESHOLD		ASSISTANCE_WITHOUT_PEDAL_ROTATION_THRESHOLD
+#else	
+#define ASSIST_WITHOUT_PEDAL_ROTATION_THRESHOLD		0
+#endif
+
+// cruise pid parameter
+#if MOTOR_TYPE
+// 36 volt motor
+#define CRUISE_PID_KP                             	14
+#define CRUISE_PID_KI                             	0.7
+#else
+// 48 volt motor
+#define CRUISE_PID_KP                             	12
+#define CRUISE_PID_KI                             	1
+#endif
+
+// cadence sensor high percentage
+#define CADENCE_SENSOR_PULSE_HIGH_PERCENTAGE_X10_0	(uint8_t) (CADENCE_SENSOR_PULSE_HIGH_PERCENTAGE_X10 & 0x00FF)
+#define CADENCE_SENSOR_PULSE_HIGH_PERCENTAGE_X10_1	(uint8_t) ((CADENCE_SENSOR_PULSE_HIGH_PERCENTAGE_X10 >> 8) & 0x00FF)
+
+// wheel perimeter
+#define WHEEL_PERIMETER_0							(uint8_t) (WHEEL_PERIMETER & 0x00FF)
+#define WHEEL_PERIMETER_1							(uint8_t) ((WHEEL_PERIMETER >> 8) & 0x00FF)
+
+// wheel speed parameters
+#define OEM_WHEEL_SPEED_DIVISOR						315
+
+
+// BATTERY PARAMETERS
+// battery low voltage cut off
+#define BATTERY_LOW_VOLTAGE_CUT_OFF_X10_0		(uint8_t) ((uint16_t)(BATTERY_LOW_VOLTAGE_CUT_OFF * 10) & 0x00FF)
+#define BATTERY_LOW_VOLTAGE_CUT_OFF_X10_1		(uint8_t) (((uint16_t)(BATTERY_LOW_VOLTAGE_CUT_OFF * 10) >> 8) & 0x00FF)
+// battery voltage to be subtracted from the cut-off 8bit
+#define DIFFERENCE_CUT_OFF_SHUTDOWN_8_BIT			24
+// battery voltage for saving battery capacity at shutdown
+#define BATTERY_VOLTAGE_SHUTDOWN_8_BIT			(uint8_t) ((uint16_t)(BATTERY_LOW_VOLTAGE_CUT_OFF * 250 / BATTERY_VOLTAGE_PER_10_BIT_ADC_STEP_X1000)) - ((uint16_t) DIFFERENCE_CUT_OFF_SHUTDOWN_8_BIT)
+// max battery power div25
+#define TARGET_MAX_BATTERY_POWER_DIV25			(uint8_t)(TARGET_MAX_BATTERY_POWER / 25)
+// power street limit value div25
+#define STREET_MODE_POWER_LIMIT_DIV25           (uint8_t)(STREET_MODE_POWER_LIMIT / 25)
+// battery voltage reset SOC percentage
+#define BATTERY_VOLTAGE_RESET_SOC_PERCENT_X10   (uint16_t)((float)LI_ION_CELL_RESET_SOC_PERCENT * (float)(BATTERY_CELLS_NUMBER * 10))
+// battery SOC eeprom value
+#define BATTERY_SOC_VALUE						0
+
+// cell bars
+#if ENABLE_VLCD6 || ENABLE_XH18
+#define LI_ION_CELL_VOLTS_5			(float)LI_ION_CELL_OVERVOLT
+#define LI_ION_CELL_VOLTS_4			(float)LI_ION_CELL_VOLTS_FULL
+#define LI_ION_CELL_VOLTS_3			(float)LI_ION_CELL_VOLTS_3_OF_4
+#define LI_ION_CELL_VOLTS_2			(float)LI_ION_CELL_VOLTS_2_OF_4
+#define LI_ION_CELL_VOLTS_1			(float)LI_ION_CELL_VOLTS_1_OF_4
+#define LI_ION_CELL_VOLTS_0			(float)LI_ION_CELL_VOLTS_EMPTY
+#else // ENABLE_VLCD5
+#define LI_ION_CELL_VOLTS_7			(float)LI_ION_CELL_OVERVOLT
+#define LI_ION_CELL_VOLTS_6			(float)LI_ION_CELL_VOLTS_FULL
+#define LI_ION_CELL_VOLTS_5			(float)LI_ION_CELL_VOLTS_5_OF_6
+#define LI_ION_CELL_VOLTS_4			(float)LI_ION_CELL_VOLTS_4_OF_6
+#define LI_ION_CELL_VOLTS_3			(float)LI_ION_CELL_VOLTS_3_OF_6
+#define LI_ION_CELL_VOLTS_2			(float)LI_ION_CELL_VOLTS_2_OF_6
+#define LI_ION_CELL_VOLTS_1			(float)LI_ION_CELL_VOLTS_1_OF_6
+#define LI_ION_CELL_VOLTS_0			(float)LI_ION_CELL_VOLTS_EMPTY
+#endif
+
+// power assist level
+#define POWER_ASSIST_LEVEL_OFF       0
+#define POWER_ASSIST_LEVEL_ECO       (uint8_t)(POWER_ASSIST_LEVEL_1 / 10)
+#define POWER_ASSIST_LEVEL_TOUR      (uint8_t)(POWER_ASSIST_LEVEL_2 / 10)
+#define POWER_ASSIST_LEVEL_SPORT     (uint8_t)(POWER_ASSIST_LEVEL_3 / 10)
+#define POWER_ASSIST_LEVEL_TURBO     (uint8_t)(POWER_ASSIST_LEVEL_4 / 10)
+
+// walk assist level
+#if ENABLE_XH18
+// walk assist level for XH18 problem
+#define WALK_ASSIST_LEVEL_OFF             WALK_ASSIST_LEVEL_1
+#define WALK_ASSIST_LEVEL_ECO             WALK_ASSIST_LEVEL_2
+#define WALK_ASSIST_LEVEL_TOUR            WALK_ASSIST_LEVEL_3
+#define WALK_ASSIST_LEVEL_SPORT           WALK_ASSIST_LEVEL_4
+#define WALK_ASSIST_LEVEL_TURBO           WALK_ASSIST_LEVEL_4
+#else
+// walk assist level for VLCD5 VLCD6
+#define WALK_ASSIST_LEVEL_OFF             WALK_ASSIST_LEVEL_0
+#define WALK_ASSIST_LEVEL_ECO             WALK_ASSIST_LEVEL_1
+#define WALK_ASSIST_LEVEL_TOUR            WALK_ASSIST_LEVEL_2
+#define WALK_ASSIST_LEVEL_SPORT           WALK_ASSIST_LEVEL_3
+#define WALK_ASSIST_LEVEL_TURBO           WALK_ASSIST_LEVEL_4
+#endif
+
+// walk assist threshold (speed limit max km/h x10)
+#define WALK_ASSIST_THRESHOLD_SPEED_X10	(uint8_t)(WALK_ASSIST_THRESHOLD_SPEED * 10)
+
+// cruise threshold (speed limit min km/h x10)
+#define CRUISE_THRESHOLD_SPEED_X10		(uint8_t)(CRUISE_THRESHOLD_SPEED * 10)
+
+// odometer compensation for displayed data (eeprom)
+#define ODOMETER_COMPENSATION        				0
+// save odometer compensation (1=ENABLED)
+#define SAVE_ODOMETER_COMPENSATION                0
+// zero odometer compensation
+#define ZERO_ODOMETER_COMPENSATION                100000000
 
 
 #endif // _MAIN_H_

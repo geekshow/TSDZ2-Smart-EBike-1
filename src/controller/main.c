@@ -82,6 +82,9 @@ int main (void)
   pwm_init_bipolar_4q();
   enableInterrupts();
   
+  // initialize ebike application (for oem display)
+  ebike_app_init();
+  
   while (1)
   {
     // because of continue; at the end of each if code block that will stop the while (1) loop there,
@@ -122,5 +125,5 @@ int main (void)
     #endif
   }
 
-  return 0;
+  //return 0;
 }

@@ -21,6 +21,7 @@
 #include "watchdog.h"
 #include "math.h"
 #include "common.h"
+#include "eeprom.h"
 
 #define SVM_TABLE_LEN   256
 #define SIN_TABLE_LEN   60
@@ -389,6 +390,10 @@ volatile uint16_t ui16_wheel_speed_sensor_ticks = 0;
 volatile uint32_t ui32_wheel_speed_sensor_ticks_total = 0;
 
 
+// for oem display
+volatile uint8_t ui8_battery_SOC_saved_flag = 0;
+
+// functions declaration
 void read_battery_voltage(void);
 void read_battery_current(void);
 void calc_foc_angle(void);
@@ -415,11 +420,45 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
   static uint8_t ui8_svm_table_index;
   static uint8_t ui8_adc_motor_phase_current;
   
-  
+  struct_configuration_variables *p_configuration_variables;
+  p_configuration_variables = get_configuration_variables ();
 
   /****************************************************************************/
+  // for oem display
+	// save percentage remaining battery capacity at shutdown
+ 	if(UI8_ADC_BATTERY_VOLTAGE < BATTERY_VOLTAGE_SHUTDOWN_8_BIT)
+	{
+		if((!ui8_battery_SOC_saved_flag)&&(ui8_display_ready_flag))
+		{
+			disableInterrupts();
+			
+			// unlock memory
+			FLASH_Unlock(FLASH_MEMTYPE_DATA);
   
-  
+			// wait until data EEPROM area unlocked flag is set
+			while (FLASH_GetFlagStatus(FLASH_FLAG_DUL) == RESET) {}
+
+			// write percentage remaining battery capacity x10 8bit to EEPROM
+			FLASH_ProgramByte(ADDRESS_BATTERY_SOC, p_configuration_variables->ui8_battery_SOC_percentage_8b);
+                     
+			// wait until end of programming (write or erase operation) flag is set
+			while (FLASH_GetFlagStatus(FLASH_FLAG_EOP) == RESET) {}
+			#if SAVE_ODOMETER_COMPENSATION
+			// write odometer compensation km x10 to EEPROM 
+			FLASH_ProgramByte(ADDRESS_ODOMETER_COMPENSATION, p_configuration_variables->ui8_odometer_compensation_km_x10);
+			
+			// wait until end of programming (write or erase operation) flag is set
+			while (FLASH_GetFlagStatus(FLASH_FLAG_EOP) == RESET) {}
+			#endif
+			// lock memory
+			FLASH_Lock(FLASH_MEMTYPE_DATA);
+			
+			// battery SOC saved
+			ui8_battery_SOC_saved_flag = 1;
+		}
+	}
+  /****************************************************************************/
+
   
   // read battery current ADC value | should happen at middle of the PWM duty_cycle
   ADC1->CR2 &= (uint8_t)(~ADC1_CR2_SCAN);   // disable scan mode
@@ -763,7 +802,7 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
     ui8_cadence_sensor_pin_state_old = ui8_cadence_sensor_pin_1_state;
     
     // select cadence sensor mode
-    switch (ui8_cadence_sensor_mode)
+    switch (p_configuration_variables->ui8_cadence_sensor_mode)
     {
       case STANDARD_MODE:
       
@@ -1084,10 +1123,18 @@ void calc_foc_angle(void)
   {
     ui16_temp = ((uint16_t) ui8_adc_battery_current_filtered) * BATTERY_CURRENT_PER_10_BIT_ADC_STEP_X512;
     ui32_i_phase_current_x2 = ui16_temp / ui8_g_duty_cycle;
+	
+	#if ENABLE_DISPLAY_WORKING_FLAG
+	ui8_working_status |= 0x40; // bit6 = 1 (motor working)
+	#endif
   }
   else
   {
     ui32_i_phase_current_x2 = 0;
+	
+	#if ENABLE_DISPLAY_WORKING_FLAG
+	ui8_working_status &= 0xBF; // bit6 = 0 (motor not working)
+	#endif
   }
 
   // calc W angular velocity: erps * 6.3

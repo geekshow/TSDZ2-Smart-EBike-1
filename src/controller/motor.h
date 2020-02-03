@@ -16,7 +16,6 @@
 #define BLOCK_COMMUTATION 			                1
 #define SINEWAVE_INTERPOLATION_60_DEGREES 	    2
 
-
 // power variables
 extern volatile uint16_t ui16_controller_duty_cycle_ramp_up_inverse_step;
 extern volatile uint16_t ui16_controller_duty_cycle_ramp_down_inverse_step;
@@ -52,5 +51,7 @@ uint16_t ui16_motor_get_motor_speed_erps (void);
 void motor_controller (void);
 
 uint8_t motor_get_adc_battery_current_filtered_10b (void);
+
+
 
 #endif /* _MOTOR_H_ */
