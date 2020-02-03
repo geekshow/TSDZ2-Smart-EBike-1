@@ -21,6 +21,7 @@
 	#include "eeprom.h"
 	#include "lights.h"
 	#include "common.h"
+	#include "advanced.h"
 
 	volatile struct_configuration_variables m_configuration_variables;
 

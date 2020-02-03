@@ -11,6 +11,7 @@
 #include "stm8s_flash.h"
 #include "eeprom.h"
 #include "ebike_app.h"
+#include "advanced.h"
 
 
 static const uint8_t ui8_default_array[EEPROM_BYTES_STORED] = 
