@@ -12,7 +12,14 @@
 #ifndef ADVANCED_H_
 #define ACVANCED_H_
 
+#define DEBUG_MODE                                  0
+#define DEBUG_DATA                                  1
 
+// experimental high cadence mode (1=ENABLED)
+#define EXPERIMENTAL_HIGH_CADENCE_MODE              0
+
+// cadence sensor high percentage (calibration required)
+#define CADENCE_SENSOR_PULSE_HIGH_PERCENTAGE_X10    500
 
 // battery internal resistance (milliohms)
 #define BATTERY_PACK_RESISTANCE                     196
