@@ -101,8 +101,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 public void loadSettings(File f) throws IOException {
     
      		BufferedReader in = new BufferedReader(new FileReader(f));
-                RB_48V.setSelected(Boolean.parseBoolean(in.readLine()));
                 RB_36V.setSelected(Boolean.parseBoolean(in.readLine()));
+                RB_48V.setSelected(Boolean.parseBoolean(in.readLine()));
                 RB_ASS_WITHOUT_PED.setSelected(Boolean.parseBoolean(in.readLine()));
 		RB_VLCD6.setSelected(Boolean.parseBoolean(in.readLine()));
                 RB_VLCD5.setSelected(Boolean.parseBoolean(in.readLine()));
@@ -307,11 +307,11 @@ public void AddListItem(File newFile) {
 					iWriter.println(RB_VLCD5.isSelected());                                        
 
                                         if (RB_XH18.isSelected()) {
-						text_to_save = "#define ENABLE_RB_XH18 1";
+						text_to_save = "#define ENABLE_XH18 1";
 						pWriter.println(text_to_save);
 					}
                                         else {
-						text_to_save = "#define ENABLE_RB_XH18 0";
+						text_to_save = "#define ENABLE_XH18 0";
 						pWriter.println(text_to_save);
 					}
 					iWriter.println(RB_XH18.isSelected());
