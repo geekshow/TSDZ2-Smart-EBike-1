@@ -1,5 +1,6 @@
 This fork is based on the v0.20 adaption for stock tongsheng displays of mbrusa, published at [jobike.it.](http://www.jobike.it/forum/topic.asp?TOPIC_ID=76426&whichpage=61).
 
+See the [wiki](https://github.com/stancecoke/TSDZ2-Smart-EBike/wiki) for instructions
 
 This ebike motor controller firmware project is to be used with the Tongsheng TSDZ2 mid drive motor.
 
