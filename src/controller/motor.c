@@ -22,7 +22,6 @@
 #include "math.h"
 #include "common.h"
 #include "eeprom.h"
-#include "advanced.h"
 
 #define SVM_TABLE_LEN   256
 #define SIN_TABLE_LEN   60
@@ -386,6 +385,11 @@ volatile uint16_t ui16_cadence_sensor_ticks_counter_min_low = CADENCE_SENSOR_TIC
 volatile uint8_t ui8_cadence_sensor_pulse_state = 0;
 
 
+// for overrun problem 
+volatile uint8_t ui8_cadence_sensor_stop_flag = 0;
+volatile uint16_t ui16_cadence_sensor_ticks_stop = 0;
+
+
 // wheel speed sensor
 volatile uint16_t ui16_wheel_speed_sensor_ticks = 0;
 volatile uint32_t ui32_wheel_speed_sensor_ticks_total = 0;
@@ -393,6 +397,7 @@ volatile uint32_t ui32_wheel_speed_sensor_ticks_total = 0;
 
 // for oem display
 volatile uint8_t ui8_battery_SOC_saved_flag = 0;
+
 
 // functions declaration
 void read_battery_voltage(void);
@@ -444,13 +449,7 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
                      
 			// wait until end of programming (write or erase operation) flag is set
 			while (FLASH_GetFlagStatus(FLASH_FLAG_EOP) == RESET) {}
-			#if SAVE_ODOMETER_COMPENSATION
-			// write odometer compensation km x10 to EEPROM 
-			FLASH_ProgramByte(ADDRESS_ODOMETER_COMPENSATION, p_configuration_variables->ui8_odometer_compensation_km_x10);
-			
-			// wait until end of programming (write or erase operation) flag is set
-			while (FLASH_GetFlagStatus(FLASH_FLAG_EOP) == RESET) {}
-			#endif
+
 			// lock memory
 			FLASH_Lock(FLASH_MEMTYPE_DATA);
 			
@@ -670,16 +669,22 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
   static uint16_t ui16_counter_duty_cycle_ramp_down;
   
   // check if to decrease, increase or maintain duty cycle
+  // changed for overrun problem
   if ((ui8_g_duty_cycle > ui8_controller_duty_cycle_target) ||
       (ui8_controller_adc_battery_current > ui8_controller_adc_battery_current_target) ||
       (ui8_adc_motor_phase_current > ADC_10_BIT_MOTOR_PHASE_CURRENT_MAX) ||
       (ui16_motor_speed_erps > ui16_max_motor_speed_erps) ||
       (UI8_ADC_BATTERY_VOLTAGE < ui8_adc_battery_voltage_cut_off) ||
-      (ui8_brake_state))
+      (ui8_brake_state) || 
+	  (ui8_cadence_sensor_stop_flag))
   {
     // reset duty cycle ramp up counter (filter)
     ui16_counter_duty_cycle_ramp_up = 0;
-    
+	
+	// for overrun problem
+	if((ui8_cadence_sensor_stop_flag) || (ui8_brake_state))
+		ui16_controller_duty_cycle_ramp_down_inverse_step = PWM_DUTY_CYCLE_RAMP_DOWN_INVERSE_STEP_MIN;
+	
     // ramp down duty cycle
     if (++ui16_counter_duty_cycle_ramp_down > ui16_controller_duty_cycle_ramp_down_inverse_step)
     {
@@ -836,6 +841,9 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
             {
               // set the cadence sensor ticks between the two transitions
               ui16_cadence_sensor_ticks = ui16_cadence_sensor_ticks_counter;
+			  
+			  // for overrun problem
+			  ui16_cadence_sensor_ticks_stop = (ui16_cadence_sensor_ticks + (ui16_cadence_sensor_ticks >> 4));
               
               // reset ticks counter
               ui16_cadence_sensor_ticks_counter = 0;
@@ -845,7 +853,7 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
             }
           }
         }
-        
+		
       break;
       
       case ADVANCED_MODE:
@@ -878,6 +886,9 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
           {
             // set the cadence sensor ticks between the two transitions
             ui16_cadence_sensor_ticks = ui16_cadence_sensor_ticks_counter;
+			
+			// for overrun problem
+			ui16_cadence_sensor_ticks_stop = (ui16_cadence_sensor_ticks + (ui16_cadence_sensor_ticks >> 2));
             
             // set the pulse state
             ui8_cadence_sensor_pulse_state = ui8_cadence_sensor_pin_1_state;
@@ -889,7 +900,7 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
             ui16_cadence_sensor_ticks_counter_min += CADENCE_SENSOR_ADVANCED_MODE_SCHMITT_TRIGGER_THRESHOLD;
           }
         }
-        
+		
       break;
       
       case CALIBRATION_MODE:
@@ -940,7 +951,19 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
     ui8_cadence_sensor_ticks_counter_started = 0;
   }
   
-  
+  // for overrun problem
+  if(ui16_cadence_sensor_ticks)
+  {
+	if(ui16_cadence_sensor_ticks_counter > ui16_cadence_sensor_ticks_stop)
+		ui8_cadence_sensor_stop_flag = 1;
+	else
+		ui8_cadence_sensor_stop_flag = 0;
+  }
+  else
+  {
+	ui8_cadence_sensor_stop_flag = 1;
+  }
+
   
   /****************************************************************************/
   
