@@ -22,6 +22,7 @@
 #include "math.h"
 #include "common.h"
 #include "eeprom.h"
+#include "advanced.h"
 
 #define SVM_TABLE_LEN   256
 #define SIN_TABLE_LEN   60
