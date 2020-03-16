@@ -389,6 +389,7 @@ volatile uint8_t ui8_cadence_sensor_pulse_state = 0;
 // for overrun problem 
 volatile uint8_t ui8_cadence_sensor_stop_flag = 0;
 volatile uint16_t ui16_cadence_sensor_ticks_stop = 0;
+volatile uint8_t ui8_fix_overrun_enabled = 1;
 
 
 // wheel speed sensor
@@ -953,18 +954,25 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
   }
   
   // for overrun problem
-  if(ui16_cadence_sensor_ticks)
+  if(ui8_fix_overrun_enabled)
   {
-	if(ui16_cadence_sensor_ticks_counter > ui16_cadence_sensor_ticks_stop)
-		ui8_cadence_sensor_stop_flag = 1;
+	if(ui16_cadence_sensor_ticks)
+	{
+		if(ui16_cadence_sensor_ticks_counter > ui16_cadence_sensor_ticks_stop)
+			ui8_cadence_sensor_stop_flag = 1;
+		else
+			ui8_cadence_sensor_stop_flag = 0;
+	}
 	else
-		ui8_cadence_sensor_stop_flag = 0;
+	{
+		ui8_cadence_sensor_stop_flag = 1;
+	}
   }
   else
   {
-	ui8_cadence_sensor_stop_flag = 1;
+	ui8_cadence_sensor_stop_flag = 0;
   }
-
+  
   
   /****************************************************************************/
   
