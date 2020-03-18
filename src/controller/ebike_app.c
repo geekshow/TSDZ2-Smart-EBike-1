@@ -21,7 +21,7 @@
 	#include "eeprom.h"
 	#include "lights.h"
 	#include "common.h"
-	#include "advanced.h"
+	//#include "advanced.h"
 
 	volatile struct_configuration_variables m_configuration_variables;
 
@@ -921,7 +921,7 @@
 	  
 	  // convert ADC value
 	  ui16_motor_temperature_filtered_x10 = ((uint32_t) ui16_adc_motor_temperature_filtered * 10000) / 2048;
-	  
+
 	  // min temperature value can not be equal or higher than max temperature value
 	  if (ui8_motor_temperature_min_value_to_limit >= ui8_motor_temperature_max_value_to_limit)
 	  {
@@ -2157,18 +2157,18 @@
 		// fault temperature limit
 		#if ENABLE_TEMPERATURE_ERROR_MIN_LIMIT
 		// temperature error at min limit value
-		if(((uint8_t) ui16_motor_temperature_filtered_x10 / 10) >= ui8_motor_temperature_min_value_to_limit)
+		if(((uint8_t) (ui16_motor_temperature_filtered_x10 / 10)) >= ui8_motor_temperature_min_value_to_limit)
 		{
 			ui8_display_fault_code = ERROR_OVERTEMPERATURE;
 		}
 		#else
 		// temperature error at max limit value
-		if(((uint8_t) ui16_motor_temperature_filtered_x10 / 10) >= ui8_motor_temperature_max_value_to_limit)
+		if(((uint8_t) (ui16_motor_temperature_filtered_x10 / 10)) >= ui8_motor_temperature_max_value_to_limit)
 		{
 			ui8_display_fault_code = ERROR_OVERTEMPERATURE;
 		}
 		#endif
-	
+		
 		// blocked motor error has priority
 		if(ui8_system_state == ERROR_MOTOR_BLOCKED)
 		{	

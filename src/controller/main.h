@@ -11,6 +11,7 @@
 
 #include "config.h"
 #include "common.h"
+#include "advanced.h"
 
 //#define DEBUG_UART
 
