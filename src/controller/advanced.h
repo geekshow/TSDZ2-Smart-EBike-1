@@ -10,7 +10,7 @@
  */
  
 #ifndef ADVANCED_H_
-#define ACVANCED_H_
+#define ADVANCED_H_
 
 #define DEBUG_MODE                                  0
 #define DEBUG_DATA                                  1
