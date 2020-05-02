@@ -1,0 +1,21 @@
+List of changes mb.20beta1.B
+ 1 - added cadence sensor calibration in advanced mode.
+ 2 - added calibration of maximum torque value (torque sensor range).
+ 3 - added ADC conversion factor calibration of the torque sensor (with weight).
+ 4 - added ADC offset adjustment of the torque sensor.
+ 5 - added choice to display, standard or advanced mode for cadence and torque sensors.
+ 6 - added data display in automatic sequence when the lights are turned on.
+ 7 - added other data that can be shown on the display.
+ 8 - added ability to view data with miles setting.
+ 9 - access to parameters and data also with error code present.
+10 - separate definitions, TARGET_MAX_BATTERY_POWER and TARGET_MAX_BATTERY_CAPACITY.
+11 - with WALK_ASSIST_DEBO UNCE_TIME, the brake sensors in addition to the motor now also stop time.
+12 - CRUISE mode now also operable with walk assist command.
+13 - at level 0 = OFF the accelerator is disabled.
+14 - moved the parameters for error E04 "motor blocked" to the config.h file.
+15 - modified " fix overrun " for a quick stop of the motor when you stop pedaling.
+16 - modified the manual reset of the residual battery percentage.
+17 - fixed data saving problem in eeprom.
+18 - fixed display battery residual percentage problem at startup.
+19 - fixed problem displaying error E06 "over temperature".
+20 - Stancecoke Java Parameter Configurator completed.

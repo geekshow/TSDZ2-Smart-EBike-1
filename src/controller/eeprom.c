@@ -11,7 +11,6 @@
 #include "stm8s_flash.h"
 #include "eeprom.h"
 #include "ebike_app.h"
-#include "advanced.h"
 
 
 static const uint8_t ui8_default_array[EEPROM_BYTES_STORED] = 
@@ -37,7 +36,8 @@ static const uint8_t ui8_default_array[EEPROM_BYTES_STORED] =
   WHEEL_MAX_SPEED,								// 6 + EEPROM_BASE_ADDRESS
   MOTOR_TYPE,									// 7 + EEPROM_BASE_ADDRESS
   PEDAL_TORQUE_PER_10_BIT_ADC_STEP_X100,		// 8 + EEPROM_BASE_ADDRESS
-  RESERVED_VALUE,								// 9 + EEPROM_BASE_ADDRESS
+  // for oem display
+  PEDAL_TORQUE_10_BIT_ADC_RANGE,				// 9 + EEPROM_BASE_ADDRESS
   ODOMETER_COMPENSATION,						// 10 + EEPROM_BASE_ADDRESS
   BATTERY_SOC_VALUE,							// 11 + EEPROM_BASE_ADDRESS
   ENABLE_SET_PARAMETER_ON_STARTUP,				// 12 + EEPROM_BASE_ADDRESS
@@ -46,7 +46,8 @@ static const uint8_t ui8_default_array[EEPROM_BYTES_STORED] =
   LIGHTS_CONFIGURATION_ON_STARTUP,				// 15 + EEPROM_BASE_ADDRESS
   CADENCE_SENSOR_MODE_ON_STARTUP,				// 16 + EEPROM_BASE_ADDRESS
   CADENCE_SENSOR_PULSE_HIGH_PERCENTAGE_X10_0,	// 17 + EEPROM_BASE_ADDRESS
-  CADENCE_SENSOR_PULSE_HIGH_PERCENTAGE_X10_1	// 18 + EEPROM_BASE_ADDRESS
+  CADENCE_SENSOR_PULSE_HIGH_PERCENTAGE_X10_1,	// 18 + EEPROM_BASE_ADDRESS
+  TORQUE_SENSOR_MODE_ON_STARTUP					// 19 + EEPROM_BASE_ADDRESS
 };
 
 volatile uint8_t ui8_error_number = 0;
@@ -166,8 +167,9 @@ void EEPROM_controller(uint8_t ui8_operation, uint8_t ui8_byte_init)
       p_configuration_variables->ui8_motor_type = FLASH_ReadByte(ADDRESS_MOTOR_TYPE);
       
       p_configuration_variables->ui8_pedal_torque_per_10_bit_ADC_step_x100 = FLASH_ReadByte(ADDRESS_PEDAL_TORQUE_PER_10_BIT_ADC_STEP_X100);
-      
-	  // for oem display
+      // for oem display
+	  p_configuration_variables->ui8_pedal_torque_10_bit_ADC_range = FLASH_ReadByte(ADDRESS_PEDAL_TORQUE_10_BIT_ADC_RANGE);
+	 
 	  p_configuration_variables->ui8_odometer_compensation_km_x10 = FLASH_ReadByte(ADDRESS_ODOMETER_COMPENSATION);
 	  p_configuration_variables->ui8_battery_SOC_percentage_8b = FLASH_ReadByte(ADDRESS_BATTERY_SOC);
 	  p_configuration_variables->ui8_set_parameter_enabled = FLASH_ReadByte(ADDRESS_SET_PARAMETER_ON_STARTUP);
@@ -180,6 +182,8 @@ void EEPROM_controller(uint8_t ui8_operation, uint8_t ui8_byte_init)
       ui8_temp = FLASH_ReadByte(ADDRESS_CADENCE_SENSOR_PULSE_HIGH_PER_X10_1);
       ui16_temp += (((uint16_t) ui8_temp << 8) & 0xff00);
       p_configuration_variables->ui16_cadence_sensor_pulse_high_percentage_x10 = ui16_temp;
+	  
+	  p_configuration_variables->ui8_torque_sensor_mode = FLASH_ReadByte(ADDRESS_TORQUE_SENSOR_MODE_ON_STARTUP);
 	  
     break;
     
@@ -205,8 +209,9 @@ void EEPROM_controller(uint8_t ui8_operation, uint8_t ui8_byte_init)
       ui8_array[ADDRESS_MOTOR_TYPE - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui8_motor_type;
       
       ui8_array[ADDRESS_PEDAL_TORQUE_PER_10_BIT_ADC_STEP_X100 - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui8_pedal_torque_per_10_bit_ADC_step_x100;
-      
-	  // for oem display
+      // for oem display
+	  ui8_array[ADDRESS_PEDAL_TORQUE_10_BIT_ADC_RANGE - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui8_pedal_torque_10_bit_ADC_range;
+	  
 	  ui8_array[ADDRESS_ODOMETER_COMPENSATION - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui8_odometer_compensation_km_x10;
 	  ui8_array[ADDRESS_BATTERY_SOC - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui8_battery_SOC_percentage_8b;
 	  ui8_array[ADDRESS_SET_PARAMETER_ON_STARTUP - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui8_set_parameter_enabled;
@@ -216,6 +221,7 @@ void EEPROM_controller(uint8_t ui8_operation, uint8_t ui8_byte_init)
 	  ui8_array[ADDRESS_CADENCE_SENSOR_MODE_ON_STARTUP - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui8_cadence_sensor_mode;
 	  ui8_array[ADDRESS_CADENCE_SENSOR_PULSE_HIGH_PER_X10_0 - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui16_cadence_sensor_pulse_high_percentage_x10 & 255;
 	  ui8_array[ADDRESS_CADENCE_SENSOR_PULSE_HIGH_PER_X10_1 - EEPROM_BASE_ADDRESS] = (p_configuration_variables->ui16_cadence_sensor_pulse_high_percentage_x10 >> 8) & 255;
+	  ui8_array[ADDRESS_TORQUE_SENSOR_MODE_ON_STARTUP - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui8_torque_sensor_mode;
 	  
       // write array of variables to EEPROM
       for (ui8_i = EEPROM_BYTES_STORED; ui8_i > ui8_byte_init; ui8_i--)
@@ -237,7 +243,7 @@ void EEPROM_controller(uint8_t ui8_operation, uint8_t ui8_byte_init)
         
         // if write was not successful, rewrite
 		if (ui8_saved_value != ui8_variable_value)
-		{ 
+		{
 			// limit errors number
 			ui8_error_number += 1;
 			if(ui8_error_number > 3)

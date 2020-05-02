@@ -5,6 +5,8 @@
  * from an idea of marcoq (Jobike forum)
  * Author: mbrusa
  * Version mb.20beta1.A
+ * Version mb.20beta1.B
+ * Completed Java Parameter Configurator.
 
  Warning
  Before compiling, flashing and using the firmaware:
@@ -19,6 +21,8 @@
 
  To compile use compile_20.bat (SDCC_Compiler required, install in C:)
  To flash use program_20.bat   (ST_Visual_Programmer required, install in C:)
+ To use JavaConfigurator.jar   (Java Runtime Environment required)
+
 
   Attenzione
   Prima di compilare, programmare e utilizzare il firmaware:

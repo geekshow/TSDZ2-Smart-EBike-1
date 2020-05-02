@@ -11,7 +11,6 @@
 
 #include "config.h"
 #include "common.h"
-#include "advanced.h"
 
 //#define DEBUG_UART
 
@@ -25,7 +24,7 @@
 #define PWM_DUTY_CYCLE_RAMP_UP_INVERSE_STEP_MIN                   20      // 20 -> 20 * 64 us for every duty cycle increment
 
 #define PWM_DUTY_CYCLE_RAMP_DOWN_INVERSE_STEP_DEFAULT             40      // 40 -> 40 * 64 us for every duty cycle decrement
-#define PWM_DUTY_CYCLE_RAMP_DOWN_INVERSE_STEP_MIN                 8       // 8 -> 8 * 64 us for every duty cycle decrement
+#define PWM_DUTY_CYCLE_RAMP_DOWN_INVERSE_STEP_MIN     (PWM_DUTY_CYCLE_RAMP_DOWN_MIN_ADDITIONAL + 8) // 8 -> 8 * 64 us for every duty cycle decrement
 
 /*---------------------------------------------------------
   NOTE: regarding duty cycle (PWM) ramping
@@ -214,11 +213,16 @@
 #define TX_CHECK_CODE					(UART_TX_BUFFER_LEN - 1)
 #define TX_STX										0x43
 #define RX_STX										0x59
-	
+
 // parameters for display data
+#if UNITS_TYPE          // 1 mph and miles
+#define OEM_WHEEL_FACTOR							90
+#else                   // 0 = km/h and kilometer
 #define OEM_WHEEL_FACTOR							143
+#endif
+
 #define DATA_INDEX_ARRAY_DIM						6
-#define DATA_VALUE_ARRAY_DIM						8
+#define DATA_VALUE_ARRAY_DIM						13
 
 // delay display mode default (0.1 sec)
 #define DELAY_DISPLAY_MODE_DEFAULT_X10	(uint16_t)(DELAY_DISPLAY_MODE_DEFAULT * 10)
@@ -226,8 +230,8 @@
 // delay lights function (0.1 sec)
 #define DELAY_LIGHTS_ON					DELAY_MENU_ON
 
-// delay display ready (0.1 sec)
-#define DELAY_DISPLAY_READY				(uint8_t)(DELAY_MENU_ON - 10)
+// delay sensor calibration (0.1 sec)
+#define DELAY_CALIBRATION_ON			(uint8_t)(DELAY_MENU_ON * 2)
 
 // assist level 
 #define OFF											0
@@ -243,20 +247,18 @@
 #define ASSIST_PEDAL_LEVEL3							0x04
 #define ASSIST_PEDAL_LEVEL4							0x08
 
-// oem display fault & functionn code
+// oem display fault & function code
 #define CLEAR_DISPLAY								0
 #define NO_FUNCTION									0
 #define NO_FAULT									0
+#define NO_ERROR                                  	0 
+#define ERROR_MOTOR_BLOCKED                       	4 // E04
+#define ERROR_TORQUE_SENSOR                       	2 // E02
+#define ERROR_CADENCE_SENSOR_CALIBRATION          	3 // E03
 #define ERROR_OVERTEMPERATURE						6 // E06
 #define ERROR_OVERVOLTAGE							8 // E08
 #define ERROR_WRITE_EEPROM  					  	9 // E09 (E08 blinking for XH18)
-//#define ERROR_MOTOR_BLOCKED                       4 // E04 common.c
-//#define ERROR_TORQUE_SENSOR                       2 // E02 common.c
-//#define ERROR_CADENCE_SENSOR_CALIBRATION          3 // E03 common.c
-//#define ERROR_BRAKE_APPLIED_DURING_POWER_ON       3 // NOT USED common.c
-//#define ERROR_THROTTLE_APPLIED_DURING_POWER_ON    4 // NOT USED common.c
-//#define ERROR_NO_SPEED_SENSOR_DETECTED            5 // NOT USED common.c
-//#define ERROR_LOW_CONTROLLER_VOLTAGE              6 // NOT USED common.c
+
 
 // optional ADC function
 #if ENABLE_TEMPERATURE_LIMIT  && ENABLE_THROTTLE
@@ -318,14 +320,16 @@
 
 // cell bars
 #if ENABLE_VLCD6 || ENABLE_XH18
-#define LI_ION_CELL_VOLTS_5			(float)LI_ION_CELL_OVERVOLT
+#define LI_ION_CELL_VOLTS_6			(float)LI_ION_CELL_OVERVOLT
+#define LI_ION_CELL_VOLTS_5			(float)LI_ION_CELL_RESET_SOC_PERCENT
 #define LI_ION_CELL_VOLTS_4			(float)LI_ION_CELL_VOLTS_FULL
 #define LI_ION_CELL_VOLTS_3			(float)LI_ION_CELL_VOLTS_3_OF_4
 #define LI_ION_CELL_VOLTS_2			(float)LI_ION_CELL_VOLTS_2_OF_4
 #define LI_ION_CELL_VOLTS_1			(float)LI_ION_CELL_VOLTS_1_OF_4
 #define LI_ION_CELL_VOLTS_0			(float)LI_ION_CELL_VOLTS_EMPTY
 #else // ENABLE_VLCD5
-#define LI_ION_CELL_VOLTS_7			(float)LI_ION_CELL_OVERVOLT
+#define LI_ION_CELL_VOLTS_8			(float)LI_ION_CELL_OVERVOLT
+#define LI_ION_CELL_VOLTS_7			(float)LI_ION_CELL_RESET_SOC_PERCENT
 #define LI_ION_CELL_VOLTS_6			(float)LI_ION_CELL_VOLTS_FULL
 #define LI_ION_CELL_VOLTS_5			(float)LI_ION_CELL_VOLTS_5_OF_6
 #define LI_ION_CELL_VOLTS_4			(float)LI_ION_CELL_VOLTS_4_OF_6
@@ -335,6 +339,13 @@
 #define LI_ION_CELL_VOLTS_0			(float)LI_ION_CELL_VOLTS_EMPTY
 #endif
 
+// assist level 0
+#define TORQUE_ASSIST_LEVEL_0        0
+#define CADENCE_ASSIST_LEVEL_0       0
+#define EMTB_ASSIST_LEVEL_0          0
+#define WALK_ASSIST_LEVEL_0          0
+#define CRUISE_TARGET_SPEED_LEVEL_0  0
+
 // power assist level
 #define POWER_ASSIST_LEVEL_OFF       0
 #define POWER_ASSIST_LEVEL_ECO       (uint8_t)(POWER_ASSIST_LEVEL_1 / 10)
@@ -342,35 +353,40 @@
 #define POWER_ASSIST_LEVEL_SPORT     (uint8_t)(POWER_ASSIST_LEVEL_3 / 10)
 #define POWER_ASSIST_LEVEL_TURBO     (uint8_t)(POWER_ASSIST_LEVEL_4 / 10)
 
-// walk assist level
-#if ENABLE_XH18
-// walk assist level for XH18 problem
-#define WALK_ASSIST_LEVEL_OFF             WALK_ASSIST_LEVEL_1
-#define WALK_ASSIST_LEVEL_ECO             WALK_ASSIST_LEVEL_2
-#define WALK_ASSIST_LEVEL_TOUR            WALK_ASSIST_LEVEL_3
-#define WALK_ASSIST_LEVEL_SPORT           WALK_ASSIST_LEVEL_4
-#define WALK_ASSIST_LEVEL_TURBO           WALK_ASSIST_LEVEL_4
-#else
-// walk assist level for VLCD5 VLCD6
-#define WALK_ASSIST_LEVEL_OFF             WALK_ASSIST_LEVEL_0
-#define WALK_ASSIST_LEVEL_ECO             WALK_ASSIST_LEVEL_1
-#define WALK_ASSIST_LEVEL_TOUR            WALK_ASSIST_LEVEL_2
-#define WALK_ASSIST_LEVEL_SPORT           WALK_ASSIST_LEVEL_3
-#define WALK_ASSIST_LEVEL_TURBO           WALK_ASSIST_LEVEL_4
-#endif
-
 // walk assist threshold (speed limit max km/h x10)
 #define WALK_ASSIST_THRESHOLD_SPEED_X10	(uint8_t)(WALK_ASSIST_THRESHOLD_SPEED * 10)
 
 // cruise threshold (speed limit min km/h x10)
 #define CRUISE_THRESHOLD_SPEED_X10		(uint8_t)(CRUISE_THRESHOLD_SPEED * 10)
 
-// odometer compensation for displayed data (eeprom)
-#define ODOMETER_COMPENSATION        				0
-// save odometer compensation (1=ENABLED)
-#define SAVE_ODOMETER_COMPENSATION                0
-// zero odometer compensation
-#define ZERO_ODOMETER_COMPENSATION                100000000
+// ticks target coefficient for fix overrun
+#if PWM_DUTY_CYCLE_RAMP_DOWN_MIN_ADDITIONAL > 15
+#define TICKS_TARGET_COEFFICIENT_STD			1
+#define TICKS_TARGET_COEFFICIENT_ADV			1
+#elif PWM_DUTY_CYCLE_RAMP_DOWN_MIN_ADDITIONAL > 7
+#define TICKS_TARGET_COEFFICIENT_STD			2
+#define TICKS_TARGET_COEFFICIENT_ADV			1
+#elif PWM_DUTY_CYCLE_RAMP_DOWN_MIN_ADDITIONAL > 0
+#define TICKS_TARGET_COEFFICIENT_STD			3
+#define TICKS_TARGET_COEFFICIENT_ADV			1
+#else
+#define TICKS_TARGET_COEFFICIENT_STD			4
+#define TICKS_TARGET_COEFFICIENT_ADV			2
+#endif
 
+// odometer compensation for displayed data (eeprom)
+#define ODOMETER_COMPENSATION					0
+// zero odometer compensation
+#define ZERO_ODOMETER_COMPENSATION				100000000
+
+// torque range adc min for remapping
+#define ADC_TORQUE_RANGE_MIN		(uint16_t)(160 - ADC_TORQUE_OFFSET_ADJUSTMENT)
+
+
+// debug
+#ifndef DEBUG_MODE
+#define DEBUG_MODE                              0
+#define DEBUG_DATA                              0
+#endif
 
 #endif // _MAIN_H_

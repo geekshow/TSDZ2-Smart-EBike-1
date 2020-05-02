@@ -22,7 +22,6 @@
 #include "math.h"
 #include "common.h"
 #include "eeprom.h"
-#include "advanced.h"
 
 #define SVM_TABLE_LEN   256
 #define SIN_TABLE_LEN   60
@@ -390,6 +389,7 @@ volatile uint8_t ui8_cadence_sensor_pulse_state = 0;
 volatile uint8_t ui8_cadence_sensor_stop_flag = 0;
 volatile uint16_t ui16_cadence_sensor_ticks_stop = 0;
 volatile uint8_t ui8_fix_overrun_enabled = 1;
+volatile uint8_t ui8_cadence_sensor_start_counter = 0;
 
 
 // wheel speed sensor
@@ -644,7 +644,7 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
   // check if brakes are installed and enabled
   
   // check if coaster brake is engaged
-  if (UI16_ADC_10_BIT_TORQUE_SENSOR < (ui16_adc_pedal_torque_offset - COASTER_BRAKE_TORQUE_THRESHOLD))
+  if (UI16_ADC_10_BIT_TORQUE_SENSOR < (ui16_adc_pedal_torque_offset - COASTER_BRAKE_TORQUE_THRESHOLD - ADC_TORQUE_OFFSET_ADJUSTMENT))
   {
     // set brake state
     ui8_brake_state = 1;
@@ -803,11 +803,17 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
   volatile uint8_t ui8_cadence_sensor_pin_1_state = PAS2__PORT->IDR & PAS2__PIN; // PAS2__PIN is leading
   volatile uint8_t ui8_cadence_sensor_pin_2_state = PAS1__PORT->IDR & PAS1__PIN; // PAS1__PIN is following
   
+  #define CADENCE_SENSOR_START_THRESHOLD				20
+  
   // check if cadence sensor pin state has changed
   if (ui8_cadence_sensor_pin_1_state != ui8_cadence_sensor_pin_state_old)
   {
     // update old cadence sensor pin state
     ui8_cadence_sensor_pin_state_old = ui8_cadence_sensor_pin_1_state;
+	
+	// delay for disable overrun at pedal start
+	if(ui8_cadence_sensor_start_counter <= CADENCE_SENSOR_START_THRESHOLD)
+		ui8_cadence_sensor_start_counter++;
     
     // select cadence sensor mode
     switch (p_configuration_variables->ui8_cadence_sensor_mode)
@@ -845,7 +851,7 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
               ui16_cadence_sensor_ticks = ui16_cadence_sensor_ticks_counter;
 			  
 			  // for overrun problem
-			  ui16_cadence_sensor_ticks_stop = (ui16_cadence_sensor_ticks + (ui16_cadence_sensor_ticks >> 4));
+			  ui16_cadence_sensor_ticks_stop = (ui16_cadence_sensor_ticks + (ui16_cadence_sensor_ticks >> TICKS_TARGET_COEFFICIENT_STD));
               
               // reset ticks counter
               ui16_cadence_sensor_ticks_counter = 0;
@@ -890,7 +896,7 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
             ui16_cadence_sensor_ticks = ui16_cadence_sensor_ticks_counter;
 			
 			// for overrun problem
-			ui16_cadence_sensor_ticks_stop = (ui16_cadence_sensor_ticks + (ui16_cadence_sensor_ticks >> 2));
+			ui16_cadence_sensor_ticks_stop = (ui16_cadence_sensor_ticks + (ui16_cadence_sensor_ticks >> TICKS_TARGET_COEFFICIENT_ADV));
             
             // set the pulse state
             ui8_cadence_sensor_pulse_state = ui8_cadence_sensor_pin_1_state;
@@ -956,17 +962,29 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
   // for overrun problem
   if(ui8_fix_overrun_enabled)
   {
-	if(ui16_cadence_sensor_ticks)
+	// disable overrun at pedal start
+	if(ui8_cadence_sensor_start_counter >= CADENCE_SENSOR_START_THRESHOLD)
 	{
-		if(ui16_cadence_sensor_ticks_counter > ui16_cadence_sensor_ticks_stop)
-			ui8_cadence_sensor_stop_flag = 1;
+		if(ui16_cadence_sensor_ticks)
+		{
+			if(ui16_cadence_sensor_ticks_counter > ui16_cadence_sensor_ticks_stop)
+				ui8_cadence_sensor_stop_flag = 1;
+			else
+				ui8_cadence_sensor_stop_flag = 0;
+		}
 		else
-			ui8_cadence_sensor_stop_flag = 0;
+		{
+		ui8_cadence_sensor_stop_flag = 1;
+		}
 	}
 	else
 	{
-		ui8_cadence_sensor_stop_flag = 1;
+		ui8_cadence_sensor_stop_flag = 0;
 	}
+	
+	// restart counter for overrun disabled at pedal start
+	if(!ui8_cadence_sensor_ticks_counter_started)
+		ui8_cadence_sensor_start_counter = 0;
   }
   else
   {

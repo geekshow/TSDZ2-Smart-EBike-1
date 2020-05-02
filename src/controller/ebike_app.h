@@ -42,6 +42,7 @@ typedef struct _configuration_variables
   //uint8_t ui8_optional_ADC_function; // moved to ebike_app.c
   
   // for oem display
+  uint8_t ui8_pedal_torque_10_bit_ADC_range;
   uint8_t ui8_odometer_compensation_km_x10;
   uint8_t ui8_battery_SOC_percentage_8b;
   uint8_t ui8_set_parameter_enabled;
@@ -50,6 +51,7 @@ typedef struct _configuration_variables
   uint8_t ui8_lights_configuration;
   uint8_t ui8_cadence_sensor_mode;
   uint16_t ui16_cadence_sensor_pulse_high_percentage_x10;
+  uint8_t ui8_torque_sensor_mode;
 } struct_configuration_variables;
 
 
