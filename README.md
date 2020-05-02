@@ -1,3 +1,6 @@
+This repo is outdated, please go to:
+https://github.com/emmebrusa/TSDZ2-Smart-EBike
+
 This fork is based on the v0.20 adaption for stock tongsheng displays of mbrusa, published at [jobike.it.](http://www.jobike.it/forum/topic.asp?TOPIC_ID=76426&whichpage=61).
 
 See the [wiki](https://github.com/stancecoke/TSDZ2-Smart-EBike/wiki) for instructions
