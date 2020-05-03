@@ -64,7 +64,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 		}
 	}
 
-    String[] displayDataArray = {"motor temperature", "battery SOC rem. %", "battery voltage", "battery current", "motor power", "adc torque sensor 8b", "adc torque sensor 10b", "pedal cadence rpm", "human power", "cadence sensor adv.", "pedal weight", "pedal torque adc conv.", "pedal torque adc range"};   
+    String[] displayDataArray = {"motor temperature", "battery SOC rem. %", "battery voltage", "battery current", "motor power", "adc torque sensor 8b", "adc torque sensor 10b", "pedal cadence rpm", "human power", "cadence sensor adv.", "pedal weight", "pedal torque adc conv.", "pedal torque adc range", "adc throttle (8 bit)"};   
     String[] lightModeArray = {"<br>lights ON", "<br>lights FLASHING", "lights ON and BRAKE-FLASHING brak.", "lights FLASHING and ON when braking", "lights FLASHING BRAKE-FLASHING brak.", "lights ON and ON always braking", "lights ON and BRAKE-FLASHING alw.br.", "lights FLASHING and ON always braking", "lights FLASHING BRAKE-FLASHING alw.br."};
   
  
@@ -1636,19 +1636,16 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(Label_Parameter2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                            .addComponent(Label_Parameter3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Label_Parameter4, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(Label_Parameter2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                    .addComponent(Label_Parameter3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Label_Parameter4, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(Label_Parameter5, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(21, 21, 21)
                         .addComponent(RB_UNIT_KILOMETERS)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1656,12 +1653,9 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                             .addComponent(RB_VLCD5, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addComponent(RB_VLCD6, javax.swing.GroupLayout.Alignment.TRAILING))
                     .addComponent(RB_DISPLAY_WORK_ON)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(RB_UNIT_MILES)
-                            .addComponent(RB_DISPLAY_ALWAY_ON))
-                        .addGap(35, 35, 35)))
-                .addContainerGap())
+                    .addComponent(RB_UNIT_MILES)
+                    .addComponent(RB_DISPLAY_ALWAY_ON))
+                .addGap(23, 23, 23))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2881,7 +2875,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jLabelData1.setText("Data 1");
 
         TF_DATA_1.setText("1");
-        TF_DATA_1.setToolTipText("<html>0 - motor temperature (°C)<br>\n1 - battery SOC remaining (%)<br>\n2 - battery voltage (V)<br>\n3 - battery current (A)<br>\n4 - motor power (Watt/10)<br>\n5 - adc torque sensor (8 bit)<br>\n6 - adc torque sensor (10 bit)<br>\n7 - pedal cadence (rpm)<br>\n8 - human power(W/10)<br>\n9 - cadence sensor adv.(%)<br>\n10 - pedal weight (kg)<br>\n11 - pedal torque adc conver.<br>\n12 - pedal torque adc range\n</html>");
+        TF_DATA_1.setToolTipText("<html>0 - motor temperature (°C)<br>\n1 - battery SOC remaining (%)<br>\n2 - battery voltage (V)<br>\n3 - battery current (A)<br>\n4 - motor power (Watt/10)<br>\n5 - adc torque sensor (8 bit)<br>\n6 - adc torque sensor (10 bit)<br>\n7 - pedal cadence (rpm)<br>\n8 - human power(W/10)<br>\n9 - cadence sensor adv.(%)<br>\n10 - pedal weight (kg)<br>\n11 - pedal torque adc conver.<br>\n12 - pedal torque adc range<br>\n13 - adc throttle (8 bit)\n</html>");
         TF_DATA_1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TF_DATA_1KeyReleased(evt);
@@ -2889,7 +2883,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         });
 
         TF_DATA_2.setText("2");
-        TF_DATA_2.setToolTipText("<html>0 - motor temperature (°C)<br>\n1 - battery SOC remaining (%)<br>\n2 - battery voltage (V)<br>\n3 - battery current (A)<br>\n4 - motor power (Watt/10)<br>\n5 - adc torque sensor (8 bit)<br>\n6 - adc torque sensor (10 bit)<br>\n7 - pedal cadence (rpm)<br>\n8 - human power(W/10)<br>\n9 - cadence sensor adv.(%)<br>\n10 - pedal weight (kg)<br>\n11 - pedal torque adc conver.<br>\n12 - pedal torque adc range\n</html>");
+        TF_DATA_2.setToolTipText("<html>0 - motor temperature (°C)<br>\n1 - battery SOC remaining (%)<br>\n2 - battery voltage (V)<br>\n3 - battery current (A)<br>\n4 - motor power (Watt/10)<br>\n5 - adc torque sensor (8 bit)<br>\n6 - adc torque sensor (10 bit)<br>\n7 - pedal cadence (rpm)<br>\n8 - human power(W/10)<br>\n9 - cadence sensor adv.(%)<br>\n10 - pedal weight (kg)<br>\n11 - pedal torque adc conver.<br>\n12 - pedal torque adc range<br>\n13 - adc throttle (8 bit)\n</html>");
         TF_DATA_2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TF_DATA_2KeyReleased(evt);
@@ -2899,7 +2893,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jLabelData2.setText("Data 2");
 
         TF_DATA_3.setText("5");
-        TF_DATA_3.setToolTipText("<html>0 - motor temperature (°C)<br>\n1 - battery SOC remaining (%)<br>\n2 - battery voltage (V)<br>\n3 - battery current (A)<br>\n4 - motor power (Watt/10)<br>\n5 - adc torque sensor (8 bit)<br>\n6 - adc torque sensor (10 bit)<br>\n7 - pedal cadence (rpm)<br>\n8 - human power(W/10)<br>\n9 - cadence sensor adv.(%)<br>\n10 - pedal weight (kg)<br>\n11 - pedal torque adc conver.<br>\n12 - pedal torque adc range\n</html>");
+        TF_DATA_3.setToolTipText("<html>0 - motor temperature (°C)<br>\n1 - battery SOC remaining (%)<br>\n2 - battery voltage (V)<br>\n3 - battery current (A)<br>\n4 - motor power (Watt/10)<br>\n5 - adc torque sensor (8 bit)<br>\n6 - adc torque sensor (10 bit)<br>\n7 - pedal cadence (rpm)<br>\n8 - human power(W/10)<br>\n9 - cadence sensor adv.(%)<br>\n10 - pedal weight (kg)<br>\n11 - pedal torque adc conver.<br>\n12 - pedal torque adc range<br>\n13 - adc throttle (8 bit)\n</html>");
         TF_DATA_3.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TF_DATA_3KeyReleased(evt);
@@ -2911,7 +2905,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jLabelData4.setText("Data 4");
 
         TF_DATA_4.setText("4");
-        TF_DATA_4.setToolTipText("<html>0 - motor temperature (°C)<br>\n1 - battery SOC remaining (%)<br>\n2 - battery voltage (V)<br>\n3 - battery current (A)<br>\n4 - motor power (Watt/10)<br>\n5 - adc torque sensor (8 bit)<br>\n6 - adc torque sensor (10 bit)<br>\n7 - pedal cadence (rpm)<br>\n8 - human power(W/10)<br>\n9 - cadence sensor adv.(%)<br>\n10 - pedal weight (kg)<br>\n11 - pedal torque adc conver.<br>\n12 - pedal torque adc range\n</html>");
+        TF_DATA_4.setToolTipText("<html>0 - motor temperature (°C)<br>\n1 - battery SOC remaining (%)<br>\n2 - battery voltage (V)<br>\n3 - battery current (A)<br>\n4 - motor power (Watt/10)<br>\n5 - adc torque sensor (8 bit)<br>\n6 - adc torque sensor (10 bit)<br>\n7 - pedal cadence (rpm)<br>\n8 - human power(W/10)<br>\n9 - cadence sensor adv.(%)<br>\n10 - pedal weight (kg)<br>\n11 - pedal torque adc conver.<br>\n12 - pedal torque adc range<br>\n13 - adc throttle (8 bit)\n</html>");
         TF_DATA_4.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
         TF_DATA_4.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -2920,7 +2914,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         });
 
         TF_DATA_5.setText("7");
-        TF_DATA_5.setToolTipText("<html>0 - motor temperature (°C)<br>\n1 - battery SOC remaining (%)<br>\n2 - battery voltage (V)<br>\n3 - battery current (A)<br>\n4 - motor power (Watt/10)<br>\n5 - adc torque sensor (8 bit)<br>\n6 - adc torque sensor (10 bit)<br>\n7 - pedal cadence (rpm)<br>\n8 - human power(W/10)<br>\n9 - cadence sensor adv.(%)<br>\n10 - pedal weight (kg)<br>\n11 - pedal torque adc conver.<br>\n12 - pedal torque adc range\n</html>");
+        TF_DATA_5.setToolTipText("<html>0 - motor temperature (°C)<br>\n1 - battery SOC remaining (%)<br>\n2 - battery voltage (V)<br>\n3 - battery current (A)<br>\n4 - motor power (Watt/10)<br>\n5 - adc torque sensor (8 bit)<br>\n6 - adc torque sensor (10 bit)<br>\n7 - pedal cadence (rpm)<br>\n8 - human power(W/10)<br>\n9 - cadence sensor adv.(%)<br>\n10 - pedal weight (kg)<br>\n11 - pedal torque adc conver.<br>\n12 - pedal torque adc range<br>\n13 - adc throttle (8 bit)\n</html>");
         TF_DATA_5.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
         TF_DATA_5.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -2933,7 +2927,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jLabelData6.setText("Data 6");
 
         TF_DATA_6.setText("0");
-        TF_DATA_6.setToolTipText("<html>0 - motor temperature (°C)<br>\n1 - battery SOC remaining (%)<br>\n2 - battery voltage (V)<br>\n3 - battery current (A)<br>\n4 - motor power (Watt/10)<br>\n5 - adc torque sensor (8 bit)<br>\n6 - adc torque sensor (10 bit)<br>\n7 - pedal cadence (rpm)<br>\n8 - human power(W/10)<br>\n9 - cadence sensor adv.(%)<br>\n10 - pedal weight (kg)<br>\n11 - pedal torque adc conver.<br>\n12 - pedal torque adc range\n</html>");
+        TF_DATA_6.setToolTipText("<html>0 - motor temperature (°C)<br>\n1 - battery SOC remaining (%)<br>\n2 - battery voltage (V)<br>\n3 - battery current (A)<br>\n4 - motor power (Watt/10)<br>\n5 - adc torque sensor (8 bit)<br>\n6 - adc torque sensor (10 bit)<br>\n7 - pedal cadence (rpm)<br>\n8 - human power(W/10)<br>\n9 - cadence sensor adv.(%)<br>\n10 - pedal weight (kg)<br>\n11 - pedal torque adc conver.<br>\n12 - pedal torque adc range<br>\n13 - adc throttle (8 bit)\n</html>");
         TF_DATA_6.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
         TF_DATA_6.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -3468,7 +3462,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private void TF_DATA_1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_DATA_1KeyReleased
         try {
             int index = Integer.parseInt(TF_DATA_1.getText());
-            if ((index >= 0)&&(index <= 12)) {
+            if ((index >= 0)&&(index <= 13)) {
                 jLabelData1.setText("Data 1 - " + displayDataArray[index]); }
             else {
                 jLabelData1.setText("Data 1");	}
@@ -3482,7 +3476,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private void TF_DATA_2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_DATA_2KeyReleased
         try {
         int index = Integer.parseInt(TF_DATA_2.getText());
-        if ((index >= 0)&&(index <= 12)) {
+        if ((index >= 0)&&(index <= 13)) {
             jLabelData2.setText("Data 2 - " + displayDataArray[index]); }
         else {
             jLabelData2.setText("Data 2");	}
@@ -3496,7 +3490,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private void TF_DATA_3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_DATA_3KeyReleased
         try {
         int index = Integer.parseInt(TF_DATA_3.getText());
-        if ((index >= 0)&&(index <= 12)) {
+        if ((index >= 0)&&(index <= 13)) {
             jLabelData3.setText("Data 3 - " + displayDataArray[index]); }
         else {
             jLabelData3.setText("Data 3");	}
@@ -3510,7 +3504,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private void TF_DATA_4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_DATA_4KeyReleased
         try {
         int index = Integer.parseInt(TF_DATA_4.getText());
-        if ((index >= 0)&&(index <= 12)) {
+        if ((index >= 0)&&(index <= 13)) {
             jLabelData4.setText("Data 4 - " + displayDataArray[index]); }
         else {
             jLabelData4.setText("Data 4");	}
@@ -3524,7 +3518,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private void TF_DATA_5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_DATA_5KeyReleased
         try {
         int index = Integer.parseInt(TF_DATA_5.getText());
-        if ((index >= 0)&&(index <= 12)) {
+        if ((index >= 0)&&(index <= 13)) {
             jLabelData5.setText("Data 5 - " + displayDataArray[index]); }
         else {
             jLabelData5.setText("Data 5");	}
@@ -3538,7 +3532,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private void TF_DATA_6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_DATA_6KeyReleased
         try {
         int index = Integer.parseInt(TF_DATA_6.getText());
-        if ((index >= 0)&&(index <= 12)) {
+        if ((index >= 0)&&(index <= 13)) {
             jLabelData6.setText("Data 6 - " + displayDataArray[index]); }
         else {
             jLabelData6.setText("Data 6");	}

@@ -2567,6 +2567,8 @@
 			ui16_data_value_array[10] = (uint16_t) ui16_display_data_factor / (ui16_pedal_weight_x100 / 100);
 			ui16_data_value_array[11] = (uint16_t) ui16_display_data_factor / (m_configuration_variables.ui8_pedal_torque_per_10_bit_ADC_step_x100);
 			ui16_data_value_array[12] = (uint16_t) ui16_display_data_factor / (ui8_pedal_torque_10_bit_ADC_range_temp / 10);
+			ui16_data_value_array[13] = (uint16_t) ui16_display_data_factor / (UI8_ADC_THROTTLE / 10);
+			
 			
 			// display data
 			if((ui8_battery_SOC_init_flag)&&(!ui8_battery_SOC_reset_flag))

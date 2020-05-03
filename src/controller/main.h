@@ -222,7 +222,7 @@
 #endif
 
 #define DATA_INDEX_ARRAY_DIM						6
-#define DATA_VALUE_ARRAY_DIM						13
+#define DATA_VALUE_ARRAY_DIM						14
 
 // delay display mode default (0.1 sec)
 #define DELAY_DISPLAY_MODE_DEFAULT_X10	(uint16_t)(DELAY_DISPLAY_MODE_DEFAULT * 10)

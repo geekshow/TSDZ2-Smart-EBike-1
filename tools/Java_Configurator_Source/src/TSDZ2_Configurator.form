@@ -664,24 +664,19 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="Label_Parameter2" max="32767" attributes="0"/>
-                                          <Component id="jLabel16" pref="150" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Component id="Label_Parameter3" alignment="0" min="-2" pref="145" max="-2" attributes="0"/>
-                                      <Component id="Label_Parameter4" alignment="0" min="-2" pref="145" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="Label_Parameter2" max="32767" attributes="0"/>
+                                  <Component id="jLabel16" pref="150" max="32767" attributes="0"/>
                               </Group>
+                              <Component id="Label_Parameter3" alignment="0" min="-2" pref="145" max="-2" attributes="0"/>
+                              <Component id="Label_Parameter4" alignment="0" min="-2" pref="145" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="Label_Parameter5" min="-2" pref="63" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                                   <Component id="RB_UNIT_KILOMETERS" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -691,15 +686,10 @@
                                   <Component id="RB_VLCD6" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="RB_DISPLAY_WORK_ON" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="RB_UNIT_MILES" max="-2" attributes="0"/>
-                                      <Component id="RB_DISPLAY_ALWAY_ON" alignment="0" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="35" pref="35" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="RB_UNIT_MILES" max="-2" attributes="0"/>
+                              <Component id="RB_DISPLAY_ALWAY_ON" alignment="0" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2889,7 +2879,7 @@
                 <Component class="javax.swing.JTextField" name="TF_DATA_1">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="1"/>
-                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;1 - battery SOC remaining (%)&lt;br&gt;&#xa;2 - battery voltage (V)&lt;br&gt;&#xa;3 - battery current (A)&lt;br&gt;&#xa;4 - motor power (Watt/10)&lt;br&gt;&#xa;5 - adc torque sensor (8 bit)&lt;br&gt;&#xa;6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;7 - pedal cadence (rpm)&lt;br&gt;&#xa;8 - human power(W/10)&lt;br&gt;&#xa;9 - cadence sensor adv.(%)&lt;br&gt;&#xa;10 - pedal weight (kg)&lt;br&gt;&#xa;11 - pedal torque adc conver.&lt;br&gt;&#xa;12 - pedal torque adc range&#xa;&lt;/html&gt;"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;1 - battery SOC remaining (%)&lt;br&gt;&#xa;2 - battery voltage (V)&lt;br&gt;&#xa;3 - battery current (A)&lt;br&gt;&#xa;4 - motor power (Watt/10)&lt;br&gt;&#xa;5 - adc torque sensor (8 bit)&lt;br&gt;&#xa;6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;7 - pedal cadence (rpm)&lt;br&gt;&#xa;8 - human power(W/10)&lt;br&gt;&#xa;9 - cadence sensor adv.(%)&lt;br&gt;&#xa;10 - pedal weight (kg)&lt;br&gt;&#xa;11 - pedal torque adc conver.&lt;br&gt;&#xa;12 - pedal torque adc range&lt;br&gt;&#xa;13 - adc throttle (8 bit)&#xa;&lt;/html&gt;"/>
                   </Properties>
                   <Events>
                     <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_DATA_1KeyReleased"/>
@@ -2898,7 +2888,7 @@
                 <Component class="javax.swing.JTextField" name="TF_DATA_2">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="2"/>
-                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;1 - battery SOC remaining (%)&lt;br&gt;&#xa;2 - battery voltage (V)&lt;br&gt;&#xa;3 - battery current (A)&lt;br&gt;&#xa;4 - motor power (Watt/10)&lt;br&gt;&#xa;5 - adc torque sensor (8 bit)&lt;br&gt;&#xa;6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;7 - pedal cadence (rpm)&lt;br&gt;&#xa;8 - human power(W/10)&lt;br&gt;&#xa;9 - cadence sensor adv.(%)&lt;br&gt;&#xa;10 - pedal weight (kg)&lt;br&gt;&#xa;11 - pedal torque adc conver.&lt;br&gt;&#xa;12 - pedal torque adc range&#xa;&lt;/html&gt;"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;1 - battery SOC remaining (%)&lt;br&gt;&#xa;2 - battery voltage (V)&lt;br&gt;&#xa;3 - battery current (A)&lt;br&gt;&#xa;4 - motor power (Watt/10)&lt;br&gt;&#xa;5 - adc torque sensor (8 bit)&lt;br&gt;&#xa;6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;7 - pedal cadence (rpm)&lt;br&gt;&#xa;8 - human power(W/10)&lt;br&gt;&#xa;9 - cadence sensor adv.(%)&lt;br&gt;&#xa;10 - pedal weight (kg)&lt;br&gt;&#xa;11 - pedal torque adc conver.&lt;br&gt;&#xa;12 - pedal torque adc range&lt;br&gt;&#xa;13 - adc throttle (8 bit)&#xa;&lt;/html&gt;"/>
                   </Properties>
                   <Events>
                     <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_DATA_2KeyReleased"/>
@@ -2912,7 +2902,7 @@
                 <Component class="javax.swing.JTextField" name="TF_DATA_3">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="5"/>
-                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;1 - battery SOC remaining (%)&lt;br&gt;&#xa;2 - battery voltage (V)&lt;br&gt;&#xa;3 - battery current (A)&lt;br&gt;&#xa;4 - motor power (Watt/10)&lt;br&gt;&#xa;5 - adc torque sensor (8 bit)&lt;br&gt;&#xa;6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;7 - pedal cadence (rpm)&lt;br&gt;&#xa;8 - human power(W/10)&lt;br&gt;&#xa;9 - cadence sensor adv.(%)&lt;br&gt;&#xa;10 - pedal weight (kg)&lt;br&gt;&#xa;11 - pedal torque adc conver.&lt;br&gt;&#xa;12 - pedal torque adc range&#xa;&lt;/html&gt;"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;1 - battery SOC remaining (%)&lt;br&gt;&#xa;2 - battery voltage (V)&lt;br&gt;&#xa;3 - battery current (A)&lt;br&gt;&#xa;4 - motor power (Watt/10)&lt;br&gt;&#xa;5 - adc torque sensor (8 bit)&lt;br&gt;&#xa;6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;7 - pedal cadence (rpm)&lt;br&gt;&#xa;8 - human power(W/10)&lt;br&gt;&#xa;9 - cadence sensor adv.(%)&lt;br&gt;&#xa;10 - pedal weight (kg)&lt;br&gt;&#xa;11 - pedal torque adc conver.&lt;br&gt;&#xa;12 - pedal torque adc range&lt;br&gt;&#xa;13 - adc throttle (8 bit)&#xa;&lt;/html&gt;"/>
                   </Properties>
                   <Events>
                     <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_DATA_3KeyReleased"/>
@@ -2931,7 +2921,7 @@
                 <Component class="javax.swing.JTextField" name="TF_DATA_4">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="4"/>
-                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;1 - battery SOC remaining (%)&lt;br&gt;&#xa;2 - battery voltage (V)&lt;br&gt;&#xa;3 - battery current (A)&lt;br&gt;&#xa;4 - motor power (Watt/10)&lt;br&gt;&#xa;5 - adc torque sensor (8 bit)&lt;br&gt;&#xa;6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;7 - pedal cadence (rpm)&lt;br&gt;&#xa;8 - human power(W/10)&lt;br&gt;&#xa;9 - cadence sensor adv.(%)&lt;br&gt;&#xa;10 - pedal weight (kg)&lt;br&gt;&#xa;11 - pedal torque adc conver.&lt;br&gt;&#xa;12 - pedal torque adc range&#xa;&lt;/html&gt;"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;1 - battery SOC remaining (%)&lt;br&gt;&#xa;2 - battery voltage (V)&lt;br&gt;&#xa;3 - battery current (A)&lt;br&gt;&#xa;4 - motor power (Watt/10)&lt;br&gt;&#xa;5 - adc torque sensor (8 bit)&lt;br&gt;&#xa;6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;7 - pedal cadence (rpm)&lt;br&gt;&#xa;8 - human power(W/10)&lt;br&gt;&#xa;9 - cadence sensor adv.(%)&lt;br&gt;&#xa;10 - pedal weight (kg)&lt;br&gt;&#xa;11 - pedal torque adc conver.&lt;br&gt;&#xa;12 - pedal torque adc range&lt;br&gt;&#xa;13 - adc throttle (8 bit)&#xa;&lt;/html&gt;"/>
                     <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="CB_DISPLAY_DOUBLE_DATA.isSelected()" type="code"/>
                     </Property>
@@ -2943,7 +2933,7 @@
                 <Component class="javax.swing.JTextField" name="TF_DATA_5">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="7"/>
-                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;1 - battery SOC remaining (%)&lt;br&gt;&#xa;2 - battery voltage (V)&lt;br&gt;&#xa;3 - battery current (A)&lt;br&gt;&#xa;4 - motor power (Watt/10)&lt;br&gt;&#xa;5 - adc torque sensor (8 bit)&lt;br&gt;&#xa;6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;7 - pedal cadence (rpm)&lt;br&gt;&#xa;8 - human power(W/10)&lt;br&gt;&#xa;9 - cadence sensor adv.(%)&lt;br&gt;&#xa;10 - pedal weight (kg)&lt;br&gt;&#xa;11 - pedal torque adc conver.&lt;br&gt;&#xa;12 - pedal torque adc range&#xa;&lt;/html&gt;"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;1 - battery SOC remaining (%)&lt;br&gt;&#xa;2 - battery voltage (V)&lt;br&gt;&#xa;3 - battery current (A)&lt;br&gt;&#xa;4 - motor power (Watt/10)&lt;br&gt;&#xa;5 - adc torque sensor (8 bit)&lt;br&gt;&#xa;6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;7 - pedal cadence (rpm)&lt;br&gt;&#xa;8 - human power(W/10)&lt;br&gt;&#xa;9 - cadence sensor adv.(%)&lt;br&gt;&#xa;10 - pedal weight (kg)&lt;br&gt;&#xa;11 - pedal torque adc conver.&lt;br&gt;&#xa;12 - pedal torque adc range&lt;br&gt;&#xa;13 - adc throttle (8 bit)&#xa;&lt;/html&gt;"/>
                     <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="CB_DISPLAY_DOUBLE_DATA.isSelected()" type="code"/>
                     </Property>
@@ -2965,7 +2955,7 @@
                 <Component class="javax.swing.JTextField" name="TF_DATA_6">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="0"/>
-                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;1 - battery SOC remaining (%)&lt;br&gt;&#xa;2 - battery voltage (V)&lt;br&gt;&#xa;3 - battery current (A)&lt;br&gt;&#xa;4 - motor power (Watt/10)&lt;br&gt;&#xa;5 - adc torque sensor (8 bit)&lt;br&gt;&#xa;6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;7 - pedal cadence (rpm)&lt;br&gt;&#xa;8 - human power(W/10)&lt;br&gt;&#xa;9 - cadence sensor adv.(%)&lt;br&gt;&#xa;10 - pedal weight (kg)&lt;br&gt;&#xa;11 - pedal torque adc conver.&lt;br&gt;&#xa;12 - pedal torque adc range&#xa;&lt;/html&gt;"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;1 - battery SOC remaining (%)&lt;br&gt;&#xa;2 - battery voltage (V)&lt;br&gt;&#xa;3 - battery current (A)&lt;br&gt;&#xa;4 - motor power (Watt/10)&lt;br&gt;&#xa;5 - adc torque sensor (8 bit)&lt;br&gt;&#xa;6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;7 - pedal cadence (rpm)&lt;br&gt;&#xa;8 - human power(W/10)&lt;br&gt;&#xa;9 - cadence sensor adv.(%)&lt;br&gt;&#xa;10 - pedal weight (kg)&lt;br&gt;&#xa;11 - pedal torque adc conver.&lt;br&gt;&#xa;12 - pedal torque adc range&lt;br&gt;&#xa;13 - adc throttle (8 bit)&#xa;&lt;/html&gt;"/>
                     <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="CB_DISPLAY_DOUBLE_DATA.isSelected()" type="code"/>
                     </Property>
