@@ -945,12 +945,12 @@
 	  #define THROTTLE_DUTY_CYCLE_RAMP_UP_INVERSE_STEP_DEFAULT    80
 	  #define THROTTLE_DUTY_CYCLE_RAMP_UP_INVERSE_STEP_MIN        40
 	  
-	  // map value from 0 to 255
+	  // map value from ASSIST_THROTTLE_MIN_VALUE to ASSIST_THROTTLE_MAX_VALUE
 	  ui8_var_adc_throttle = map((uint8_t) UI8_ADC_THROTTLE,
 							 (uint8_t) ADC_THROTTLE_MIN_VALUE,
 							 (uint8_t) ADC_THROTTLE_MAX_VALUE,
-							 (uint8_t) 0,
-							 (uint8_t) 255);
+							 (uint8_t) ASSIST_THROTTLE_MIN_VALUE,
+							 (uint8_t) ASSIST_THROTTLE_MAX_VALUE);
 							 
 	  // disable throttle at level OFF
 	  if(ui8_assist_level == OFF)

@@ -196,6 +196,9 @@
 // throttle ADC values (optional)
 #define ADC_THROTTLE_MIN_VALUE                      47
 #define ADC_THROTTLE_MAX_VALUE                      176
+// throttle assist values
+#define ASSIST_THROTTLE_MIN_VALUE 					0
+#define ASSIST_THROTTLE_MAX_VALUE 					255
 
 // motor temperature limit (sensor required)
 #define MOTOR_TEMPERATURE_MIN_VALUE_LIMIT           65

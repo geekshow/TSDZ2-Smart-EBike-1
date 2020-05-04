@@ -2395,7 +2395,7 @@
                       <Component id="jPanel18" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jPanel19" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="33" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -3036,12 +3036,8 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
+                          <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="CB_DISPLAY_DOUBLE_DATA" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="102" attributes="0">
@@ -3068,55 +3064,63 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
+                              <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="CB_TEMP_ERR_MIN_LIM" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel101" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="CB_RET_DISPLAY_MODE" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                                          <Component id="jLabel102" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="TF_ADC_THROTTLE_MIN" min="-2" pref="48" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jLabel109" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="TF_ADC_THROTTLE_MAX" min="-2" pref="48" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel102" max="32767" attributes="0"/>
-                                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                                              <Component id="TF_ADC_THROTTLE_MIN" min="-2" pref="48" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel103" max="32767" attributes="0"/>
-                                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                                              <Component id="TF_ADC_THROTTLE_MAX" min="-2" pref="48" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="jLabel104" max="32767" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="TF_TEMP_MIN_LIM" min="-2" pref="48" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel105" max="32767" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="TF_TEMP_MAX_LIM" min="-2" pref="48" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel106" max="32767" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="TF_MOTOR_BLOCK_TIME" min="-2" pref="48" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel107" max="32767" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="TF_MOTOR_BLOCK_CURR" min="-2" pref="48" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel108" max="32767" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="TF_MOTOR_BLOCK_ERPS" min="-2" pref="48" max="-2" attributes="0"/>
-                                          </Group>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="jLabel104" max="32767" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="TF_TEMP_MIN_LIM" min="-2" pref="48" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel105" max="32767" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="TF_TEMP_MAX_LIM" min="-2" pref="48" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel106" max="32767" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="TF_MOTOR_BLOCK_TIME" min="-2" pref="48" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel107" max="32767" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="TF_MOTOR_BLOCK_CURR" min="-2" pref="48" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel108" max="32767" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="TF_MOTOR_BLOCK_ERPS" min="-2" pref="48" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel103" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="TF_ASSIST_THROTTLE_MIN" min="-2" pref="48" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="jLabel110" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="TF_ASSIST_THROTTLE_MAX" min="-2" pref="48" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="CB_TEMP_ERR_MIN_LIM" min="-2" max="-2" attributes="0"/>
+                                      <Component id="CB_RET_DISPLAY_MODE" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="CB_DISPLAY_DOUBLE_DATA" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel101" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -3147,13 +3151,19 @@
                           <EmptySpace type="separate" max="32767" attributes="0"/>
                           <Component id="jLabel101" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="TF_ADC_THROTTLE_MIN" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel102" alignment="3" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="TF_ADC_THROTTLE_MIN" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel102" alignment="3" max="-2" attributes="0"/>
+                                  <Component id="TF_ADC_THROTTLE_MAX" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel109" alignment="3" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="TF_ADC_THROTTLE_MAX" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="TF_ASSIST_THROTTLE_MIN" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="TF_ASSIST_THROTTLE_MAX" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel110" alignment="3" max="-2" attributes="0"/>
                               <Component id="jLabel103" alignment="3" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -3207,7 +3217,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel102">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ADC throttle min value"/>
+                    <Property name="text" type="java.lang.String" value="ADC throttle value       min"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="TF_ADC_THROTTLE_MIN">
@@ -3230,7 +3240,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel103">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ADC throttle max value"/>
+                    <Property name="text" type="java.lang.String" value="Throttle assist value    min"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CB_TEMP_ERR_MIN_LIM">
@@ -3346,6 +3356,34 @@
                     <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;Max value&lt;br&gt;&#xa;3 - Display second serie data DISABLED&lt;br&gt;&#xa;6 - Display second serie data ENABLED&#xa;&lt;/html&gt;"/>
                     <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="CB_AUTO_DISPLAY_DATA.isSelected()" type="code"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel109">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="max"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="TF_ASSIST_THROTTLE_MIN">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="0"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Value 0 to 100"/>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="RB_THROTTLE.isSelected()" type="code"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel110">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="max"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="TF_ASSIST_THROTTLE_MAX">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="255"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Value MIN to 255"/>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="RB_THROTTLE.isSelected()" type="code"/>
                     </Property>
                   </Properties>
                 </Component>

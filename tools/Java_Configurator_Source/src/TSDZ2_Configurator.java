@@ -191,6 +191,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 TF_NUM_DATA_AUTO_DISPLAY.setText(in.readLine());
                 RB_UNIT_KILOMETERS.setSelected(Boolean.parseBoolean(in.readLine()));
                 RB_UNIT_MILES.setSelected(Boolean.parseBoolean(in.readLine()));
+                TF_ASSIST_THROTTLE_MIN.setText(in.readLine());
+                TF_ASSIST_THROTTLE_MAX.setText(in.readLine());
                 
 		in.close();
                 
@@ -977,6 +979,14 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 					}
 					iWriter.println(RB_UNIT_MILES.isSelected());
                                         
+                                        text_to_save = "#define ASSIST_THROTTLE_MIN_VALUE " + TF_ASSIST_THROTTLE_MIN.getText();
+                                        iWriter.println(TF_ASSIST_THROTTLE_MIN.getText());
+					pWriter.println(text_to_save);
+                                        
+                                        text_to_save = "#define ASSIST_THROTTLE_MAX_VALUE " + TF_ASSIST_THROTTLE_MAX.getText();
+                                        iWriter.println(TF_ASSIST_THROTTLE_MAX.getText());
+					pWriter.println(text_to_save);
+                                        
                                         pWriter.println("\r\n#endif /* CONFIG_H_ */");
 
 					iWriter.close();
@@ -1281,6 +1291,10 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         CB_DISPLAY_DOUBLE_DATA = new javax.swing.JCheckBox();
         jLabel90 = new javax.swing.JLabel();
         TF_NUM_DATA_AUTO_DISPLAY = new javax.swing.JTextField();
+        jLabel109 = new javax.swing.JLabel();
+        TF_ASSIST_THROTTLE_MIN = new javax.swing.JTextField();
+        jLabel110 = new javax.swing.JLabel();
+        TF_ASSIST_THROTTLE_MAX = new javax.swing.JTextField();
         label1 = new java.awt.Label();
         jScrollPane1 = new javax.swing.JScrollPane();
         expSet = new javax.swing.JList<>();
@@ -3089,7 +3103,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
             }
         });
 
-        jLabel102.setText("ADC throttle min value");
+        jLabel102.setText("ADC throttle value       min");
 
         TF_ADC_THROTTLE_MIN.setText("47");
         TF_ADC_THROTTLE_MIN.setToolTipText("Value 40 to 50");
@@ -3099,7 +3113,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         TF_ADC_THROTTLE_MAX.setToolTipText("Value 170 to 180");
         TF_ADC_THROTTLE_MAX.setEnabled(RB_THROTTLE.isSelected());
 
-        jLabel103.setText("ADC throttle max value");
+        jLabel103.setText("Throttle assist value    min");
 
         CB_TEMP_ERR_MIN_LIM.setText("Temperature error with min limit");
         CB_TEMP_ERR_MIN_LIM.setEnabled(RB_TEMP_LIMIT.isSelected());
@@ -3155,16 +3169,25 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         TF_NUM_DATA_AUTO_DISPLAY.setToolTipText("<html>Max value<br>\n3 - Display second serie data DISABLED<br>\n6 - Display second serie data ENABLED\n</html>");
         TF_NUM_DATA_AUTO_DISPLAY.setEnabled(CB_AUTO_DISPLAY_DATA.isSelected());
 
+        jLabel109.setText("max");
+
+        TF_ASSIST_THROTTLE_MIN.setText("0");
+        TF_ASSIST_THROTTLE_MIN.setToolTipText("Value 0 to 100");
+        TF_ASSIST_THROTTLE_MIN.setEnabled(RB_THROTTLE.isSelected());
+
+        jLabel110.setText("max");
+
+        TF_ASSIST_THROTTLE_MAX.setText("255");
+        TF_ASSIST_THROTTLE_MAX.setToolTipText("Value MIN to 255");
+        TF_ASSIST_THROTTLE_MAX.setEnabled(RB_THROTTLE.isSelected());
+
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
         jPanel19Layout.setHorizontalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addComponent(CB_DISPLAY_DOUBLE_DATA)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel19Layout.createSequentialGroup()
                         .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel19Layout.createSequentialGroup()
@@ -3186,41 +3209,50 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                     .addGroup(jPanel19Layout.createSequentialGroup()
                         .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel19Layout.createSequentialGroup()
-                                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(CB_TEMP_ERR_MIN_LIM)
-                                    .addComponent(jLabel101)
-                                    .addComponent(CB_RET_DISPLAY_MODE))
-                                .addGap(65, 65, 65))
-                            .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel19Layout.createSequentialGroup()
-                                    .addComponent(jLabel102, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(8, 8, 8)
-                                    .addComponent(TF_ADC_THROTTLE_MIN, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel19Layout.createSequentialGroup()
-                                    .addComponent(jLabel103, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(8, 8, 8)
-                                    .addComponent(TF_ADC_THROTTLE_MAX, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
-                                    .addComponent(jLabel104, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(TF_TEMP_MIN_LIM, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel19Layout.createSequentialGroup()
-                                    .addComponent(jLabel105, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(TF_TEMP_MAX_LIM, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel19Layout.createSequentialGroup()
-                                    .addComponent(jLabel106, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(TF_MOTOR_BLOCK_TIME, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel19Layout.createSequentialGroup()
-                                    .addComponent(jLabel107, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(TF_MOTOR_BLOCK_CURR, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel19Layout.createSequentialGroup()
-                                    .addComponent(jLabel108, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(TF_MOTOR_BLOCK_ERPS, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(18, 18, 18))))
+                                .addComponent(jLabel102)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TF_ADC_THROTTLE_MIN, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel109)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TF_ADC_THROTTLE_MAX, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
+                                .addComponent(jLabel104, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(TF_TEMP_MIN_LIM, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel19Layout.createSequentialGroup()
+                                .addComponent(jLabel105, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(TF_TEMP_MAX_LIM, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel19Layout.createSequentialGroup()
+                                .addComponent(jLabel106, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(TF_MOTOR_BLOCK_TIME, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel19Layout.createSequentialGroup()
+                                .addComponent(jLabel107, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(TF_MOTOR_BLOCK_CURR, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel19Layout.createSequentialGroup()
+                                .addComponent(jLabel108, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(TF_MOTOR_BLOCK_ERPS, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel19Layout.createSequentialGroup()
+                                .addComponent(jLabel103)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TF_ASSIST_THROTTLE_MIN, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel110)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TF_ASSIST_THROTTLE_MAX, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel19Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CB_TEMP_ERR_MIN_LIM)
+                            .addComponent(CB_RET_DISPLAY_MODE)
+                            .addComponent(CB_DISPLAY_DOUBLE_DATA)
+                            .addComponent(jLabel101))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3244,12 +3276,17 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jLabel101)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TF_ADC_THROTTLE_MIN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel102))
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TF_ADC_THROTTLE_MIN, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel102)
+                        .addComponent(TF_ADC_THROTTLE_MAX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel109)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TF_ADC_THROTTLE_MAX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TF_ASSIST_THROTTLE_MIN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TF_ASSIST_THROTTLE_MAX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel110)
                     .addComponent(jLabel103))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CB_TEMP_ERR_MIN_LIM)
@@ -3287,7 +3324,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3441,6 +3478,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private void RB_THROTTLEStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_THROTTLEStateChanged
         TF_ADC_THROTTLE_MIN.setEnabled(RB_THROTTLE.isSelected());
         TF_ADC_THROTTLE_MAX.setEnabled(RB_THROTTLE.isSelected());
+        TF_ASSIST_THROTTLE_MIN.setEnabled(RB_THROTTLE.isSelected());
+        TF_ASSIST_THROTTLE_MAX.setEnabled(RB_THROTTLE.isSelected());
         // TODO add your handling code here:
     }//GEN-LAST:event_RB_THROTTLEStateChanged
 
@@ -3456,6 +3495,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         TF_ADC_THROTTLE_MAX.setEnabled(RB_THROTTLE.isSelected());
         TF_TEMP_MIN_LIM.setEnabled(RB_TEMP_LIMIT.isSelected());
         TF_TEMP_MAX_LIM.setEnabled(RB_TEMP_LIMIT.isSelected());
+        TF_ASSIST_THROTTLE_MIN.setEnabled(RB_THROTTLE.isSelected());
+        TF_ASSIST_THROTTLE_MAX.setEnabled(RB_THROTTLE.isSelected());
         // TODO add your handling code here:
     }//GEN-LAST:event_RB_ADC_OPTION_DISStateChanged
 
@@ -3727,6 +3768,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.JRadioButton RB_XH18;
     private javax.swing.JTextField TF_ADC_THROTTLE_MAX;
     private javax.swing.JTextField TF_ADC_THROTTLE_MIN;
+    private javax.swing.JTextField TF_ASSIST_THROTTLE_MAX;
+    private javax.swing.JTextField TF_ASSIST_THROTTLE_MIN;
     private javax.swing.JTextField TF_ASS_WITHOUT_PED_THRES;
     private javax.swing.JTextField TF_BATT_CAPACITY;
     private javax.swing.JTextField TF_BATT_CAPACITY_CAL;
@@ -3828,7 +3871,9 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel106;
     private javax.swing.JLabel jLabel107;
     private javax.swing.JLabel jLabel108;
+    private javax.swing.JLabel jLabel109;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel110;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
