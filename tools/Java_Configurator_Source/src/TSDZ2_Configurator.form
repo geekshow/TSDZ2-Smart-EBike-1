@@ -3152,7 +3152,7 @@
                           <Component id="jLabel101" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="TF_ADC_THROTTLE_MIN" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="TF_ADC_THROTTLE_MIN" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel102" alignment="3" max="-2" attributes="0"/>
                                   <Component id="TF_ADC_THROTTLE_MAX" alignment="3" min="-2" max="-2" attributes="0"/>
