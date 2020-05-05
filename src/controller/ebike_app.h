@@ -17,6 +17,7 @@
 extern volatile uint8_t ui8_display_ready_flag;
 extern volatile uint8_t ui8_display_fault_code;
 extern volatile uint8_t ui8_working_status;
+extern volatile uint8_t ui8_assist_without_pedal_rotation_threshold;
 
 // cadence sensor
 //extern volatile uint8_t ui8_cadence_sensor_mode;

@@ -1,4 +1,4 @@
-	/*
+ 	/*
 	 * TongSheng TSDZ2 motor controller firmware
 	 *
 	 * Copyright (C) Casainho and EndlessCadence and Leon, 2019.
@@ -464,7 +464,7 @@
 	  if ((m_configuration_variables.ui8_riding_mode == CRUISE_MODE)|| 
 	  (m_configuration_variables.ui8_riding_mode == WALK_ASSIST_MODE)|| 
 	  (m_configuration_variables.ui8_riding_mode == CADENCE_SENSOR_CALIBRATION_MODE)|| 
-	  (ui8_var_adc_throttle)||(ui8_lights_state))
+	  (ui8_var_adc_throttle))
 		  ui8_fix_overrun_enabled = 0;
 	  else
 		  ui8_fix_overrun_enabled = 1;

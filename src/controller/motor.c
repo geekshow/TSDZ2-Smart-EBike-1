@@ -963,7 +963,7 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
   if(ui8_fix_overrun_enabled)
   {
 	// disable overrun at pedal start
-	if(ui8_cadence_sensor_start_counter >= CADENCE_SENSOR_START_THRESHOLD)
+	if((ui8_assist_without_pedal_rotation_threshold == 0)||(ui8_cadence_sensor_start_counter >= CADENCE_SENSOR_START_THRESHOLD))
 	{
 		if(ui16_cadence_sensor_ticks)
 		{
