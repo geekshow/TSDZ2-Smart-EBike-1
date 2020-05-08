@@ -36,8 +36,10 @@ extern volatile uint16_t ui16_cadence_sensor_ticks_counter_min_high;
 extern volatile uint16_t ui16_cadence_sensor_ticks_counter_min_low;
 extern volatile uint8_t ui8_cadence_sensor_pulse_state;
 
+
 // for overrun problem
 extern volatile uint8_t ui8_fix_overrun_enabled;
+
 
 // wheel speed sensor
 extern volatile uint16_t ui16_wheel_speed_sensor_ticks;

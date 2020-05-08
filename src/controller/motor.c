@@ -391,7 +391,6 @@ volatile uint16_t ui16_cadence_sensor_ticks_stop = 0;
 volatile uint8_t ui8_fix_overrun_enabled = 1;
 volatile uint8_t ui8_cadence_sensor_start_counter = 0;
 
-
 // wheel speed sensor
 volatile uint16_t ui16_wheel_speed_sensor_ticks = 0;
 volatile uint32_t ui32_wheel_speed_sensor_ticks_total = 0;
@@ -792,26 +791,28 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
   
   /****************************************************************************/
   
-  
+
+  // delay for disable overrun at start without pedal rotation (PAS pulses)
+  #define CADENCE_SENSOR_START_THRESHOLD				20
   
   static uint16_t ui16_cadence_sensor_ticks_counter;
   static uint16_t ui16_cadence_sensor_ticks_counter_min;
   static uint8_t ui8_cadence_sensor_ticks_counter_started;
-  static uint8_t ui8_cadence_sensor_pin_state_old;
+  static uint8_t ui8_cadence_sensor_pin_1_state_old;
+  static uint8_t ui8_cadence_sensor_pin_2_state_old;
+  static uint8_t ui8_pedals_rotate_backwards;
   
   // check cadence sensor pins state
   volatile uint8_t ui8_cadence_sensor_pin_1_state = PAS2__PORT->IDR & PAS2__PIN; // PAS2__PIN is leading
   volatile uint8_t ui8_cadence_sensor_pin_2_state = PAS1__PORT->IDR & PAS1__PIN; // PAS1__PIN is following
-  
-  #define CADENCE_SENSOR_START_THRESHOLD				20
-  
+
   // check if cadence sensor pin state has changed
-  if (ui8_cadence_sensor_pin_1_state != ui8_cadence_sensor_pin_state_old)
+  if (ui8_cadence_sensor_pin_1_state != ui8_cadence_sensor_pin_1_state_old)
   {
     // update old cadence sensor pin state
-    ui8_cadence_sensor_pin_state_old = ui8_cadence_sensor_pin_1_state;
-	
-	// delay for disable overrun at pedal start
+    ui8_cadence_sensor_pin_1_state_old = ui8_cadence_sensor_pin_1_state;
+
+	// delay for disable overrun at start without pedal rotation
 	if(ui8_cadence_sensor_start_counter <= CADENCE_SENSOR_START_THRESHOLD)
 		ui8_cadence_sensor_start_counter++;
     
@@ -821,7 +822,7 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
       case STANDARD_MODE:
       
         #define CADENCE_SENSOR_STANDARD_MODE_SCHMITT_TRIGGER_THRESHOLD    1000 // software based Schmitt trigger to stop motor jitter when at resolution limits
-      
+		
         // only consider the 0 -> 1 transition
         if (ui8_cadence_sensor_pin_1_state)
         {
@@ -868,22 +869,28 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
         
         #define CADENCE_SENSOR_ADVANCED_MODE_TICKS_COUNTER_MAX            150   // CADENCE_SENSOR_TICKS_COUNTER_MAX / 2
         #define CADENCE_SENSOR_ADVANCED_MODE_SCHMITT_TRIGGER_THRESHOLD    500   // software based Schmitt trigger to stop motor jitter when at resolution limits
-        
+		
+		// see the pedals direction
+		if(ui8_cadence_sensor_pin_1_state == ui8_cadence_sensor_pin_2_state)
+			ui8_pedals_rotate_backwards = 1;
+		else
+			ui8_pedals_rotate_backwards = 0;
+		
         // set the ticks counter limit depending on current wheel speed and pin state
         if (ui8_cadence_sensor_pin_1_state) { ui16_cadence_sensor_ticks_counter_min = ui16_cadence_sensor_ticks_counter_min_high; }
         else { ui16_cadence_sensor_ticks_counter_min = ui16_cadence_sensor_ticks_counter_min_low; }
-        
+		  
         // check if first transition
         if (!ui8_cadence_sensor_ticks_counter_started)
         {
-          // start cadence sensor ticks counter as this is the first transition
-          ui8_cadence_sensor_ticks_counter_started = 1;
+				// start cadence sensor ticks counter as this is the first transition
+				ui8_cadence_sensor_ticks_counter_started = 1;
         }
         else
         {
           // check if cadence sensor ticks counter is out of bounds and also check direction of rotation
           if ((ui16_cadence_sensor_ticks_counter < CADENCE_SENSOR_ADVANCED_MODE_TICKS_COUNTER_MAX) || 
-              (ui8_cadence_sensor_pin_1_state == ui8_cadence_sensor_pin_2_state))
+			  (ui8_pedals_rotate_backwards))
           {
             // reset variables
             ui16_cadence_sensor_ticks = 0;
@@ -914,7 +921,7 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
       case CALIBRATION_MODE:
         
         #define CADENCE_SENSOR_CALIBRATION_MODE_TICKS_COUNTER_MIN   20000
-        
+
         // set the ticks counter limit
         ui16_cadence_sensor_ticks_counter_min = CADENCE_SENSOR_CALIBRATION_MODE_TICKS_COUNTER_MIN;
         
@@ -947,7 +954,9 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
   }
   
   // increment and also limit the ticks counter
-  if ((ui8_cadence_sensor_ticks_counter_started) && (ui16_cadence_sensor_ticks_counter < ui16_cadence_sensor_ticks_counter_min)) 
+  if ((ui8_cadence_sensor_ticks_counter_started) && 
+	  (ui16_cadence_sensor_ticks_counter < ui16_cadence_sensor_ticks_counter_min) && 
+	  ((!ui8_pedals_rotate_backwards)||(p_configuration_variables->ui8_cadence_sensor_mode != ADVANCED_MODE))) 
   {
     ++ui16_cadence_sensor_ticks_counter;
   }
@@ -962,7 +971,7 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
   // for overrun problem
   if(ui8_fix_overrun_enabled)
   {
-	// disable overrun at pedal start
+	// disable overrun at start without pedal rotation
 	if((ui8_assist_without_pedal_rotation_threshold == 0)||(ui8_cadence_sensor_start_counter >= CADENCE_SENSOR_START_THRESHOLD))
 	{
 		if(ui16_cadence_sensor_ticks)
@@ -982,7 +991,7 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
 		ui8_cadence_sensor_stop_flag = 0;
 	}
 	
-	// restart counter for overrun disabled at pedal start
+	// restart counter for overrun disabled at start whitout pedal rotation
 	if(!ui8_cadence_sensor_ticks_counter_started)
 		ui8_cadence_sensor_start_counter = 0;
   }
