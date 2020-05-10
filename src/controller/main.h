@@ -380,7 +380,7 @@
 #define ZERO_ODOMETER_COMPENSATION				100000000
 
 // torque range adc min for remapping
-#define ADC_TORQUE_RANGE_MIN		(uint16_t)(160 - ADC_TORQUE_OFFSET_ADJUSTMENT)
+#define ADC_TORQUE_RANGE_MIN	  				160
 
 
 // debug

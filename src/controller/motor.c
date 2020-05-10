@@ -806,10 +806,10 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
   volatile uint8_t ui8_cadence_sensor_pin_1_state = PAS2__PORT->IDR & PAS2__PIN; // PAS2__PIN is leading
   volatile uint8_t ui8_cadence_sensor_pin_2_state = PAS1__PORT->IDR & PAS1__PIN; // PAS1__PIN is following
 
-  // check if cadence sensor pin state has changed
+  // check if cadence sensor pin 1 state has changed
   if (ui8_cadence_sensor_pin_1_state != ui8_cadence_sensor_pin_1_state_old)
   {
-    // update old cadence sensor pin state
+    // update old cadence sensor pin 1 state
     ui8_cadence_sensor_pin_1_state_old = ui8_cadence_sensor_pin_1_state;
 
 	// delay for disable overrun at start without pedal rotation
@@ -870,12 +870,19 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
         #define CADENCE_SENSOR_ADVANCED_MODE_TICKS_COUNTER_MAX            150   // CADENCE_SENSOR_TICKS_COUNTER_MAX / 2
         #define CADENCE_SENSOR_ADVANCED_MODE_SCHMITT_TRIGGER_THRESHOLD    500   // software based Schmitt trigger to stop motor jitter when at resolution limits
 		
-		// see the pedals direction
-		if(ui8_cadence_sensor_pin_1_state == ui8_cadence_sensor_pin_2_state)
-			ui8_pedals_rotate_backwards = 1;
-		else
-			ui8_pedals_rotate_backwards = 0;
+		// check if cadence sensor pin 2 state has changed
+		if (ui8_cadence_sensor_pin_2_state != ui8_cadence_sensor_pin_2_state_old)
+		{
+			// update old cadence sensor pin 2 state
+			ui8_cadence_sensor_pin_2_state_old = ui8_cadence_sensor_pin_2_state;
 		
+			// see the pedals direction
+			if(ui8_cadence_sensor_pin_1_state == ui8_cadence_sensor_pin_2_state)
+				ui8_pedals_rotate_backwards = 1;
+			else
+				ui8_pedals_rotate_backwards = 0;
+		}
+	
         // set the ticks counter limit depending on current wheel speed and pin state
         if (ui8_cadence_sensor_pin_1_state) { ui16_cadence_sensor_ticks_counter_min = ui16_cadence_sensor_ticks_counter_min_high; }
         else { ui16_cadence_sensor_ticks_counter_min = ui16_cadence_sensor_ticks_counter_min_low; }
@@ -883,8 +890,8 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
         // check if first transition
         if (!ui8_cadence_sensor_ticks_counter_started)
         {
-				// start cadence sensor ticks counter as this is the first transition
-				ui8_cadence_sensor_ticks_counter_started = 1;
+			// start cadence sensor ticks counter as this is the first transition
+			ui8_cadence_sensor_ticks_counter_started = 1;
         }
         else
         {
@@ -954,9 +961,9 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
   }
   
   // increment and also limit the ticks counter
-  if ((ui8_cadence_sensor_ticks_counter_started) && 
-	  (ui16_cadence_sensor_ticks_counter < ui16_cadence_sensor_ticks_counter_min) && 
-	  ((!ui8_pedals_rotate_backwards)||(p_configuration_variables->ui8_cadence_sensor_mode != ADVANCED_MODE))) 
+  if ((ui8_cadence_sensor_ticks_counter_started) &&
+	  (ui16_cadence_sensor_ticks_counter < ui16_cadence_sensor_ticks_counter_min) &&
+	  ((!ui8_pedals_rotate_backwards)||(p_configuration_variables->ui8_cadence_sensor_mode != ADVANCED_MODE)))
   {
     ++ui16_cadence_sensor_ticks_counter;
   }
@@ -983,7 +990,7 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
 		}
 		else
 		{
-		ui8_cadence_sensor_stop_flag = 1;
+			ui8_cadence_sensor_stop_flag = 1;
 		}
 	}
 	else

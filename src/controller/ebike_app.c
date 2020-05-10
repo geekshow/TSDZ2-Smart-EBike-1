@@ -1198,30 +1198,26 @@
 	  // get adc pedal torque
 	  ui16_adc_pedal_torque = UI16_ADC_10_BIT_TORQUE_SENSOR;
 	  
-	  // adc pedal torque offset adjustment
-	  uint16_t ui16_adc_pedal_torque_offset_temp = ui16_adc_pedal_torque_offset - ADC_TORQUE_OFFSET_ADJUSTMENT;
-	  
 	  if(m_configuration_variables.ui8_torque_sensor_mode == STANDARD_MODE)
 	  {	  
 		// calculate the delta value of adc pedal torque with adc pedal adjustment
-		if (ui16_adc_pedal_torque > ui16_adc_pedal_torque_offset_temp)
-			ui16_adc_pedal_torque_delta = (ui16_adc_pedal_torque - ui16_adc_pedal_torque_offset_temp);
+		if (ui16_adc_pedal_torque > ui16_adc_pedal_torque_offset)
+			ui16_adc_pedal_torque_delta = (ui16_adc_pedal_torque - ui16_adc_pedal_torque_offset) + ADC_TORQUE_OFFSET_ADJUSTMENT;
 		else
 			ui16_adc_pedal_torque_delta = 0;
 	  }
 	  else
 	  {
-		// calculate the delta value of adc pedal torque
-		if (ui16_adc_pedal_torque > ui16_adc_pedal_torque_offset_temp)
+		// calculate the delta value of adc pedal torque with adc pedal adjustment
+		if (ui16_adc_pedal_torque > ui16_adc_pedal_torque_offset)
 		{
 			if((m_configuration_variables.ui8_pedal_torque_10_bit_ADC_range < ADC_TORQUE_RANGE_MIN)&&(m_configuration_variables.ui8_riding_mode != TORQUE_SENSOR_CALIBRATION_MODE))
 				// adc pedal torque delta remapping
-				ui16_adc_pedal_torque_delta = (ui16_adc_pedal_torque - ui16_adc_pedal_torque_offset_temp) * ADC_TORQUE_RANGE_MIN / m_configuration_variables.ui8_pedal_torque_10_bit_ADC_range;							
+				ui16_adc_pedal_torque_delta = ((ui16_adc_pedal_torque - ui16_adc_pedal_torque_offset) * ADC_TORQUE_RANGE_MIN / m_configuration_variables.ui8_pedal_torque_10_bit_ADC_range) + ADC_TORQUE_OFFSET_ADJUSTMENT;							
 			else
-				ui16_adc_pedal_torque_delta = (ui16_adc_pedal_torque - ui16_adc_pedal_torque_offset_temp);
+				ui16_adc_pedal_torque_delta = (ui16_adc_pedal_torque - ui16_adc_pedal_torque_offset) + ADC_TORQUE_OFFSET_ADJUSTMENT;
 		}
-		else
-			
+		else	
 		{
 			ui16_adc_pedal_torque_delta = 0;
 		}
