@@ -1,0 +1,11 @@
+21 - 2020/05/17 - added the version number in Java Configurator
+20 - 2020/05/13 - updated manuals
+19 - 2020/05/12 - fix pedal torque offset adjustment
+18 - 2020/05/12 - Layout JavaConfigurator for wiki
+17 - 2020/05/12 - Update README.md
+14 - 2020/05/11 - updated ini file
+12 - 2020/05/10 - fix backwards resistance in cadence sensor advanced mode
+06 - 2020/05/08 - changed DefaultSetting.ini
+04 - 2020/05/05 - fix overrun changed
+03 - 2020/05/04 - added throttle assist min-max values
+01 - 2020/05/03 - added UI8_ADC_THROTTLE to viewable data
