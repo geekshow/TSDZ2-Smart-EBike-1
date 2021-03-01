@@ -1,4 +1,26 @@
-List of changes mb.20beta1.B
+List of changes v20.1C
+ 1 - Added field weakening function to increase the motor speed (by mspider65).
+ 2 - Added other optimizations to motor control, torque sensor and cadence sensor (by mspider65).
+ 3 - Added startup boost function in POWER assist mode, enable/disable at display.
+ 4 - Added HYBRID assist mode, TORQUE + POWER, can be set on the display.
+ 5 - Improved "Start-up without pedal rotation" function.
+ 6 - Added a filter to the speed sensor to avoid problems of adjusting the distance from the magnet.
+ 7 - Added error E08 due to speed sensor failure or missing magnet.
+ 8 - Added error E03 cadence sensor failure.
+ 9 - Added "Assist with sensors error" function, to force assistance with sensors problem.
+10 - Changed the manual reset of battery soc, now more accurate.
+11 - Changed the voltage detection for battery bars, the battery resistance is no longer used, (by kaltekaffe).
+12 - Changed "Set parameters" function on display.
+13 - Added display of the status of the selected parameter.
+14 - Removed flashing of the options byte file.
+15 - Configurator. Added choice of data to be displayed at power on.
+16 - Configurator. Added ability to disable "Walk assist" in "Street mode".
+17 - Configurator. Added enable/disable and sensitivity of coaster brake.
+18 - Configurator. By changing the unit of measurement km/h or mph, all speed values are adjusted.
+19 - Configurator. New parameters have been added. Default values are been changed.
+20 - Configurator manual and display manual, updated.
+
+List of changes v20.1B
  1 - added cadence sensor calibration in advanced mode.
  2 - added calibration of maximum torque value (torque sensor range).
  3 - added ADC conversion factor calibration of the torque sensor (with weight).

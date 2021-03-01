@@ -1,3 +1,4 @@
+23 - 2020/12/20 - v20.1C
 22 - 2020/05/21 - "Motor ramp down additional" updated default value
 21 - 2020/05/17 - added the version number in Java Configurator
 20 - 2020/05/13 - updated manuals

@@ -11,7 +11,8 @@
 #include "pins.h"
 #include "torque_sensor.h"
 
-void torque_sensor_init (void)
-{
-  GPIO_Init(TORQUE_SENSOR_EXCITATION__PORT, TORQUE_SENSOR_EXCITATION__PIN, GPIO_MODE_OUT_OD_HIZ_FAST);
+void torque_sensor_init(void) {
+    GPIO_Init(TORQUE_SENSOR_EXCITATION__PORT,
+            TORQUE_SENSOR_EXCITATION__PIN,
+            GPIO_MODE_OUT_OD_HIZ_FAST);
 }

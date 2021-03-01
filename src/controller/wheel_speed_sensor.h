@@ -9,8 +9,6 @@
 #ifndef _WHELL_SPEED_SENSOR_H_
 #define _WHELL_SPEED_SENSOR_H_
 
-#include "main.h"
-
-void wheel_speed_sensor_init (void);
+void wheel_speed_sensor_init(void);
 
 #endif /* _WHELL_SPEED_SENSOR_H_ */

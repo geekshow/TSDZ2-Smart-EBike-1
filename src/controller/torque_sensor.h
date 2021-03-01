@@ -12,6 +12,6 @@
 #include "main.h"
 #include "stm8s_gpio.h"
 
-void torque_sensor_init (void);
+void torque_sensor_init(void);
 
 #endif /* _TORQUE_SENSOR_H_ */
