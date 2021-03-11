@@ -2551,7 +2551,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CB_STREET_POWER_LIM">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Street power limit enebled"/>
+                    <Property name="text" type="java.lang.String" value="Street power limit enabled"/>
                   </Properties>
                   <Events>
                     <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="CB_STREET_POWER_LIMStateChanged"/>

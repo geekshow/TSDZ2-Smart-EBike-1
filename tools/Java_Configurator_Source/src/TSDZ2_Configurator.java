@@ -2857,7 +2857,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         TF_STREET_POWER_LIM.setToolTipText("<html>Max nominal value in EU 250 W<br>\nMax peak value approx. 500 W\n</html>");
         TF_STREET_POWER_LIM.setEnabled(CB_STREET_POWER_LIM.isSelected());
 
-        CB_STREET_POWER_LIM.setText("Street power limit enebled");
+        CB_STREET_POWER_LIM.setText("Street power limit enabled");
         CB_STREET_POWER_LIM.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 CB_STREET_POWER_LIMStateChanged(evt);
