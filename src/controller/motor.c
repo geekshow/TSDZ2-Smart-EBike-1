@@ -380,11 +380,11 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
     p_configuration_variables = get_configuration_variables();
 	
 	// save percentage remaining battery capacity at shutdown
- 	if(UI8_ADC_BATTERY_VOLTAGE < BATTERY_VOLTAGE_SHUTDOWN_8_BIT)
+	if(UI8_ADC_BATTERY_VOLTAGE < BATTERY_VOLTAGE_SHUTDOWN_8_BIT)
 	{
 		if((!ui8_battery_SOC_saved_flag)&&(ui8_battery_SOC_reset_flag))
 		{
-			disableInterrupts();
+			//disableInterrupts();
 			
 			// unlock memory
 			FLASH_Unlock(FLASH_MEMTYPE_DATA);
@@ -400,6 +400,8 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
 
 			// lock memory
 			FLASH_Lock(FLASH_MEMTYPE_DATA);
+			
+			//enableInterrupts();
 			
 			// battery SOC saved
 			ui8_battery_SOC_saved_flag = 1;
@@ -598,7 +600,8 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
                 || (ui16_PWM_cycles_counter_total < (DOUBLE_PWM_CYCLES_SECOND / MOTOR_OVER_SPEED_ERPS))
                 || (UI8_ADC_BATTERY_VOLTAGE < ui8_adc_battery_voltage_cut_off)
                 || (ui8_fw_angle > ui8_fw_angle_max)
-                || (ui8_brake_state)) {
+                || (ui8_brake_state)
+				|| (!ui8_assist_level)) {
             // reset duty cycle ramp up counter (filter)
             ui8_counter_duty_cycle_ramp_up = 0;
 
@@ -979,6 +982,11 @@ void calc_foc_angle(void) {
 
     // calc FOC angle
     ui8_g_foc_angle = asin_table(ui16_iwl_128 / ui16_e_phase_voltage);
+	
+	uint8_t ui8_tmp = ui8_adc_battery_current_filtered / (uint8_t)13U;
+	if (ui8_tmp > 5)
+		ui8_tmp = 5;
+	ui8_g_foc_angle += ui8_tmp;
 
     skip_foc:
     // low pass filter FOC angle

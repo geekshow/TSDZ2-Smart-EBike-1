@@ -93,7 +93,7 @@ void pwm_init_bipolar_4q(void) {
     TIM1_BDTRConfig(TIM1_OSSISTATE_ENABLE,
             TIM1_LOCKLEVEL_OFF,
             // hardware nees a dead time of 1us
-            16,// DTG = 0; dead time in 62.5 ns steps; 1us/62.5ns = 16
+            24,// DTG = 0; dead time in 62.5 ns steps; 1.5us/62.5ns = 24
             TIM1_BREAK_DISABLE,
             TIM1_BREAKPOLARITY_LOW,
             TIM1_AUTOMATICOUTPUT_DISABLE);

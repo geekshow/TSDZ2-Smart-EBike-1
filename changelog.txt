@@ -1,3 +1,12 @@
+TSDZ2 Open Source Firmware
+
+List of changes v20.1C.1
+ 1 - Torque sensor calibration bug fixed.
+ 2 - Overtemperature problem at high power fixed.
+ 3 - Eliminated potential mosfet risk in "save battery capacity".
+ 4 - Eliminated potential phantom pedaling risk in "rx buffer".
+ 5 - Changed "dead time" value to 1.5 us.
+
 List of changes v20.1C
  1 - Added field weakening function to increase the motor speed (by mspider65).
  2 - Added other optimizations to motor control, torque sensor and cadence sensor (by mspider65).

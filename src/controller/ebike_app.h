@@ -14,6 +14,7 @@
 
 // for oem display
 extern volatile uint8_t ui8_display_fault_code;
+extern volatile uint8_t ui8_assist_level;
 
 // cadence sensor
 extern uint16_t ui16_cadence_sensor_ticks_counter_min_speed_adjusted;
