@@ -19,7 +19,6 @@
 #define CRUISE_MODE                               6
 #define WALK_ASSIST_MODE                          7
 #define TORQUE_SENSOR_CALIBRATION_MODE            8								   
-#define MOTOR_CALIBRATION_MODE                    9
 
 // error codes
 /*

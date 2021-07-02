@@ -14,18 +14,12 @@
 
 // for oem display
 extern volatile uint8_t ui8_display_fault_code;
-extern volatile uint8_t ui8_assist_level;
 
 // cadence sensor
-extern uint16_t ui16_cadence_ticks_count_min_speed_adj;
-extern uint8_t ui8_pedal_cadence_fast_stop;
-extern uint8_t ui8_field_weakening_enabled;
+extern uint16_t ui16_cadence_sensor_ticks_counter_min_speed_adjusted;
 
 // Torque sensor coaster brake engaged threshold value
-extern uint16_t ui16_adc_coaster_brake_threshold;
-
-// ADC motor phase current max
-extern volatile uint8_t ui8_adc_motor_phase_current_max;
+extern uint8_t ui8_adc_coaster_brake_threshold;
 
 typedef struct _configuration_variables
 {
