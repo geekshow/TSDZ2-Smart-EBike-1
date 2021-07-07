@@ -78,7 +78,7 @@ volatile uint8_t ui8_optional_ADC_function_temp = OPTIONAL_ADC_FUNCTION;
 static uint8_t ui8_motor_blocked_counter_threshold = MOTOR_BLOCKED_COUNTER_THRESHOLD * 4;
 static uint8_t ui8_walk_assist_counter = 0;
 static uint8_t ui8_walk_assist_level = 0;
-static uint8_t ui8_configurations_changed = 0;
+static uint8_t ui8_configurations_changed = 1;
 	
 // battery
 volatile uint16_t ui16_battery_voltage_filtered_x10 = 0;
