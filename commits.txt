@@ -1,3 +1,4 @@
+31 - 2021/07/09 - v20.1C.3 new version
 30 - 2021/07/07 - Update v20.1C.1 torque offset fix
 29 - 2021/07/02 - v20.1C.1 safety updates
 28 - 2021/07/02 - Revert v20.1C

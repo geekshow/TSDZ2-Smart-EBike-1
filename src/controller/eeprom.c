@@ -34,8 +34,8 @@ static const uint8_t ui8_default_array[EEPROM_BYTES_STORED] =
   LIGHTS_CONFIGURATION_ON_STARTUP,				// 15 + EEPROM_BASE_ADDRESS
   STARTUP_BOOST_ON_STARTUP,						// 16 + EEPROM_BASE_ADDRESS
   ENABLE_AUTO_DATA_DISPLAY,						// 17 + EEPROM_BASE_ADDRESS
-  TORQUE_SENSOR_CALIBRATED,						// 18 + EEPROM_BASE_ADDRESS not used
-  TORQUE_SENSOR_ADV_ON_STARTUP						// 19 + EEPROM_BASE_ADDRESS
+  FIELD_WEAKENING_ON_STARTUP,					// 18 + EEPROM_BASE_ADDRESS
+  TORQUE_SENSOR_ADV_ON_STARTUP					// 19 + EEPROM_BASE_ADDRESS
 };
 
 static uint8_t ui8_error_number = 0;
@@ -166,7 +166,7 @@ void EEPROM_controller(uint8_t ui8_operation, uint8_t ui8_byte_init)
 	  p_configuration_variables->ui8_lights_configuration = FLASH_ReadByte(ADDRESS_LIGHTS_CONFIGURATION_ON_STARTUP);
 	  p_configuration_variables->ui8_startup_boost_enabled = FLASH_ReadByte(ADDRESS_STARTUP_BOOST_ON_STARTUP);
 	  p_configuration_variables->ui8_auto_display_data_enabled = FLASH_ReadByte(ADDRESS_ENABLE_AUTO_DATA_DISPLAY);
-      //p_configuration_variables->ui8_torque_sensor_calibrated = FLASH_ReadByte(ADDRESS_TORQUE_SENSOR_CALIBRATED);
+      p_configuration_variables->ui8_field_weakening_enabled = FLASH_ReadByte(ADDRESS_FIELD_WEAKENING_ON_STARTUP);
 	  
 	  p_configuration_variables->ui8_torque_sensor_adv_enabled = FLASH_ReadByte(ADDRESS_TORQUE_SENSOR_ADV_ON_STARTUP);
 	  
@@ -205,7 +205,7 @@ void EEPROM_controller(uint8_t ui8_operation, uint8_t ui8_byte_init)
 	  ui8_array[ADDRESS_LIGHTS_CONFIGURATION_ON_STARTUP - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui8_lights_configuration;
 	  ui8_array[ADDRESS_STARTUP_BOOST_ON_STARTUP - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui8_startup_boost_enabled;
 	  ui8_array[ADDRESS_ENABLE_AUTO_DATA_DISPLAY - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui8_auto_display_data_enabled;
-	  //ui8_array[ADDRESS_TORQUE_SENSOR_CALIBRATED - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui8_torque_sensor_calibrated;
+	  ui8_array[ADDRESS_FIELD_WEAKENING_ON_STARTUP - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui8_field_weakening_enabled;
 	  ui8_array[ADDRESS_TORQUE_SENSOR_ADV_ON_STARTUP - EEPROM_BASE_ADDRESS] = p_configuration_variables->ui8_torque_sensor_adv_enabled;
 	  
       // write array of variables to EEPROM
