@@ -1,4 +1,7 @@
-31 - 2021/07/09 - v20.1C.3 new version
+34 - 2021/10/25 - Revert v20.1C.1
+33 - 2021/08/03 - v20.1C.3 NEW suspended
+32 - 2021/07/10 - v20.1C.3 Update default settings
+31 - 2021/07/09 - v20.1C.3 NEW version
 30 - 2021/07/07 - Update v20.1C.1 torque offset fix
 29 - 2021/07/02 - v20.1C.1 safety updates
 28 - 2021/07/02 - Revert v20.1C

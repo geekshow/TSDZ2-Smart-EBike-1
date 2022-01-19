@@ -6,10 +6,12 @@
  * Released under the GPL License, Version 3
  */
 
-#ifndef _TIMERS_H_
-#define _TIMERS_H_
+#ifndef _BRAKE_H
+#define _BRAKE_H
 
-void timer2_init(void);
-void timer3_init(void);
+#include "main.h"
 
-#endif /* _TIMERS_H_ */
+void brake_init (void);
+BitStatus brake_is_set (void);
+
+#endif /* _BRAKE_H */

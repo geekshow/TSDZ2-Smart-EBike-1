@@ -13,14 +13,15 @@
 #include "main.h"
 
 // for oem display
+extern volatile uint8_t ui8_battery_SOC_reset_flag;
 extern volatile uint8_t ui8_display_fault_code;
-extern volatile uint8_t ui8_assist_level;
+extern volatile uint8_t ui8_working_status;
 
 // cadence sensor
 extern uint16_t ui16_cadence_sensor_ticks_counter_min_speed_adjusted;
 
 // Torque sensor coaster brake engaged threshold value
-extern volatile uint16_t ui16_adc_coaster_brake_threshold;
+extern uint8_t ui8_adc_coaster_brake_threshold;
 
 typedef struct _configuration_variables
 {
@@ -31,9 +32,9 @@ typedef struct _configuration_variables
   uint8_t ui8_wheel_speed_max;
   uint8_t ui8_motor_type;
   uint8_t ui8_pedal_torque_per_10_bit_ADC_step_x100;
-  // for oem display
-  uint8_t ui8_assist_without_pedal_rotation_enabled;
-  uint8_t ui8_assist_whit_error_enabled;
+
+  uint8_t ui8_available_on_eeprom; // not used
+  uint8_t ui8_odometer_compensation_km_x10;
   uint8_t ui8_battery_SOC_percentage_8b;
   uint8_t ui8_set_parameter_enabled;
   uint8_t ui8_street_mode_enabled;
