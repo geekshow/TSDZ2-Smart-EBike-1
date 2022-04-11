@@ -12,7 +12,7 @@
 #include "config.h"
 #include "common.h"
 
-//#define FW_VERSION 7
+//#define FW_VERSION 7 // mspider65 
 
 // PWM related values
 // motor
@@ -20,6 +20,7 @@
 #define PWM_CYCLES_COUNTER_MAX                                  3800U  // 5 erps minimum speed -> 1/5 = 200 ms; 200 ms / 50 us = 4000 (3125 at 15.625KHz)
 #define DOUBLE_PWM_CYCLES_SECOND                                38094 // 25us (2 irq x PWM period)
 // ramp up/down PWM cycles count
+#define PWM_DUTY_CYCLE_RAMP_UP_INVERSE_STEP_CADENCE_OFFSET      60     // PWM_DUTY_CYCLE_RAMP_UP_INVERSE_STEP offset for cadence assist mode
 //#define PWM_DUTY_CYCLE_RAMP_UP_INVERSE_STEP_DEFAULT             195    // 160 -> 160 * 64 us for every duty cycle increment at 15.625KHz
 //#define PWM_DUTY_CYCLE_RAMP_UP_INVERSE_STEP_MIN                 24     // 20 -> 20 * 64 us for every duty cycle increment at 15.625KHz
 #define PWM_DUTY_CYCLE_RAMP_UP_INVERSE_STEP_DEFAULT             160    // 160 -> 160 * 64 us for every duty cycle increment at 15.625KHz
@@ -28,9 +29,12 @@
 #define PWM_DUTY_CYCLE_RAMP_DOWN_INVERSE_STEP_MIN               10     // 8 -> 8 * 64 us for every duty cycle decrement at 15.625KHz
 #define MOTOR_OVER_SPEED_ERPS                                   650    // motor max speed | 30 points for the sinewave at max speed (less than PWM_CYCLES_SECOND/30)
 #define CRUISE_DUTY_CYCLE_RAMP_UP_INVERSE_STEP                  98    // 80 at 15.625KHz
-#define WALK_ASSIST_DUTY_CYCLE_RAMP_UP_INVERSE_STEP             244    // 200 at 15.625KHz
+#define WALK_ASSIST_DUTY_CYCLE_RAMP_UP_INVERSE_STEP             254    // 200 at 15.625KHz
 #define THROTTLE_DUTY_CYCLE_RAMP_UP_INVERSE_STEP_DEFAULT        98    // 80 at 15.625KHz
 #define THROTTLE_DUTY_CYCLE_RAMP_UP_INVERSE_STEP_MIN            49     // 40 at 15.625KHz
+
+#define MOTOR_SPEED_FIELD_WEAKEANING_MIN          				300		// ERPS
+
 // cadence
 #define CADENCE_SENSOR_CALC_COUNTER_MIN                         4266  // 3500 at 15.625KHz
 #define CADENCE_SENSOR_TICKS_COUNTER_MIN_AT_SPEED               341  // 280 at 15.625KHz
@@ -74,15 +78,6 @@
 
 #define MOTOR_ROTOR_ERPS_START_INTERPOLATION_60_DEGREES           10
 
-// Torque sensor values
-#define ADC_TORQUE_SENSOR_CALIBRATION_OFFSET    6
-// adc torque offset gap value for error
-#define ADC_TORQUE_SENSOR_OFFSET_THRESHOLD		25
-// adc torque delta range value for remapping
-#define ADC_TORQUE_SENSOR_RANGE_MIN	  			160
-// scale the torque assist target current
-#define TORQUE_ASSIST_FACTOR_DENOMINATOR		110
-
 /*---------------------------------------------------------
  NOTE: regarding motor start interpolation
 
@@ -91,12 +86,60 @@
  interpolation 60 degrees. Must be found experimentally
  but a value of 25 may be good.
  ---------------------------------------------------------*/
+
+// Torque sensor range values
+#define ADC_TORQUE_SENSOR_RANGE					(uint16_t)(PEDAL_TORQUE_ADC_MAX - PEDAL_TORQUE_ADC_OFFSET)
+#define ADC_TORQUE_SENSOR_RANGE_TARGET	  		160
+
+// Torque sensor offset values
+#if TORQUE_SENSOR_CALIBRATED
+#define ADC_TORQUE_SENSOR_CALIBRATION_OFFSET    (uint16_t)(((6 * ADC_TORQUE_SENSOR_RANGE) / ADC_TORQUE_SENSOR_RANGE_TARGET) + 1)
+#define ADC_TORQUE_SENSOR_MIDDLE_OFFSET_ADJ		(uint16_t)(((20 * ADC_TORQUE_SENSOR_RANGE) / ADC_TORQUE_SENSOR_RANGE_TARGET) + 1)
+#define ADC_TORQUE_SENSOR_OFFSET_ADJ			(uint16_t)(((PEDAL_TORQUE_ADC_OFFSET_ADJ * ADC_TORQUE_SENSOR_RANGE) / ADC_TORQUE_SENSOR_RANGE_TARGET) + 1)
+#else
+#define ADC_TORQUE_SENSOR_CALIBRATION_OFFSET    6
+#define ADC_TORQUE_SENSOR_MIDDLE_OFFSET_ADJ		20
+#define ADC_TORQUE_SENSOR_OFFSET_ADJ			PEDAL_TORQUE_ADC_OFFSET_ADJ
+#endif
+
+// adc torque range parameters for remapping
+#define ADC_TORQUE_SENSOR_DELTA_ADJ				(uint16_t)((ADC_TORQUE_SENSOR_MIDDLE_OFFSET_ADJ * 2) - ADC_TORQUE_SENSOR_CALIBRATION_OFFSET - ADC_TORQUE_SENSOR_OFFSET_ADJ)
+#define ADC_TORQUE_SENSOR_RANGE_INGREASE_X100	(uint16_t)((ADC_TORQUE_SENSOR_RANGE_TARGET * 50) / ADC_TORQUE_SENSOR_RANGE)
+#define ADC_TORQUE_SENSOR_ANGLE_COEFF			11
+#define ADC_TORQUE_SENSOR_ANGLE_COEFF_X10		(uint16_t)(ADC_TORQUE_SENSOR_ANGLE_COEFF * 10)
+
+#define ADC_TORQUE_SENSOR_RANGE_TARGET_MIN 		(uint16_t)((float)((ADC_TORQUE_SENSOR_RANGE_TARGET / 2) \
+* (((ADC_TORQUE_SENSOR_RANGE_TARGET / 2) / ADC_TORQUE_SENSOR_ANGLE_COEFF + ADC_TORQUE_SENSOR_ANGLE_COEFF) / ADC_TORQUE_SENSOR_ANGLE_COEFF)))
+
+#define ADC_TORQUE_SENSOR_RANGE_TARGET_MAX 		(uint16_t)((ADC_TORQUE_SENSOR_RANGE_TARGET_MIN * (100 + PEDAL_TORQUE_ADC_RANGE_ADJ)) / 100)
+
+// parameters of the adc torque step for human power calculation
+#define PEDAL_TORQUE_PER_10_BIT_ADC_STEP_BASE_X100	34 // base adc step for remapping
+#define WEIGHT_ON_PEDAL_FOR_STEP_CALIBRATION		24 // Kg
+#define PERCENT_TORQUE_SENSOR_RANGE_WITH_WEIGHT		75 // % of torque sensor range with weight
+#define ADC_TORQUE_SENSOR_TARGET_WITH_WEIGHT		(uint16_t)((ADC_TORQUE_SENSOR_RANGE_TARGET * PERCENT_TORQUE_SENSOR_RANGE_WITH_WEIGHT) / 100)
+
+#define ADC_TORQUE_SENSOR_DELTA_WITH_WEIGHT			(uint16_t)(((((ADC_TORQUE_SENSOR_TARGET_WITH_WEIGHT \
+* ADC_TORQUE_SENSOR_RANGE_TARGET_MIN) / ADC_TORQUE_SENSOR_RANGE_TARGET)	* (100 + PEDAL_TORQUE_ADC_RANGE_ADJ) / 100) \
+* (ADC_TORQUE_SENSOR_TARGET_WITH_WEIGHT - ADC_TORQUE_SENSOR_CALIBRATION_OFFSET + ADC_TORQUE_SENSOR_OFFSET_ADJ \
+- ((ADC_TORQUE_SENSOR_DELTA_ADJ * ADC_TORQUE_SENSOR_TARGET_WITH_WEIGHT) / ADC_TORQUE_SENSOR_RANGE_TARGET))) / ADC_TORQUE_SENSOR_TARGET_WITH_WEIGHT)
+
+#define PEDAL_TORQUE_PER_10_BIT_ADC_STEP_CALC_X100	(uint8_t)((uint16_t)(((WEIGHT_ON_PEDAL_FOR_STEP_CALIBRATION * 167) \
+/ ((ADC_TORQUE_SENSOR_DELTA_WITH_WEIGHT * ADC_TORQUE_SENSOR_RANGE_TARGET_MAX) \
+/ (ADC_TORQUE_SENSOR_RANGE_TARGET_MAX - (((ADC_TORQUE_SENSOR_RANGE_TARGET_MAX - ADC_TORQUE_SENSOR_DELTA_WITH_WEIGHT) * 10) \
+/ PEDAL_TORQUE_ADC_ANGLE_ADJ))) \
+* PEDAL_TORQUE_PER_10_BIT_ADC_STEP_ADV_X100) / PEDAL_TORQUE_PER_10_BIT_ADC_STEP_BASE_X100))
+
+// scale the torque assist target current
+#define TORQUE_ASSIST_FACTOR_DENOMINATOR			110
+
+/*---------------------------------------------------------
+ ---------------------------------------------------------*/
  
-#define ADC_10_BIT_BATTERY_CURRENT_MAX                            112	// 18 amps
-#define ADC_10_BIT_MOTOR_PHASE_CURRENT_MAX                        187	// 30 amps
-//#define ADC_10_BIT_BATTERY_CURRENT_MAX                            106	// 17 amps
-//#define ADC_10_BIT_MOTOR_PHASE_CURRENT_MAX                        177	// 28 amps
-//#define ADC_10_BIT_BATTERY_CURRENT_MIN		                      1		// 1 = 0.16 Amp
+#define ADC_10_BIT_BATTERY_CURRENT_MAX				112	// 18 amps
+#define ADC_10_BIT_MOTOR_PHASE_CURRENT_MAX			187	// 30 amps
+//#define ADC_10_BIT_BATTERY_CURRENT_MAX				106	// 17 amps
+//#define ADC_10_BIT_MOTOR_PHASE_CURRENT_MAX			177	// 28 amps// 1 = 0.16 Amp
 
 /*---------------------------------------------------------
  NOTE: regarding ADC battery current max
@@ -226,13 +269,15 @@
 #define ERROR_TORQUE_SENSOR                       	2 // E02
 #define ERROR_CADENCE_SENSOR			          	3 // E03
 #define ERROR_MOTOR_BLOCKED                       	4 // E04
+#define ERROR_MOTOR_CHECK                       	5 // E05 (E03 blinking for XH18)
 #define ERROR_OVERTEMPERATURE						6 // E06
+#define ERROR_BATTERY_OVERCURRENT                 	7 // E07 (E04 blinking for XH18)
 #define ERROR_SPEED_SENSOR							8 // E08
 #define ERROR_WRITE_EEPROM  					  	9 // E09 (E08 blinking for XH18)
 
 
 // optional ADC function
-#if ENABLE_TEMPERATURE_LIMIT  && ENABLE_THROTTLE
+#if ENABLE_TEMPERATURE_LIMIT && ENABLE_THROTTLE
 #define OPTIONAL_ADC_FUNCTION                 		NOT_IN_USE
 #elif ENABLE_TEMPERATURE_LIMIT
 #define OPTIONAL_ADC_FUNCTION                 		TEMPERATURE_CONTROL
@@ -277,8 +322,10 @@
 #define STREET_MODE_POWER_LIMIT_DIV25           (uint8_t)(STREET_MODE_POWER_LIMIT / 25)
 // battery voltage reset SOC percentage
 #define BATTERY_VOLTAGE_RESET_SOC_PERCENT_X10   (uint16_t)((float)LI_ION_CELL_RESET_SOC_PERCENT * (float)(BATTERY_CELLS_NUMBER * 10))
-// battery SOC eeprom value
-#define BATTERY_SOC_VALUE						0
+// battery SOC eeprom value saved (8 bit)
+#define BATTERY_SOC								0
+// battery SOC % threshold x10 (volts calc)
+#define BATTERY_SOC_PERCENT_THRESHOLD_X10		150
 
 // cell bars
 #if ENABLE_VLCD6 || ENABLE_XH18
@@ -315,8 +362,16 @@
 #define POWER_ASSIST_LEVEL_SPORT     (uint8_t)(POWER_ASSIST_LEVEL_3 / 2)
 #define POWER_ASSIST_LEVEL_TURBO     (uint8_t)(POWER_ASSIST_LEVEL_4 / 2)
 
-// walk assist threshold (speed limit max km/h x10)
-#define WALK_ASSIST_THRESHOLD_SPEED_X10	(uint8_t)(WALK_ASSIST_THRESHOLD_SPEED * 10)
+// walk assist
+//#define WALK_ASSIST_THRESHOLD_SPEED_X10	(uint8_t)(WALK_ASSIST_THRESHOLD_SPEED * 10)
+#define WALK_ASSIST_THRESHOLD_SPEED_X10	(uint8_t)(WALK_ASSIST_THRESHOLD_SPEED)
+#define WALK_ASSIST_PROP_GAIN					12
+#define WALK_ASSIST_ADJ_DELAY_MIN				4
+#define WALK_ASSIST_DUTY_CYCLE_MIN              40
+#define WALK_ASSIST_DUTY_CYCLE_MAX              120
+#define WALK_ASSIST_ADC_BATTERY_CURRENT_MAX     80
+#define WALK_ASSIST_SPEED_MIN_DETECTABLE		38
+#define WALK_ASSIST_SPEED_NO_DETECTED_COEFF		3
 
 // cruise threshold (speed limit min km/h x10)
 #define CRUISE_THRESHOLD_SPEED_X10		(uint8_t)(CRUISE_THRESHOLD_SPEED * 10)
@@ -327,6 +382,8 @@
 // zero odometer compensation
 #define ZERO_ODOMETER_COMPENSATION				100000000
 
-#define ASSISTANCE_WITH_ERROR_ENABLED					0
+#define ASSISTANCE_WITH_ERROR_ENABLED			0
+
+#define AVAIABLE_FOR_FUTURE_USE					0 // EEPROM
 
 #endif // _MAIN_H_

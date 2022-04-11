@@ -1,4 +1,6 @@
-34 - 2021/10/25 - Revert v20.1C.1
+36 - 2022/04/10 - v20.1C.2
+35 - 2022/03/01 - v20.1C.2 beta
+34 - 2022/01/19 - Revert v20.1C.1
 33 - 2021/08/03 - v20.1C.3 NEW suspended
 32 - 2021/07/10 - v20.1C.3 Update default settings
 31 - 2021/07/09 - v20.1C.3 NEW version

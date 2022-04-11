@@ -65,16 +65,39 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 	}
 
     String[] displayDataArray = {"motor temperature", "battery SOC rem. %", "battery voltage", "battery current", "motor power", "adc throttle 8b", "adc torque sensor 10b", "pedal cadence rpm", "human power", "adc pedal torque delta", "consumed Wh"};   
-    String[] lightModeArray = {"<br>lights ON", "<br>lights FLASHING", "lights ON and BRAKE-FLASHING brak.", "lights FLASHING and ON when braking", "lights FLASHING BRAKE-FLASHING brak.", "lights ON and ON always braking", "lights ON and BRAKE-FLASHING alw.br.", "lights FLASHING and ON always braking", "lights FLASHING BRAKE-FLASHING alw.br.", "assist without pedal rotation", "assist with sensors error"};
-
-    public int varMaxSpeed;
-    public int varStreetSpeed;
-    public int varWalkSpeed;
-    public int varCruiseSpeed;
-    public int varCruiseSpeed1;
-    public int varCruiseSpeed2;
-    public int varCruiseSpeed3;
-    public int varCruiseSpeed4;
+    String[] lightModeArray = {"<br>lights ON", "<br>lights FLASHING", "lights ON and BRAKE-FLASHING brak.", "lights FLASHING and ON when braking", "lights FLASHING BRAKE-FLASHING brak.", "lights ON and ON always braking", "lights ON and BRAKE-FLASHING alw.br.", "lights FLASHING and ON always braking", "lights FLASHING BRAKE-FLASHING alw.br.", "assist without pedal rotation", "assist with sensors error", "field weakening"};
+    
+    public int[] intAdcPedalTorqueAngleAdjArray = {160, 138, 120, 107, 96, 88, 80, 74, 70, 66, 63, 59, 56, 52, 50, 47, 44, 42, 39, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16 };
+    
+    public int intMaxSpeed;
+    public int intStreetSpeed;
+    public int intWalkSpeed1;
+    public int intWalkSpeed2;
+    public int intWalkSpeed3;
+    public int intWalkSpeed4;
+    public int intWalkSpeedLimit;
+    public int intCruiseSpeed;
+    public int intCruiseSpeed1;
+    public int intCruiseSpeed2;
+    public int intCruiseSpeed3;
+    public int intCruiseSpeed4;
+    public int intTorqueAdcStep;
+    public int intTorqueAdcStepCalc;
+    public int intTorqueAdcOffset;
+    public int intTorqueAdcMax;
+    public int intTorqueAdcOnWeight;
+    public int intTorqueOffsetAdj;
+    public int intTorqueRangeAdj;
+    public int intTorqueAngleAdj;
+    String strTorqueOffsetAdj;
+    String strTorqueRangeAdj;
+    String strTorqueAngleAdj;
+    
+    public static final int WEIGHT_ON_PEDAL = 25; // kg
+    public static final int MIDDLE_OFFSET_ADJ = 20;
+    public static final int OFFSET_MAX_VALUE = 34; // MIDDLE_OFFSET_ADJ * 2 - 6 (ADC_TORQUE_SENSOR_CALIBRATION_OFFSET)
+    public static final int MIDDLE_RANGE_ADJ = 20;
+    public static final int MIDDLE_ANGLE_ADJ = 20;
     
     public void loadSettings(File f) throws IOException {
     
@@ -85,7 +108,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 TF_MOTOR_ACC.setText(in.readLine());
                 CB_ASS_WITHOUT_PED.setSelected(Boolean.parseBoolean(in.readLine()));
                 TF_ASS_WITHOUT_PED_THRES.setText(in.readLine());
-                TF_TORQ_PER_ADC_STEP.setText(in.readLine());
+                intTorqueAdcStep = Integer.parseInt(in.readLine());
+                //TF_TORQ_PER_ADC_STEP.setText(in.readLine());
                 TF_TORQUE_ADC_MAX.setText(in.readLine());
                 TF_BOOST_TORQUE_FACTOR.setText(in.readLine());
                 TF_MOTOR_BLOCK_TIME.setText(in.readLine());
@@ -96,7 +120,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 TF_BATT_POW_MAX.setText(in.readLine());
                 TF_BATT_CAPACITY.setText(in.readLine());
                 TF_BATT_NUM_CELLS.setText(in.readLine());
-                TF_MIN_CURRENT_ADC.setText(in.readLine());
+                TF_MOTOR_DEC.setText(in.readLine());
                 TF_BATT_VOLT_CUT_OFF.setText(in.readLine());
                 TF_BATT_VOLT_CAL.setText(in.readLine());
                 TF_BATT_CAPACITY_CAL.setText(in.readLine());
@@ -113,7 +137,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 TF_BAT_CELL_1_6.setText(in.readLine());
                 TF_BAT_CELL_EMPTY.setText(in.readLine());
                 TF_WHEEL_CIRCUMF.setText(in.readLine());
-                varMaxSpeed = Integer.parseInt(in.readLine());
+                intMaxSpeed = Integer.parseInt(in.readLine());
                 CB_LIGHTS.setSelected(Boolean.parseBoolean(in.readLine()));
                 CB_WALK_ASSIST.setSelected(Boolean.parseBoolean(in.readLine()));
                 CB_BRAKE_SENSOR.setSelected(Boolean.parseBoolean(in.readLine()));
@@ -135,7 +159,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 TF_LIGHT_MODE_3.setText(in.readLine());
                 CB_STREET_POWER_LIM.setSelected(Boolean.parseBoolean(in.readLine()));
                 TF_STREET_POWER_LIM.setText(in.readLine());
-                varStreetSpeed = Integer.parseInt(in.readLine());
+                intStreetSpeed = Integer.parseInt(in.readLine());
                 CB_STREET_THROTTLE.setSelected(Boolean.parseBoolean(in.readLine()));
                 CB_STREET_CRUISE.setSelected(Boolean.parseBoolean(in.readLine()));
                 TF_ADC_THROTTLE_MIN.setText(in.readLine());
@@ -153,7 +177,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 CB_COASTER_BRAKE.setSelected(Boolean.parseBoolean(in.readLine()));
                 TF_COASTER_BRAKE_THRESHOLD.setText(in.readLine());
                 CB_AUTO_DISPLAY_DATA.setSelected(Boolean.parseBoolean(in.readLine()));
-                CB_DISPLAY_DOUBLE_DATA.setSelected(Boolean.parseBoolean(in.readLine()));
+                CB_STARTUP_ASSIST_ENABLED.setSelected(Boolean.parseBoolean(in.readLine()));
                 TF_DELAY_DATA_1.setText(in.readLine());
                 TF_DELAY_DATA_2.setText(in.readLine());
                 TF_DELAY_DATA_3.setText(in.readLine());
@@ -182,19 +206,23 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 TF_EMTB_ASS_2.setText(in.readLine());
                 TF_EMTB_ASS_3.setText(in.readLine());
                 TF_EMTB_ASS_4.setText(in.readLine());
-                TF_WALK_ASS_1.setText(in.readLine());
-                TF_WALK_ASS_2.setText(in.readLine());
-                TF_WALK_ASS_3.setText(in.readLine());
-                TF_WALK_ASS_4.setText(in.readLine());
-                varWalkSpeed =  Integer.parseInt(in.readLine());
+                //TF_WALK_ASS_SPEED_1.setText(in.readLine());
+                //TF_WALK_ASS_SPEED_2.setText(in.readLine());
+                //TF_WALK_ASS_SPEED_3.setText(in.readLine());
+                //TF_WALK_ASS_SPEED_4.setText(in.readLine());
+                intWalkSpeed1 =  Integer.parseInt(in.readLine());
+                intWalkSpeed2 =  Integer.parseInt(in.readLine());
+                intWalkSpeed3 =  Integer.parseInt(in.readLine());
+                intWalkSpeed4 =  Integer.parseInt(in.readLine());
+                intWalkSpeedLimit =  Integer.parseInt(in.readLine());
                 CB_WALK_TIME_ENA.setSelected(Boolean.parseBoolean(in.readLine()));
                 TF_WALK_ASS_TIME.setText(in.readLine());            
-                varCruiseSpeed1 =  Integer.parseInt(in.readLine());
-                varCruiseSpeed2 =  Integer.parseInt(in.readLine());
-                varCruiseSpeed3 =  Integer.parseInt(in.readLine());
-                varCruiseSpeed4 =  Integer.parseInt(in.readLine());
+                intCruiseSpeed1 =  Integer.parseInt(in.readLine());
+                intCruiseSpeed2 =  Integer.parseInt(in.readLine());
+                intCruiseSpeed3 =  Integer.parseInt(in.readLine());
+                intCruiseSpeed4 =  Integer.parseInt(in.readLine());
                 CB_CRUISE_WHITOUT_PED.setSelected(Boolean.parseBoolean(in.readLine()));
-                varCruiseSpeed =  Integer.parseInt(in.readLine());
+                intCruiseSpeed =  Integer.parseInt(in.readLine());
                 TF_TORQ_ADC_OFFSET.setText(in.readLine());
                 TF_NUM_DATA_AUTO_DISPLAY.setText(in.readLine());
                 RB_UNIT_KILOMETERS.setSelected(Boolean.parseBoolean(in.readLine()));
@@ -206,8 +234,70 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 RB_STARTUP_NONE.setSelected(Boolean.parseBoolean(in.readLine()));
                 RB_STARTUP_SOC.setSelected(Boolean.parseBoolean(in.readLine()));
                 RB_STARTUP_VOLTS.setSelected(Boolean.parseBoolean(in.readLine()));
+                CB_FIELD_WEAKENING_ENABLED.setSelected(Boolean.parseBoolean(in.readLine()));
+                strTorqueOffsetAdj = in.readLine();
+                strTorqueRangeAdj = in.readLine();
+                strTorqueAngleAdj = in.readLine();
+                TF_TORQ_PER_ADC_STEP_ADV.setText(in.readLine());
+                RB_SOC_AUTO.setSelected(Boolean.parseBoolean(in.readLine()));
+                RB_SOC_WH.setSelected(Boolean.parseBoolean(in.readLine()));
+                RB_SOC_VOLTS.setSelected(Boolean.parseBoolean(in.readLine()));
+                CB_ADC_STEP_ESTIM.setSelected(Boolean.parseBoolean(in.readLine()));
+                RB_BOOST_AT_ZERO_CADENCE.setSelected(Boolean.parseBoolean(in.readLine()));
+                RB_BOOST_AT_ZERO_SPEED.setSelected(Boolean.parseBoolean(in.readLine()));
                 
 		in.close();
+                
+                if ((!RB_BOOST_AT_ZERO_CADENCE.isSelected()) && (!RB_BOOST_AT_ZERO_SPEED.isSelected())) {
+                    RB_BOOST_AT_ZERO_CADENCE.setSelected(true); }
+                    
+                TF_TORQ_PER_ADC_STEP.setText(String.valueOf(intTorqueAdcStep));
+                
+                if (strTorqueOffsetAdj != null) {
+                    intTorqueOffsetAdj = Integer.parseInt(strTorqueOffsetAdj); }
+                else {
+                    intTorqueOffsetAdj = MIDDLE_OFFSET_ADJ; }
+    
+                if (intTorqueOffsetAdj == MIDDLE_OFFSET_ADJ) {
+                    TF_TORQ_ADC_OFFSET_ADJ.setText("0"); }
+                else if (intTorqueOffsetAdj < MIDDLE_OFFSET_ADJ) {
+                    TF_TORQ_ADC_OFFSET_ADJ.setText("-" + String.valueOf(MIDDLE_OFFSET_ADJ - intTorqueOffsetAdj)); }
+                else {
+                    TF_TORQ_ADC_OFFSET_ADJ.setText(String.valueOf(intTorqueOffsetAdj - MIDDLE_OFFSET_ADJ)); }
+                
+                if (strTorqueRangeAdj != null) {
+                    intTorqueRangeAdj = Integer.parseInt(strTorqueRangeAdj); }
+                else {
+                    intTorqueRangeAdj = MIDDLE_RANGE_ADJ; }
+    
+                if (intTorqueRangeAdj == MIDDLE_RANGE_ADJ) {
+                    TF_TORQ_ADC_RANGE_ADJ.setText("0"); }
+                else if (intTorqueRangeAdj < MIDDLE_RANGE_ADJ) {
+                    TF_TORQ_ADC_RANGE_ADJ.setText("-" + String.valueOf(MIDDLE_RANGE_ADJ - intTorqueRangeAdj)); }
+                else {
+                    TF_TORQ_ADC_RANGE_ADJ.setText(String.valueOf(intTorqueRangeAdj - MIDDLE_RANGE_ADJ)); }
+                
+                if (strTorqueAngleAdj != null) {
+                    intTorqueAngleAdj = Integer.parseInt(strTorqueAngleAdj); }
+                else {
+                    intTorqueAngleAdj = MIDDLE_ANGLE_ADJ; }
+    
+                if (intTorqueAngleAdj == MIDDLE_ANGLE_ADJ) {
+                    TF_TORQ_ADC_ANGLE_ADJ.setText("0"); }
+                else if (intTorqueAngleAdj < MIDDLE_ANGLE_ADJ) {
+                    TF_TORQ_ADC_ANGLE_ADJ.setText("-" + String.valueOf(MIDDLE_ANGLE_ADJ - intTorqueAngleAdj)); }
+                else {
+                    TF_TORQ_ADC_ANGLE_ADJ.setText(String.valueOf(intTorqueAngleAdj - MIDDLE_ANGLE_ADJ)); }
+                /*
+                if (CB_FIELD_WEAKENING_ENABLED.isSelected()) {
+                    CB_FIELD_WEAKENING_ENABLED.setText("Field weakening enabled - PWM 18.0 kHz"); }
+                else {
+                    CB_FIELD_WEAKENING_ENABLED.setText("Field weakening disabled - PWM 15.6 kHz"); }
+                */
+                jLabelMOTOR_BLOCK_CURR.setVisible(false);
+                jLabelMOTOR_BLOCK_ERPS.setVisible(false);
+                TF_MOTOR_BLOCK_CURR.setVisible(false);
+                TF_MOTOR_BLOCK_ERPS.setVisible(false);
                 
                 jLabelData1.setText("Data 1 - " + displayDataArray[Integer.parseInt(TF_DATA_1.getText())]);
                 jLabelData2.setText("Data 2 - " + displayDataArray[Integer.parseInt(TF_DATA_2.getText())]);
@@ -220,38 +310,44 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 jLabelLights1.setText("<html>Mode 1 - " + lightModeArray[Integer.parseInt(TF_LIGHT_MODE_1.getText())] + "</html>");
                 jLabelLights2.setText("<html>Mode 2 - " + lightModeArray[Integer.parseInt(TF_LIGHT_MODE_2.getText())] + "</html>");
                 jLabelLights3.setText("<html>Mode 3 - " + lightModeArray[Integer.parseInt(TF_LIGHT_MODE_3.getText())] + "</html>");
-                               
+                
                 if (RB_UNIT_KILOMETERS.isSelected()) {
                     jLabelMaxSpeed.setText("Max speed offroad mode (km/h)");
                     jLabelStreetSpeed.setText("Street speed limit (km/h)");
-                    jLabelWalkSpeed.setText("Walk assist speed (km/h)");
                     jLabelCruiseSpeedUnits.setText("km/h");
-                    TF_MAX_SPEED.setText(String.valueOf(varMaxSpeed));
-                    TF_STREET_SPEED_LIM.setText(String.valueOf(varStreetSpeed));
-                    TF_WALK_ASS_SPEED.setText(String.valueOf(varWalkSpeed));
-                    TF_CRUISE_SPEED_ENA.setText(String.valueOf(varCruiseSpeed));
-                    TF_CRUISE_ASS_1.setText(String.valueOf(varCruiseSpeed1));
-                    TF_CRUISE_ASS_2.setText(String.valueOf(varCruiseSpeed2));
-                    TF_CRUISE_ASS_3.setText(String.valueOf(varCruiseSpeed3));
-                    TF_CRUISE_ASS_4.setText(String.valueOf(varCruiseSpeed4));
+                    jLabelWalkSpeedUnits.setText("km/h x10");
+                    TF_MAX_SPEED.setText(String.valueOf(intMaxSpeed));
+                    TF_STREET_SPEED_LIM.setText(String.valueOf(intStreetSpeed));
+                    TF_WALK_ASS_SPEED_1.setText(String.valueOf(intWalkSpeed1));
+                    TF_WALK_ASS_SPEED_2.setText(String.valueOf(intWalkSpeed2));
+                    TF_WALK_ASS_SPEED_3.setText(String.valueOf(intWalkSpeed3));
+                    TF_WALK_ASS_SPEED_4.setText(String.valueOf(intWalkSpeed4));
+                    TF_WALK_ASS_SPEED_LIMIT.setText(String.valueOf(intWalkSpeedLimit));
+                    TF_CRUISE_SPEED_ENA.setText(String.valueOf(intCruiseSpeed));
+                    TF_CRUISE_ASS_1.setText(String.valueOf(intCruiseSpeed1));
+                    TF_CRUISE_ASS_2.setText(String.valueOf(intCruiseSpeed2));
+                    TF_CRUISE_ASS_3.setText(String.valueOf(intCruiseSpeed3));
+                    TF_CRUISE_ASS_4.setText(String.valueOf(intCruiseSpeed4));
 		}   
                 
                 if (RB_UNIT_MILES.isSelected()) {
                     jLabelMaxSpeed.setText("Max speed offroad mode (mph)");
                     jLabelStreetSpeed.setText("Street speed limit (mph)");
-                    jLabelWalkSpeed.setText("Walk assist speed (mph)");
                     jLabelCruiseSpeedUnits.setText("mph");
-                    TF_MAX_SPEED.setText(String.valueOf((varMaxSpeed * 10 + 5) / 16));
-                    TF_STREET_SPEED_LIM.setText(String.valueOf((varStreetSpeed * 10 + 5) / 16));
-                    TF_WALK_ASS_SPEED.setText(String.valueOf((varWalkSpeed * 10 + 5) / 16));
-                    TF_CRUISE_SPEED_ENA.setText(String.valueOf((varCruiseSpeed * 10 + 5) / 16));
-                    TF_CRUISE_ASS_1.setText(String.valueOf((varCruiseSpeed1 * 10 + 5) / 16));
-                    TF_CRUISE_ASS_2.setText(String.valueOf((varCruiseSpeed2 * 10 + 5) / 16));
-                    TF_CRUISE_ASS_3.setText(String.valueOf((varCruiseSpeed3 * 10 + 5) / 16));
-                    TF_CRUISE_ASS_4.setText(String.valueOf((varCruiseSpeed4 * 10 + 5) / 16));
+                    jLabelWalkSpeedUnits.setText("mph x10");
+                    TF_MAX_SPEED.setText(String.valueOf((intMaxSpeed * 10 + 5) / 16));
+                    TF_STREET_SPEED_LIM.setText(String.valueOf((intStreetSpeed * 10 + 5) / 16));
+                    TF_WALK_ASS_SPEED_1.setText(String.valueOf((intWalkSpeed1 * 10 + 5) / 16));
+                    TF_WALK_ASS_SPEED_2.setText(String.valueOf((intWalkSpeed2 * 10 + 5) / 16));
+                    TF_WALK_ASS_SPEED_3.setText(String.valueOf((intWalkSpeed3 * 10 + 5) / 16));
+                    TF_WALK_ASS_SPEED_4.setText(String.valueOf((intWalkSpeed4 * 10 + 5) / 16));
+                    TF_WALK_ASS_SPEED_LIMIT.setText(String.valueOf((intWalkSpeedLimit * 10 + 5) / 16));
+                    TF_CRUISE_SPEED_ENA.setText(String.valueOf((intCruiseSpeed * 10 + 5) / 16));
+                    TF_CRUISE_ASS_1.setText(String.valueOf((intCruiseSpeed1 * 10 + 5) / 16));
+                    TF_CRUISE_ASS_2.setText(String.valueOf((intCruiseSpeed2 * 10 + 5) / 16));
+                    TF_CRUISE_ASS_3.setText(String.valueOf((intCruiseSpeed3 * 10 + 5) / 16));
+                    TF_CRUISE_ASS_4.setText(String.valueOf((intCruiseSpeed4 * 10 + 5) / 16));
                 }
-                
-                CB_DISPLAY_DOUBLE_DATA.setVisible(false);
 
             try {
 		BufferedReader br = new BufferedReader (new FileReader("commits.txt"));
@@ -464,8 +560,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                                         iWriter.println(TF_BATT_NUM_CELLS.getText());
 					pWriter.println(text_to_save); 
 
-                                        text_to_save = "#define ADC_10_BIT_BATTERY_CURRENT_MIN " + TF_MIN_CURRENT_ADC.getText();
-                                        iWriter.println(TF_MIN_CURRENT_ADC.getText());
+                                        text_to_save = "#define MOTOR_DECELERATION " + TF_MOTOR_DEC.getText();
+                                        iWriter.println(TF_MOTOR_DEC.getText());
 					pWriter.println(text_to_save);
 
                                         text_to_save = "#define BATTERY_LOW_VOLTAGE_CUT_OFF " + TF_BATT_VOLT_CUT_OFF.getText();
@@ -532,8 +628,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                                         iWriter.println(TF_WHEEL_CIRCUMF.getText());
 					pWriter.println(text_to_save);
                                         
-                                        text_to_save = "#define WHEEL_MAX_SPEED " + String.valueOf(varMaxSpeed);
-                                        iWriter.println(String.valueOf(varMaxSpeed));
+                                        text_to_save = "#define WHEEL_MAX_SPEED " + String.valueOf(intMaxSpeed);
+                                        iWriter.println(String.valueOf(intMaxSpeed));
 					pWriter.println(text_to_save);
 
                                         if (CB_LIGHTS.isSelected()) {
@@ -688,8 +784,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                                         iWriter.println(TF_STREET_POWER_LIM.getText());
 					pWriter.println(text_to_save);
                                         
-                                        text_to_save = "#define STREET_MODE_SPEED_LIMIT " + String.valueOf(varStreetSpeed);
-                                        iWriter.println(String.valueOf(varStreetSpeed));
+                                        text_to_save = "#define STREET_MODE_SPEED_LIMIT " + String.valueOf(intStreetSpeed);
+                                        iWriter.println(String.valueOf(intStreetSpeed));
 					pWriter.println(text_to_save);
                                         
                                         if (CB_STREET_THROTTLE.isSelected()) {
@@ -826,15 +922,15 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 					}
 					iWriter.println(CB_AUTO_DISPLAY_DATA.isSelected());
                                         
-                                        if (CB_DISPLAY_DOUBLE_DATA.isSelected()) {
-						text_to_save = "#define ENABLE_DISPLAY_DOUBLE_DATA 1";
+                                        if (CB_STARTUP_ASSIST_ENABLED.isSelected()) {
+						text_to_save = "#define STARTUP_ASSIST_ENABLED 1";
 						pWriter.println(text_to_save);
 					}
                                         else {
-						text_to_save = "#define ENABLE_DISPLAY_DOUBLE_DATA 0";
+						text_to_save = "#define STARTUP_ASSIST_ENABLED 0";
 						pWriter.println(text_to_save);
 					}
-					iWriter.println(CB_DISPLAY_DOUBLE_DATA.isSelected());
+					iWriter.println(CB_STARTUP_ASSIST_ENABLED.isSelected());
                                         
                                         text_to_save = "#define DELAY_DISPLAY_DATA_1 " + TF_DELAY_DATA_1.getText();
                                         iWriter.println(TF_DELAY_DATA_1.getText());
@@ -948,24 +1044,24 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                                         iWriter.println(TF_EMTB_ASS_4.getText());
 					pWriter.println(text_to_save);
                                         
-                                        text_to_save = "#define WALK_ASSIST_LEVEL_1 " + TF_WALK_ASS_1.getText();
-                                        iWriter.println(TF_WALK_ASS_1.getText());
+                                        text_to_save = "#define WALK_ASSIST_LEVEL_1 " + String.valueOf(intWalkSpeed1);
+                                        iWriter.println(String.valueOf(intWalkSpeed1));
 					pWriter.println(text_to_save);
                                         
-                                        text_to_save = "#define WALK_ASSIST_LEVEL_2 " + TF_WALK_ASS_2.getText();
-                                        iWriter.println(TF_WALK_ASS_2.getText());
+                                        text_to_save = "#define WALK_ASSIST_LEVEL_2 " + String.valueOf(intWalkSpeed2);
+                                        iWriter.println(String.valueOf(intWalkSpeed2));
 					pWriter.println(text_to_save);
                                         
-                                        text_to_save = "#define WALK_ASSIST_LEVEL_3 " + TF_WALK_ASS_3.getText();
-                                        iWriter.println(TF_WALK_ASS_3.getText());
+                                        text_to_save = "#define WALK_ASSIST_LEVEL_3 " + String.valueOf(intWalkSpeed3);
+                                        iWriter.println(String.valueOf(intWalkSpeed3));
 					pWriter.println(text_to_save);
                                         
-                                        text_to_save = "#define WALK_ASSIST_LEVEL_4 " + TF_WALK_ASS_4.getText();
-                                        iWriter.println(TF_WALK_ASS_4.getText());
+                                        text_to_save = "#define WALK_ASSIST_LEVEL_4 " + String.valueOf(intWalkSpeed4);
+                                        iWriter.println(String.valueOf(intWalkSpeed4));
 					pWriter.println(text_to_save);
                                         
-                                        text_to_save = "#define WALK_ASSIST_THRESHOLD_SPEED " + String.valueOf(varWalkSpeed);
-                                        iWriter.println(String.valueOf(varWalkSpeed));
+                                        text_to_save = "#define WALK_ASSIST_THRESHOLD_SPEED " + String.valueOf(intWalkSpeedLimit);
+                                        iWriter.println(String.valueOf(intWalkSpeedLimit));
 					pWriter.println(text_to_save);
                                         
                                         if (CB_WALK_TIME_ENA.isSelected()) {
@@ -982,20 +1078,20 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                                         iWriter.println(TF_WALK_ASS_TIME.getText());
 					pWriter.println(text_to_save);
                                         
-                                        text_to_save = "#define CRUISE_TARGET_SPEED_LEVEL_1 " + String.valueOf(varCruiseSpeed1);
-                                        iWriter.println(String.valueOf(varCruiseSpeed1));
+                                        text_to_save = "#define CRUISE_TARGET_SPEED_LEVEL_1 " + String.valueOf(intCruiseSpeed1);
+                                        iWriter.println(String.valueOf(intCruiseSpeed1));
 					pWriter.println(text_to_save);
                                         
-                                        text_to_save = "#define CRUISE_TARGET_SPEED_LEVEL_2 " + String.valueOf(varCruiseSpeed2);
-                                        iWriter.println(String.valueOf(varCruiseSpeed2));
+                                        text_to_save = "#define CRUISE_TARGET_SPEED_LEVEL_2 " + String.valueOf(intCruiseSpeed2);
+                                        iWriter.println(String.valueOf(intCruiseSpeed2));
 					pWriter.println(text_to_save);
                                         
-                                        text_to_save = "#define CRUISE_TARGET_SPEED_LEVEL_3 " + String.valueOf(varCruiseSpeed3);
-                                        iWriter.println(String.valueOf(varCruiseSpeed3));
+                                        text_to_save = "#define CRUISE_TARGET_SPEED_LEVEL_3 " + String.valueOf(intCruiseSpeed3);
+                                        iWriter.println(String.valueOf(intCruiseSpeed3));
 					pWriter.println(text_to_save);
                                         
-                                        text_to_save = "#define CRUISE_TARGET_SPEED_LEVEL_4 " + String.valueOf(varCruiseSpeed4);
-                                        iWriter.println(String.valueOf(varCruiseSpeed4));
+                                        text_to_save = "#define CRUISE_TARGET_SPEED_LEVEL_4 " + String.valueOf(intCruiseSpeed4);
+                                        iWriter.println(String.valueOf(intCruiseSpeed4));
 					pWriter.println(text_to_save);
                                         
                                         if (CB_CRUISE_WHITOUT_PED.isSelected()) {
@@ -1008,8 +1104,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 					}
 					iWriter.println(CB_CRUISE_WHITOUT_PED.isSelected());
                                         
-                                        text_to_save = "#define CRUISE_THRESHOLD_SPEED " + String.valueOf(varCruiseSpeed);
-                                        iWriter.println(String.valueOf(varCruiseSpeed));
+                                        text_to_save = "#define CRUISE_THRESHOLD_SPEED " + String.valueOf(intCruiseSpeed);
+                                        iWriter.println(String.valueOf(intCruiseSpeed));
 					pWriter.println(text_to_save);
 
                                         text_to_save = "#define PEDAL_TORQUE_ADC_OFFSET " + TF_TORQ_ADC_OFFSET.getText();
@@ -1073,6 +1169,74 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 						pWriter.println(text_to_save);
 					}
 					iWriter.println(RB_STARTUP_VOLTS.isSelected());
+                                        
+                                        if (CB_FIELD_WEAKENING_ENABLED.isSelected()) {
+						text_to_save = "#define FIELD_WEAKENING_ENABLED 1";
+						pWriter.println(text_to_save);
+					}
+                                        else {
+						text_to_save = "#define FIELD_WEAKENING_ENABLED 0";
+						pWriter.println(text_to_save);
+					}
+					iWriter.println(CB_FIELD_WEAKENING_ENABLED.isSelected());
+                                        
+                                        text_to_save = "#define PEDAL_TORQUE_ADC_OFFSET_ADJ " + String.valueOf(intTorqueOffsetAdj);
+                                        iWriter.println(String.valueOf(intTorqueOffsetAdj));
+					pWriter.println(text_to_save);
+                                        
+                                        text_to_save = "#define PEDAL_TORQUE_ADC_RANGE_ADJ " + String.valueOf(intTorqueRangeAdj);
+                                        iWriter.println(String.valueOf(intTorqueRangeAdj));
+					pWriter.println(text_to_save);
+                                        
+                                        text_to_save = "#define PEDAL_TORQUE_ADC_ANGLE_ADJ " + String.valueOf(intAdcPedalTorqueAngleAdjArray[intTorqueAngleAdj]);
+                                        iWriter.println(String.valueOf(intTorqueAngleAdj));
+					pWriter.println(text_to_save);
+                                        
+                                        text_to_save = "#define PEDAL_TORQUE_PER_10_BIT_ADC_STEP_ADV_X100 " + TF_TORQ_PER_ADC_STEP_ADV.getText();
+                                        iWriter.println(TF_TORQ_PER_ADC_STEP_ADV.getText());
+					pWriter.println(text_to_save);
+                                        
+                                        if (RB_SOC_AUTO.isSelected()) {
+						text_to_save = "#define SOC_PERCENT_CALC 0";
+						pWriter.println(text_to_save);
+					}
+					iWriter.println(RB_SOC_AUTO.isSelected());
+
+                                        if (RB_SOC_WH.isSelected()) {
+						text_to_save = "#define SOC_PERCENT_CALC 1";
+						pWriter.println(text_to_save);
+					}
+					iWriter.println(RB_SOC_WH.isSelected());
+
+                                        if (RB_SOC_VOLTS.isSelected()) {
+						text_to_save = "#define SOC_PERCENT_CALC 2";
+						pWriter.println(text_to_save);
+					}
+					iWriter.println(RB_SOC_VOLTS.isSelected());
+                                        
+                                        /*
+                                        if (CB_ADC_STEP_CALC.isSelected()) {
+						text_to_save = "#define TORQUE_ADC_STEP_EXTIMATED 1";
+						pWriter.println(text_to_save);
+					}
+                                        else {
+						text_to_save = "#define TORQUE_ADC_STEP_EXTIMATED 0";
+						pWriter.println(text_to_save);
+					}
+                                        */
+					iWriter.println(CB_ADC_STEP_ESTIM.isSelected());
+                                        
+                                        if (RB_BOOST_AT_ZERO_CADENCE.isSelected()) {
+						text_to_save = "#define STARTUP_BOOST_AT_ZERO 0";
+						pWriter.println(text_to_save);
+					}
+					iWriter.println(RB_BOOST_AT_ZERO_CADENCE.isSelected());
+
+                                        if (RB_BOOST_AT_ZERO_SPEED.isSelected()) {
+						text_to_save = "#define STARTUP_BOOST_AT_ZERO 1";
+						pWriter.println(text_to_save);
+					}
+					iWriter.println(RB_BOOST_AT_ZERO_SPEED.isSelected());
 
                                         pWriter.println("\r\n#endif /* CONFIG_H_ */");
 
@@ -1127,6 +1291,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         buttonGroup5 = new javax.swing.ButtonGroup();
         buttonGroup6 = new javax.swing.ButtonGroup();
         buttonGroup7 = new javax.swing.ButtonGroup();
+        buttonGroup8 = new javax.swing.ButtonGroup();
+        buttonGroup9 = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -1139,7 +1305,6 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         TF_BOOST_TORQUE_FACTOR = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         TF_MOTOR_ACC = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         TF_ASS_WITHOUT_PED_THRES = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         TF_BOOST_CADENCE_STEP = new javax.swing.JTextField();
@@ -1149,9 +1314,20 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         RB_MOTOR_48V = new javax.swing.JRadioButton();
         TF_TORQ_ADC_OFFSET = new javax.swing.JTextField();
         jLabel_TORQ_ADC_OFFSET = new javax.swing.JLabel();
-        CB_TORQUE_CALIBRATION = new javax.swing.JCheckBox();
-        jLabelMinCurrentADC = new javax.swing.JLabel();
-        TF_MIN_CURRENT_ADC = new javax.swing.JTextField();
+        jLabelMotorFastStop = new javax.swing.JLabel();
+        TF_MOTOR_DEC = new javax.swing.JTextField();
+        TF_TORQ_ADC_OFFSET_ADJ = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        TF_TORQ_ADC_RANGE_ADJ = new javax.swing.JTextField();
+        CB_ADC_STEP_ESTIM = new javax.swing.JCheckBox();
+        jLabel31 = new javax.swing.JLabel();
+        TF_TORQ_PER_ADC_STEP_ADV = new javax.swing.JTextField();
+        jLabel32 = new javax.swing.JLabel();
+        TF_TORQ_ADC_ANGLE_ADJ = new javax.swing.JTextField();
+        jLabel33 = new javax.swing.JLabel();
+        RB_BOOST_AT_ZERO_CADENCE = new javax.swing.JRadioButton();
+        RB_BOOST_AT_ZERO_SPEED = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -1170,7 +1346,6 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         Label_Parameter3 = new javax.swing.JLabel();
-        Label_Parameter4 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         RB_VLCD6 = new javax.swing.JRadioButton();
         RB_VLCD5 = new javax.swing.JRadioButton();
@@ -1195,18 +1370,18 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jLabel30 = new javax.swing.JLabel();
         RB_ADC_OPTION_DIS = new javax.swing.JRadioButton();
         RB_THROTTLE = new javax.swing.JRadioButton();
-        jLabel31 = new javax.swing.JLabel();
         RB_TEMP_LIMIT = new javax.swing.JRadioButton();
         CB_STREET_MODE_ON_START = new javax.swing.JCheckBox();
         CB_ODO_COMPENSATION = new javax.swing.JCheckBox();
         CB_STARTUP_BOOST_ON_START = new javax.swing.JCheckBox();
         CB_TOR_SENSOR_ADV = new javax.swing.JCheckBox();
-        jLabel33 = new javax.swing.JLabel();
         CB_AUTO_DISPLAY_DATA = new javax.swing.JCheckBox();
         CB_SET_PARAM_ON_START = new javax.swing.JCheckBox();
         CB_MAX_SPEED_DISPLAY = new javax.swing.JCheckBox();
         CB_COASTER_BRAKE = new javax.swing.JCheckBox();
-        CB_DISPLAY_DOUBLE_DATA = new javax.swing.JCheckBox();
+        CB_FIELD_WEAKENING_ENABLED = new javax.swing.JCheckBox();
+        CB_STARTUP_ASSIST_ENABLED = new javax.swing.JCheckBox();
+        CB_TORQUE_CALIBRATION = new javax.swing.JCheckBox();
         jPanel4 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -1259,18 +1434,19 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jPanel15 = new javax.swing.JPanel();
         jLabel62 = new javax.swing.JLabel();
         jLabel63 = new javax.swing.JLabel();
-        TF_WALK_ASS_1 = new javax.swing.JTextField();
+        TF_WALK_ASS_SPEED_1 = new javax.swing.JTextField();
         jLabel64 = new javax.swing.JLabel();
-        TF_WALK_ASS_2 = new javax.swing.JTextField();
+        TF_WALK_ASS_SPEED_2 = new javax.swing.JTextField();
         jLabel65 = new javax.swing.JLabel();
-        TF_WALK_ASS_3 = new javax.swing.JTextField();
-        TF_WALK_ASS_4 = new javax.swing.JTextField();
+        TF_WALK_ASS_SPEED_3 = new javax.swing.JTextField();
+        TF_WALK_ASS_SPEED_4 = new javax.swing.JTextField();
         jLabel66 = new javax.swing.JLabel();
         jLabelWalkSpeed = new javax.swing.JLabel();
-        TF_WALK_ASS_SPEED = new javax.swing.JTextField();
+        TF_WALK_ASS_SPEED_LIMIT = new javax.swing.JTextField();
         TF_WALK_ASS_TIME = new javax.swing.JTextField();
         jLabel68 = new javax.swing.JLabel();
         CB_WALK_TIME_ENA = new javax.swing.JCheckBox();
+        jLabelWalkSpeedUnits = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jLabel69 = new javax.swing.JLabel();
         jLabel70 = new javax.swing.JLabel();
@@ -1375,10 +1551,6 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         TF_TEMP_MAX_LIM = new javax.swing.JTextField();
         jLabel106 = new javax.swing.JLabel();
         TF_MOTOR_BLOCK_TIME = new javax.swing.JTextField();
-        jLabel107 = new javax.swing.JLabel();
-        TF_MOTOR_BLOCK_CURR = new javax.swing.JTextField();
-        jLabel108 = new javax.swing.JLabel();
-        TF_MOTOR_BLOCK_ERPS = new javax.swing.JTextField();
         TF_DELAY_MENU = new javax.swing.JTextField();
         jLabel87 = new javax.swing.JLabel();
         jLabel90 = new javax.swing.JLabel();
@@ -1393,6 +1565,14 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         RB_STARTUP_VOLTS = new javax.swing.JRadioButton();
         jLabelCoasterBrakeThreshld = new javax.swing.JLabel();
         TF_COASTER_BRAKE_THRESHOLD = new javax.swing.JTextField();
+        jLabel94 = new javax.swing.JLabel();
+        RB_SOC_AUTO = new javax.swing.JRadioButton();
+        RB_SOC_WH = new javax.swing.JRadioButton();
+        RB_SOC_VOLTS = new javax.swing.JRadioButton();
+        TF_MOTOR_BLOCK_ERPS = new javax.swing.JTextField();
+        TF_MOTOR_BLOCK_CURR = new javax.swing.JTextField();
+        jLabelMOTOR_BLOCK_CURR = new javax.swing.JLabel();
+        jLabelMOTOR_BLOCK_ERPS = new javax.swing.JLabel();
         label1 = new java.awt.Label();
         jScrollPane1 = new javax.swing.JScrollPane();
         expSet = new javax.swing.JList<>();
@@ -1407,8 +1587,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jRadioButton1.setText("jRadioButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("TSDZ2 Parameter Configurator 3.0 for Open Source Firmware v20.1C");
-        setPreferredSize(new java.awt.Dimension(1192, 608));
+        setTitle("TSDZ2 Parameter Configurator 4.1 for Open Source Firmware v20.1C.2");
         setResizable(false);
         setSize(new java.awt.Dimension(1192, 608));
 
@@ -1424,7 +1603,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         buttonGroup1.add(RB_MOTOR_36V);
         RB_MOTOR_36V.setText("36V");
 
-        CB_ASS_WITHOUT_PED.setText("Startup assistance without pedaling");
+        CB_ASS_WITHOUT_PED.setText("Startup assist without pedaling thres.");
         CB_ASS_WITHOUT_PED.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 CB_ASS_WITHOUT_PEDStateChanged(evt);
@@ -1433,6 +1612,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 
         TF_TORQ_PER_ADC_STEP.setText("67");
         TF_TORQ_PER_ADC_STEP.setToolTipText("<html>\nDefault value 67<br>\nOptional calibration\n</html>");
+        TF_TORQ_PER_ADC_STEP.setEnabled(!CB_ADC_STEP_ESTIM.isSelected());
 
         jLabel20.setText("Startup boost torque factor (%)");
 
@@ -1441,21 +1621,14 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel3.setText("Motor acceleration");
+        jLabel3.setText("Motor acceleration (%)");
 
         TF_MOTOR_ACC.setText("25");
         TF_MOTOR_ACC.setToolTipText("<html>MAX VALUE<br>\n36 volt motor, 36 volt battery = 35<br>\n36 volt motor, 48 volt battery = 5<br>\n36 volt motor, 52 volt battery = 0<br>\n48 volt motor, 36 volt battery = 45<br>\n48 volt motor, 48 volt battery = 35<br>\n48 volt motor, 52 volt battery = 30\n</html>");
 
-        jLabel5.setText("Assist without pedaling threshold");
-
         TF_ASS_WITHOUT_PED_THRES.setText("20");
         TF_ASS_WITHOUT_PED_THRES.setToolTipText("<html>Max value 100<br>\nRecommended range 10 to 30\n</html>");
         TF_ASS_WITHOUT_PED_THRES.setEnabled(CB_ASS_WITHOUT_PED.isSelected());
-        TF_ASS_WITHOUT_PED_THRES.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TF_ASS_WITHOUT_PED_THRESActionPerformed(evt);
-            }
-        });
 
         jLabel22.setText("Startup boost cadence step (decr.)");
 
@@ -1465,6 +1638,11 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         TF_TORQUE_ADC_MAX.setText("300");
         TF_TORQUE_ADC_MAX.setToolTipText("<html>\nInsert value read on calibration<br>\nMax 500\n</html>");
         TF_TORQUE_ADC_MAX.setEnabled(CB_TORQUE_CALIBRATION.isSelected());
+        TF_TORQUE_ADC_MAX.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TF_TORQUE_ADC_MAXKeyReleased(evt);
+            }
+        });
 
         jLabel6.setText("Pedal torque ADC step");
 
@@ -1476,78 +1654,155 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         TF_TORQ_ADC_OFFSET.setText("150");
         TF_TORQ_ADC_OFFSET.setToolTipText("<html>\nInsert value read on calibration<br>\nMax 250\n</html>");
         TF_TORQ_ADC_OFFSET.setEnabled(CB_TORQUE_CALIBRATION.isSelected());
-
-        jLabel_TORQ_ADC_OFFSET.setText("Pedal torque ADC offset (no weight)");
-
-        CB_TORQUE_CALIBRATION.setText("Torque sensor calibrated");
-        CB_TORQUE_CALIBRATION.setToolTipText("Enable after calibration");
-        CB_TORQUE_CALIBRATION.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                CB_TORQUE_CALIBRATIONStateChanged(evt);
+        TF_TORQ_ADC_OFFSET.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TF_TORQ_ADC_OFFSETKeyReleased(evt);
             }
         });
 
-        jLabelMinCurrentADC.setText("Min current ADC step");
+        jLabel_TORQ_ADC_OFFSET.setText("Pedal torque ADC offset (no weight)");
 
-        TF_MIN_CURRENT_ADC.setText("0");
-        TF_MIN_CURRENT_ADC.setToolTipText("<html>Min current value (in ADC steps)<br>\nwhile pedaling, from 0 to 3<br>\n0 = 0 Amp<br>\n1 = 0.16 Amp<br>\n2 = 0.32 Amp<br>\n3 = 0.48 Amp\n</html>");
+        jLabelMotorFastStop.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelMotorFastStop.setForeground(new java.awt.Color(255, 0, 0));
+        jLabelMotorFastStop.setText("Motor deceleration (%)");
+
+        TF_MOTOR_DEC.setText("0");
+        TF_MOTOR_DEC.setToolTipText("<html>Max value 100<br>\nRecommended range 0 to 50\n</html>");
+
+        TF_TORQ_ADC_OFFSET_ADJ.setText("0");
+        TF_TORQ_ADC_OFFSET_ADJ.setToolTipText("<html>\nValue -20 to 14<br>\nDefault 0\n</html>");
+        TF_TORQ_ADC_OFFSET_ADJ.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TF_TORQ_ADC_OFFSET_ADJKeyReleased(evt);
+            }
+        });
+
+        jLabel15.setText("Pedal torque ADC offset adjustment");
+
+        jLabel23.setText("Pedal torque ADC range adjustment");
+
+        TF_TORQ_ADC_RANGE_ADJ.setText("0");
+        TF_TORQ_ADC_RANGE_ADJ.setToolTipText("<html>\nValue -20 to 20<br>\nDefault 0\n</html>");
+        TF_TORQ_ADC_RANGE_ADJ.setEnabled(CB_TORQUE_CALIBRATION.isSelected());
+        TF_TORQ_ADC_RANGE_ADJ.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TF_TORQ_ADC_RANGE_ADJKeyReleased(evt);
+            }
+        });
+
+        CB_ADC_STEP_ESTIM.setText("Estimated");
+        CB_ADC_STEP_ESTIM.setEnabled(CB_TORQUE_CALIBRATION.isSelected());
+        CB_ADC_STEP_ESTIM.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                CB_ADC_STEP_ESTIMStateChanged(evt);
+            }
+        });
+
+        jLabel31.setText("Pedal torque ADC step advanced");
+
+        TF_TORQ_PER_ADC_STEP_ADV.setText("34");
+        TF_TORQ_PER_ADC_STEP_ADV.setToolTipText("<html>\nDefault value 34<br>\nOptional calibration\n</html>");
+        TF_TORQ_PER_ADC_STEP_ADV.setEnabled(CB_TORQUE_CALIBRATION.isSelected());
+
+        jLabel32.setText("Pedal torque ADC angle adjustment");
+
+        TF_TORQ_ADC_ANGLE_ADJ.setText("0");
+        TF_TORQ_ADC_ANGLE_ADJ.setToolTipText("<html>\nValue -20 to 20<br>\nDefault 0\n</html>");
+        TF_TORQ_ADC_ANGLE_ADJ.setEnabled(CB_TORQUE_CALIBRATION.isSelected());
+        TF_TORQ_ADC_ANGLE_ADJ.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TF_TORQ_ADC_ANGLE_ADJKeyReleased(evt);
+            }
+        });
+
+        jLabel33.setText("Startup boost at zero");
+
+        buttonGroup9.add(RB_BOOST_AT_ZERO_CADENCE);
+        RB_BOOST_AT_ZERO_CADENCE.setText("cadence");
+
+        buttonGroup9.add(RB_BOOST_AT_ZERO_SPEED);
+        RB_BOOST_AT_ZERO_SPEED.setText("speed");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(CB_TORQUE_CALIBRATION)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel_TORQ_ADC_OFFSET, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(TF_TORQ_ADC_OFFSET, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jPanel6Layout.createSequentialGroup()
-                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                                        .addComponent(jLabel_TORQ_ADC_MAX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TF_ASS_WITHOUT_PED_THRES, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TF_MOTOR_ACC, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TF_BOOST_CADENCE_STEP, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TF_BOOST_TORQUE_FACTOR, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TF_TORQUE_ADC_MAX, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TF_TORQ_PER_ADC_STEP, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabelMinCurrentADC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(TF_MIN_CURRENT_ADC, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(16, 16, 16))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(Label_Parameter1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(50, 50, 50))
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(CB_ASS_WITHOUT_PED)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(Label_Parameter1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(54, 54, 54)))
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(RB_MOTOR_36V, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(RB_MOTOR_48V, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(CB_ADC_STEP_ESTIM)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TF_TORQ_PER_ADC_STEP, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(TF_MOTOR_ACC, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                                .addComponent(CB_ASS_WITHOUT_PED, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(TF_ASS_WITHOUT_PED_THRES, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabelMotorFastStop, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TF_MOTOR_DEC, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(16, 16, 16))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel_TORQ_ADC_MAX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(14, 14, 14))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel_TORQ_ADC_OFFSET)
+                                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TF_TORQUE_ADC_MAX, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TF_TORQ_ADC_OFFSET, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TF_BOOST_TORQUE_FACTOR, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TF_BOOST_CADENCE_STEP, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TF_TORQ_ADC_RANGE_ADJ, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TF_TORQ_ADC_OFFSET_ADJ, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TF_TORQ_PER_ADC_STEP_ADV, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TF_TORQ_ADC_ANGLE_ADJ, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(16, 16, 16))))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(RB_BOOST_AT_ZERO_CADENCE)
+                                .addGap(18, 18, 18)
+                                .addComponent(RB_BOOST_AT_ZERO_SPEED)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1562,30 +1817,45 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                         .addComponent(RB_MOTOR_36V)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(RB_MOTOR_48V)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(2, 2, 2)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TF_MOTOR_ACC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CB_ASS_WITHOUT_PED)
+                .addGap(2, 2, 2)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelMotorFastStop, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TF_MOTOR_DEC))
+                .addGap(2, 2, 2)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CB_ASS_WITHOUT_PED)
+                    .addComponent(TF_ASS_WITHOUT_PED_THRES, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(CB_ADC_STEP_ESTIM)
+                        .addComponent(TF_TORQ_PER_ADC_STEP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TF_ASS_WITHOUT_PED_THRES, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel31)
+                    .addComponent(TF_TORQ_PER_ADC_STEP_ADV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TF_MIN_CURRENT_ADC)
-                    .addComponent(jLabelMinCurrentADC, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel15)
+                    .addComponent(TF_TORQ_ADC_OFFSET_ADJ, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TF_TORQ_PER_ADC_STEP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CB_TORQUE_CALIBRATION)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TF_TORQ_ADC_RANGE_ADJ, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TF_TORQ_ADC_OFFSET, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel_TORQ_ADC_OFFSET))
+                    .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TF_TORQ_ADC_ANGLE_ADJ, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_TORQ_ADC_OFFSET)
+                    .addComponent(TF_TORQ_ADC_OFFSET, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TF_TORQUE_ADC_MAX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1597,7 +1867,13 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TF_BOOST_CADENCE_STEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22)))
+                    .addComponent(jLabel22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel33)
+                    .addComponent(RB_BOOST_AT_ZERO_CADENCE)
+                    .addComponent(RB_BOOST_AT_ZERO_SPEED))
+                .addGap(42, 42, 42))
         );
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -1653,7 +1929,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1665,7 +1941,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                     .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(TF_BAT_CUR_MAX, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1676,8 +1952,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(TF_BATT_VOLT_CAL, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TF_BATT_VOLT_CUT_OFF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(TF_BATT_CAPACITY_CAL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(TF_BATT_VOLT_CUT_OFF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(TF_BATT_CAPACITY_CAL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -1716,9 +1992,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        Label_Parameter3.setText("Display working on");
-
-        Label_Parameter4.setText("Display always on");
+        Label_Parameter3.setText("Mode");
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel16.setText("Display settings");
@@ -1749,11 +2023,13 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 
         Label_Parameter2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Label_Parameter2.setForeground(new java.awt.Color(255, 0, 0));
-        Label_Parameter2.setText("Display type");
+        Label_Parameter2.setText("Type");
 
         buttonGroup4.add(RB_DISPLAY_WORK_ON);
+        RB_DISPLAY_WORK_ON.setText("Working on");
 
         buttonGroup4.add(RB_DISPLAY_ALWAY_ON);
+        RB_DISPLAY_ALWAY_ON.setText("Always on");
 
         Label_Parameter5.setText("Units type");
 
@@ -1767,7 +2043,6 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         });
 
         buttonGroup6.add(RB_UNIT_KILOMETERS);
-        RB_UNIT_KILOMETERS.setSelected(true);
         RB_UNIT_KILOMETERS.setText("km/h");
         RB_UNIT_KILOMETERS.setToolTipText("<html>Also set on the display<br>\nIf you set miles in display<br>\nset max wheel available\n</html>");
         RB_UNIT_KILOMETERS.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -1780,66 +2055,53 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+            .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(Label_Parameter5, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(21, 21, 21)
-                                .addComponent(RB_UNIT_KILOMETERS)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(Label_Parameter2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(RB_VLCD5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(RB_VLCD6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(RB_XH18))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Label_Parameter2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Label_Parameter3)
-                                    .addComponent(Label_Parameter4))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(RB_DISPLAY_WORK_ON)
-                    .addComponent(RB_DISPLAY_ALWAY_ON)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(RB_XH18)
-                            .addComponent(RB_VLCD5, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addComponent(RB_VLCD6, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addComponent(RB_UNIT_MILES))
-                .addGap(23, 23, 23))
+                        .addComponent(Label_Parameter5, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(RB_UNIT_KILOMETERS)
+                        .addGap(28, 28, 28)
+                        .addComponent(RB_UNIT_MILES))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(Label_Parameter3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(RB_DISPLAY_WORK_ON)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(RB_DISPLAY_ALWAY_ON, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(RB_VLCD5)
-                    .addComponent(Label_Parameter2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(RB_VLCD6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(RB_XH18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                        .addComponent(Label_Parameter3)
-                        .addGap(9, 9, 9)
-                        .addComponent(Label_Parameter4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RB_DISPLAY_WORK_ON)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RB_DISPLAY_ALWAY_ON)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(Label_Parameter2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RB_VLCD6)
+                    .addComponent(RB_XH18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Label_Parameter3)
+                    .addComponent(RB_DISPLAY_WORK_ON)
+                    .addComponent(RB_DISPLAY_ALWAY_ON))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(Label_Parameter5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(RB_UNIT_KILOMETERS))
-                    .addComponent(RB_UNIT_MILES)))
+                    .addComponent(RB_UNIT_MILES))
+                .addGap(57, 57, 57))
         );
 
         jLabelMaxSpeed.setText("Max speed offroad mode");
@@ -1868,31 +2130,32 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                    .addComponent(jLabelMaxSpeed, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(50, 50, 50)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TF_WHEEL_CIRCUMF, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TF_MAX_SPEED, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10))
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabelMaxSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(TF_MAX_SPEED, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addComponent(TF_WHEEL_CIRCUMF, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(2, 2, 2)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TF_WHEEL_CIRCUMF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
-                .addGap(4, 4, 4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TF_MAX_SPEED, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelMaxSpeed))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabelMaxSpeed)))
         );
 
         jLabel39.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -1919,9 +2182,10 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
             }
         });
 
-        jLabel30.setText("ADC optional disabled");
+        jLabel30.setText("Optional ADC function");
 
         buttonGroup3.add(RB_ADC_OPTION_DIS);
+        RB_ADC_OPTION_DIS.setText("None");
         RB_ADC_OPTION_DIS.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 RB_ADC_OPTION_DISStateChanged(evt);
@@ -1929,16 +2193,16 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         });
 
         buttonGroup3.add(RB_THROTTLE);
-        RB_THROTTLE.setEnabled(CB_BRAKE_SENSOR.isSelected());
+        RB_THROTTLE.setText("Throttle");
+        RB_THROTTLE.setEnabled(CB_BRAKE_SENSOR.isSelected()&&(!(CB_COASTER_BRAKE.isSelected())));
         RB_THROTTLE.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 RB_THROTTLEStateChanged(evt);
             }
         });
 
-        jLabel31.setText("Throttle");
-
         buttonGroup3.add(RB_TEMP_LIMIT);
+        RB_TEMP_LIMIT.setText("Temp. sensor");
         RB_TEMP_LIMIT.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 RB_TEMP_LIMITStateChanged(evt);
@@ -1951,9 +2215,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 
         CB_STARTUP_BOOST_ON_START.setText("Startup boost enabled  on startup");
 
-        CB_TOR_SENSOR_ADV.setText("Torque sensor adv. on startup");
-
-        jLabel33.setText("Temperature sensor");
+        CB_TOR_SENSOR_ADV.setText("Torque sensor adv.");
 
         CB_AUTO_DISPLAY_DATA.setText("Auto display data with lights on");
         CB_AUTO_DISPLAY_DATA.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -1978,39 +2240,58 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
             }
         });
 
+        CB_FIELD_WEAKENING_ENABLED.setText("Field weakening enabled");
+        CB_FIELD_WEAKENING_ENABLED.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                CB_FIELD_WEAKENING_ENABLEDStateChanged(evt);
+            }
+        });
+
+        CB_STARTUP_ASSIST_ENABLED.setText("Startup assist enabled");
+        CB_STARTUP_ASSIST_ENABLED.setToolTipText("");
+
+        CB_TORQUE_CALIBRATION.setText("Calibrated");
+        CB_TORQUE_CALIBRATION.setToolTipText("Enable after calibration");
+        CB_TORQUE_CALIBRATION.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                CB_TORQUE_CALIBRATIONStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CB_STARTUP_ASSIST_ENABLED)
+                    .addComponent(CB_FIELD_WEAKENING_ENABLED)
                     .addComponent(CB_COASTER_BRAKE)
                     .addComponent(CB_MAX_SPEED_DISPLAY)
                     .addComponent(CB_AUTO_DISPLAY_DATA)
-                    .addComponent(CB_STREET_MODE_ON_START)
+                    .addComponent(CB_STARTUP_BOOST_ON_START)
+                    .addComponent(CB_ODO_COMPENSATION)
+                    .addComponent(CB_SET_PARAM_ON_START)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGap(6, 6, 6)
-                                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jLabel31, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel33, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(CB_TOR_SENSOR_ADV)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CB_TORQUE_CALIBRATION))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(RB_ADC_OPTION_DIS)
-                            .addComponent(RB_THROTTLE)
-                            .addComponent(RB_TEMP_LIMIT)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(RB_ADC_OPTION_DIS)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RB_THROTTLE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(RB_TEMP_LIMIT))
+                            .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel39)
                     .addComponent(CB_LIGHTS, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CB_WALK_ASSIST, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CB_BRAKE_SENSOR, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CB_STARTUP_BOOST_ON_START)
-                    .addComponent(CB_TOR_SENSOR_ADV)
-                    .addComponent(CB_ODO_COMPENSATION)
-                    .addComponent(CB_SET_PARAM_ON_START))
-                .addGap(0, 14, Short.MAX_VALUE))
+                    .addComponent(CB_STREET_MODE_ON_START)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2025,24 +2306,25 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 .addComponent(CB_BRAKE_SENSOR)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CB_COASTER_BRAKE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(RB_ADC_OPTION_DIS)
-                    .addComponent(jLabel30))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel31)
-                    .addComponent(RB_THROTTLE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel33)
+                    .addComponent(RB_THROTTLE)
                     .addComponent(RB_TEMP_LIMIT))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 7, Short.MAX_VALUE)
                 .addComponent(CB_STREET_MODE_ON_START)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CB_STARTUP_BOOST_ON_START)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(CB_TOR_SENSOR_ADV)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CB_TOR_SENSOR_ADV)
+                    .addComponent(CB_TORQUE_CALIBRATION))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(CB_FIELD_WEAKENING_ENABLED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 8, Short.MAX_VALUE)
+                .addComponent(CB_STARTUP_ASSIST_ENABLED)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CB_ODO_COMPENSATION)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -2051,15 +2333,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 .addComponent(CB_AUTO_DISPLAY_DATA)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CB_MAX_SPEED_DISPLAY)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(4, 4, 4))
         );
-
-        CB_DISPLAY_DOUBLE_DATA.setText("Display double data");
-        CB_DISPLAY_DOUBLE_DATA.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                CB_DISPLAY_DOUBLE_DATAStateChanged(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -2067,43 +2342,32 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(CB_DISPLAY_DOUBLE_DATA)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(CB_DISPLAY_DOUBLE_DATA))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGap(7, 7, 7))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Basic settings", jPanel1);
@@ -2327,7 +2591,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                         .addComponent(TF_CADENCE_ASS_2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addComponent(jLabel51)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 12, Short.MAX_VALUE)
                         .addComponent(TF_CADENCE_ASS_3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2455,38 +2719,58 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jLabel62.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel62.setText("Walk assist mode");
 
-        jLabel63.setText("Assist level 1 - ECO");
+        jLabel63.setText("Speed level 1 - ECO");
 
-        TF_WALK_ASS_1.setText("30");
-        TF_WALK_ASS_1.setToolTipText("Max value 80");
-        TF_WALK_ASS_1.setEnabled(CB_WALK_ASSIST.isSelected());
-
-        jLabel64.setText("Assist level 2 - TOUR");
-
-        TF_WALK_ASS_2.setText("40");
-        TF_WALK_ASS_2.setToolTipText("Max value 80");
-        TF_WALK_ASS_2.setEnabled(CB_WALK_ASSIST.isSelected());
-
-        jLabel65.setText("Assist level 3 - SPORT");
-
-        TF_WALK_ASS_3.setText("50");
-        TF_WALK_ASS_3.setToolTipText("Max value 80");
-        TF_WALK_ASS_3.setEnabled(CB_WALK_ASSIST.isSelected());
-
-        TF_WALK_ASS_4.setText("60");
-        TF_WALK_ASS_4.setToolTipText("Max value 80");
-        TF_WALK_ASS_4.setEnabled(CB_WALK_ASSIST.isSelected());
-
-        jLabel66.setText("Assist level 4 -TURBO");
-
-        jLabelWalkSpeed.setText("Walk assist speed (km/h)");
-
-        TF_WALK_ASS_SPEED.setText("6");
-        TF_WALK_ASS_SPEED.setToolTipText("<html>km/h or mph<br>\nMax value in EU 6 km/h\n</html>");
-        TF_WALK_ASS_SPEED.setEnabled(CB_WALK_ASSIST.isSelected());
-        TF_WALK_ASS_SPEED.addKeyListener(new java.awt.event.KeyAdapter() {
+        TF_WALK_ASS_SPEED_1.setText("35");
+        TF_WALK_ASS_SPEED_1.setToolTipText("<html>km/h x10 or mph x10<br>\nValue 35 to 50 (3.5 to 5.0 km/h)\n</html>");
+        TF_WALK_ASS_SPEED_1.setEnabled(CB_WALK_ASSIST.isSelected());
+        TF_WALK_ASS_SPEED_1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                TF_WALK_ASS_SPEEDKeyReleased(evt);
+                TF_WALK_ASS_SPEED_1KeyReleased(evt);
+            }
+        });
+
+        jLabel64.setText("Speed level 2 - TOUR");
+
+        TF_WALK_ASS_SPEED_2.setText("40");
+        TF_WALK_ASS_SPEED_2.setToolTipText("<html>km/h x10 or mph x10<br>\nValue 35 to 50 (3.5 to 5.0 km/h)\n</html>");
+        TF_WALK_ASS_SPEED_2.setEnabled(CB_WALK_ASSIST.isSelected());
+        TF_WALK_ASS_SPEED_2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TF_WALK_ASS_SPEED_2KeyReleased(evt);
+            }
+        });
+
+        jLabel65.setText("Speed level 3 - SPORT");
+
+        TF_WALK_ASS_SPEED_3.setText("45");
+        TF_WALK_ASS_SPEED_3.setToolTipText("<html>km/h x10 or mph x10<br>\nValue 35 to 50 (3.5 to 5.0 km/h)\n</html>");
+        TF_WALK_ASS_SPEED_3.setEnabled(CB_WALK_ASSIST.isSelected());
+        TF_WALK_ASS_SPEED_3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TF_WALK_ASS_SPEED_3KeyReleased(evt);
+            }
+        });
+
+        TF_WALK_ASS_SPEED_4.setText("50");
+        TF_WALK_ASS_SPEED_4.setToolTipText("<html>km/h x10 or mph x10<br>\nValue 35 to 50 (3.5 to 5.0 km/h)\n</html>");
+        TF_WALK_ASS_SPEED_4.setEnabled(CB_WALK_ASSIST.isSelected());
+        TF_WALK_ASS_SPEED_4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TF_WALK_ASS_SPEED_4KeyReleased(evt);
+            }
+        });
+
+        jLabel66.setText("Speed level 4 -TURBO");
+
+        jLabelWalkSpeed.setText("Walk assist speed limit");
+
+        TF_WALK_ASS_SPEED_LIMIT.setText("60");
+        TF_WALK_ASS_SPEED_LIMIT.setToolTipText("<html>km/h x10 or mph x10<br>\nMax value 60 (in EU 6 km/h)\n</html>");
+        TF_WALK_ASS_SPEED_LIMIT.setEnabled(CB_WALK_ASSIST.isSelected());
+        TF_WALK_ASS_SPEED_LIMIT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TF_WALK_ASS_SPEED_LIMITKeyReleased(evt);
             }
         });
 
@@ -2505,6 +2789,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
             }
         });
 
+        jLabelWalkSpeedUnits.setText("km/h x10");
+
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
@@ -2512,54 +2798,57 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel62, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel15Layout.createSequentialGroup()
-                                .addComponent(CB_WALK_TIME_ENA)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel15Layout.createSequentialGroup()
-                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel68)
-                                    .addComponent(jLabelWalkSpeed)
-                                    .addComponent(jLabel66)
-                                    .addComponent(jLabel65)
-                                    .addComponent(jLabel64)
-                                    .addComponent(jLabel63))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TF_WALK_ASS_1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TF_WALK_ASS_2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TF_WALK_ASS_3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TF_WALK_ASS_4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TF_WALK_ASS_SPEED, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TF_WALK_ASS_TIME, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap())))
+                            .addComponent(jLabel68)
+                            .addComponent(jLabelWalkSpeed)
+                            .addComponent(jLabel66)
+                            .addComponent(jLabel65)
+                            .addComponent(jLabel64)
+                            .addComponent(jLabel63))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TF_WALK_ASS_SPEED_1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TF_WALK_ASS_SPEED_2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TF_WALK_ASS_SPEED_3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TF_WALK_ASS_SPEED_4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TF_WALK_ASS_SPEED_LIMIT, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TF_WALK_ASS_TIME, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addComponent(CB_WALK_TIME_ENA)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addComponent(jLabel62, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelWalkSpeedUnits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
-                .addComponent(jLabel62, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel62, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelWalkSpeedUnits))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel63)
-                    .addComponent(TF_WALK_ASS_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TF_WALK_ASS_SPEED_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel64)
-                    .addComponent(TF_WALK_ASS_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TF_WALK_ASS_SPEED_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel65)
-                    .addComponent(TF_WALK_ASS_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TF_WALK_ASS_SPEED_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel66)
-                    .addComponent(TF_WALK_ASS_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TF_WALK_ASS_SPEED_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelWalkSpeed)
-                    .addComponent(TF_WALK_ASS_SPEED, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TF_WALK_ASS_SPEED_LIMIT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel68)
@@ -2636,34 +2925,36 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addComponent(jLabel70)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TF_CRUISE_ASS_1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addComponent(jLabel71)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TF_CRUISE_ASS_2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addComponent(jLabel72)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TF_CRUISE_ASS_3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                        .addComponent(jLabel73)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TF_CRUISE_ASS_4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addComponent(jLabel74)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TF_CRUISE_SPEED_ENA, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel16Layout.createSequentialGroup()
                         .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(CB_CRUISE_WHITOUT_PED)
                             .addGroup(jPanel16Layout.createSequentialGroup()
-                                .addComponent(jLabel69, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(jLabel69, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabelCruiseSpeedUnits)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(3, 3, 3))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel16Layout.createSequentialGroup()
+                                .addComponent(jLabel70)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TF_CRUISE_ASS_1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel16Layout.createSequentialGroup()
+                                .addComponent(jLabel71)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TF_CRUISE_ASS_2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel16Layout.createSequentialGroup()
+                                .addComponent(jLabel72)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 17, Short.MAX_VALUE)
+                                .addComponent(TF_CRUISE_ASS_3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                                .addComponent(jLabel73)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TF_CRUISE_ASS_4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel16Layout.createSequentialGroup()
+                                .addComponent(jLabel74)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TF_CRUISE_SPEED_ENA, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(3, 3, 3))))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2754,11 +3045,6 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 
         buttonGroup5.add(RB_HYBRID_ON_START);
         RB_HYBRID_ON_START.setToolTipText("Torque & Power");
-        RB_HYBRID_ON_START.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RB_HYBRID_ON_STARTActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
@@ -2857,7 +3143,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         TF_STREET_POWER_LIM.setToolTipText("<html>Max nominal value in EU 250 W<br>\nMax peak value approx. 500 W\n</html>");
         TF_STREET_POWER_LIM.setEnabled(CB_STREET_POWER_LIM.isSelected());
 
-        CB_STREET_POWER_LIM.setText("Street power limit enebled");
+        CB_STREET_POWER_LIM.setText("Street power limit enabled");
         CB_STREET_POWER_LIM.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 CB_STREET_POWER_LIMStateChanged(evt);
@@ -2924,23 +3210,23 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3175,7 +3461,6 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 
         TF_DATA_4.setText("4");
         TF_DATA_4.setToolTipText("<html>0 - motor temperature (°C)<br>\n  1 - battery SOC remaining (%)<br>\n  2 - battery voltage (V)<br>\n  3 - battery current (A)<br>\n  4 - motor power (Watt/10)<br>\n  5 - adc throttle (8 bit)<br>\n  6 - adc torque sensor (10 bit)<br>\n  7 - pedal cadence (rpm)<br>\n  8 - human power(W/10)<br>\n  9 - pedal torque adc delta<br>\n10 - consumed Wh/10\n</html>");
-        TF_DATA_4.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
         TF_DATA_4.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TF_DATA_4KeyReleased(evt);
@@ -3184,7 +3469,6 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 
         TF_DATA_5.setText("7");
         TF_DATA_5.setToolTipText("<html>0 - motor temperature (°C)<br>\n  1 - battery SOC remaining (%)<br>\n  2 - battery voltage (V)<br>\n  3 - battery current (A)<br>\n  4 - motor power (Watt/10)<br>\n  5 - adc throttle (8 bit)<br>\n  6 - adc torque sensor (10 bit)<br>\n  7 - pedal cadence (rpm)<br>\n  8 - human power(W/10)<br>\n  9 - pedal torque adc delta<br>\n10 - consumed Wh/10\n</html>");
-        TF_DATA_5.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
         TF_DATA_5.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TF_DATA_5KeyReleased(evt);
@@ -3197,7 +3481,6 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 
         TF_DATA_6.setText("0");
         TF_DATA_6.setToolTipText("<html>0 - motor temperature (°C)<br>\n  1 - battery SOC remaining (%)<br>\n  2 - battery voltage (V)<br>\n  3 - battery current (A)<br>\n  4 - motor power (Watt/10)<br>\n  5 - adc throttle (8 bit)<br>\n  6 - adc torque sensor (10 bit)<br>\n  7 - pedal cadence (rpm)<br>\n  8 - human power(W/10)<br>\n  9 - pedal torque adc delta<br>\n10 - consumed Wh/10\n</html>");
-        TF_DATA_6.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
         TF_DATA_6.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TF_DATA_6KeyReleased(evt);
@@ -3218,19 +3501,16 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 
         TF_DELAY_DATA_4.setText("50");
         TF_DELAY_DATA_4.setToolTipText("<html>Max value 255 (0.1 sec)<br>\ncontinuous display at zero value\n</html>");
-        TF_DELAY_DATA_4.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
 
         jLabel99.setText("Time to displayed data 5 (0.1 s)");
 
         TF_DELAY_DATA_5.setText("50");
         TF_DELAY_DATA_5.setToolTipText("<html>Max value 255 (0.1 sec)<br>\ncontinuous display at zero value\n</html>");
-        TF_DELAY_DATA_5.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
 
         jLabel100.setText("Time to displayed data 6 (0.1 s)");
 
         TF_DELAY_DATA_6.setText("50");
         TF_DELAY_DATA_6.setToolTipText("<html>Max value 255 (0.1 sec)<br>\ncontinuous display at zero value\n</html>");
-        TF_DELAY_DATA_6.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
 
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
@@ -3351,7 +3631,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jLabel101.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel101.setText("Other function settings");
 
-        jLabel102.setText("ADC throttle value       min");
+        jLabel102.setText("ADC throttle value      min");
 
         TF_ADC_THROTTLE_MIN.setText("47");
         TF_ADC_THROTTLE_MIN.setToolTipText("Value 40 to 50");
@@ -3361,7 +3641,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         TF_ADC_THROTTLE_MAX.setToolTipText("Value 170 to 180");
         TF_ADC_THROTTLE_MAX.setEnabled(RB_THROTTLE.isSelected());
 
-        jLabel103.setText("Throttle assist value    min");
+        jLabel103.setText("Throttle assist value   min");
 
         CB_TEMP_ERR_MIN_LIM.setText("Temperature error with min limit");
         CB_TEMP_ERR_MIN_LIM.setEnabled(RB_TEMP_LIMIT.isSelected());
@@ -3382,16 +3662,6 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 
         TF_MOTOR_BLOCK_TIME.setText("2");
         TF_MOTOR_BLOCK_TIME.setToolTipText("Value 1 to 10 (0.1 s)");
-
-        jLabel107.setText("Motor blocked error - threshold current");
-
-        TF_MOTOR_BLOCK_CURR.setText("30");
-        TF_MOTOR_BLOCK_CURR.setToolTipText("Value 1 to 5 (0.1 A)");
-
-        jLabel108.setText("Motor blocked error - threshold ERPS");
-
-        TF_MOTOR_BLOCK_ERPS.setText("20");
-        TF_MOTOR_BLOCK_ERPS.setToolTipText("Value 10 to 30 (ERPS)");
 
         TF_DELAY_MENU.setText("50");
         TF_DELAY_MENU.setToolTipText("Max value 60 (0.1 s)");
@@ -3425,30 +3695,14 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         buttonGroup7.add(RB_STARTUP_NONE);
         RB_STARTUP_NONE.setText("None");
         RB_STARTUP_NONE.setToolTipText("");
-        RB_STARTUP_NONE.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                RB_STARTUP_NONEStateChanged(evt);
-            }
-        });
 
         buttonGroup7.add(RB_STARTUP_SOC);
-        RB_STARTUP_SOC.setSelected(true);
         RB_STARTUP_SOC.setText("Soc %");
         RB_STARTUP_SOC.setToolTipText("");
-        RB_STARTUP_SOC.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                RB_STARTUP_SOCStateChanged(evt);
-            }
-        });
 
         buttonGroup7.add(RB_STARTUP_VOLTS);
         RB_STARTUP_VOLTS.setText("Volts");
         RB_STARTUP_VOLTS.setToolTipText("");
-        RB_STARTUP_VOLTS.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                RB_STARTUP_VOLTSStateChanged(evt);
-            }
-        });
 
         jLabelCoasterBrakeThreshld.setText("Coaster brake torque threshold");
 
@@ -3456,89 +3710,96 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         TF_COASTER_BRAKE_THRESHOLD.setToolTipText("Max value 255 (s)");
         TF_COASTER_BRAKE_THRESHOLD.setEnabled(CB_COASTER_BRAKE.isSelected());
 
+        jLabel94.setText("Soc % calculation");
+
+        buttonGroup8.add(RB_SOC_AUTO);
+        RB_SOC_AUTO.setText("Auto");
+        RB_SOC_AUTO.setToolTipText("");
+
+        buttonGroup8.add(RB_SOC_WH);
+        RB_SOC_WH.setSelected(true);
+        RB_SOC_WH.setText("Wh");
+        RB_SOC_WH.setToolTipText("");
+
+        buttonGroup8.add(RB_SOC_VOLTS);
+        RB_SOC_VOLTS.setText("Volts");
+        RB_SOC_VOLTS.setToolTipText("");
+
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
         jPanel19Layout.setHorizontalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
+                .addContainerGap()
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(CB_TEMP_ERR_MIN_LIM)
+                        .addComponent(jLabel91, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
+                        .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel104, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel105, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel106, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, 0)
+                        .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TF_MOTOR_BLOCK_TIME, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TF_TEMP_MAX_LIM, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TF_TEMP_MIN_LIM, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TF_COASTER_BRAKE_THRESHOLD, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TF_DELAY_MENU, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TF_NUM_DATA_AUTO_DISPLAY, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32))
+                    .addGroup(jPanel19Layout.createSequentialGroup()
+                        .addComponent(jLabel94, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
                         .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel19Layout.createSequentialGroup()
-                                .addComponent(jLabel102)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(TF_ADC_THROTTLE_MIN, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel109)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TF_ADC_THROTTLE_MAX, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel19Layout.createSequentialGroup()
-                                .addComponent(jLabel104, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(TF_TEMP_MIN_LIM, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel19Layout.createSequentialGroup()
-                                .addComponent(jLabel105, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(TF_TEMP_MAX_LIM, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel19Layout.createSequentialGroup()
-                                .addComponent(jLabel106, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(TF_MOTOR_BLOCK_TIME, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel19Layout.createSequentialGroup()
-                                .addComponent(jLabel107, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(TF_MOTOR_BLOCK_CURR, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel19Layout.createSequentialGroup()
-                                .addComponent(jLabel108, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(TF_MOTOR_BLOCK_ERPS, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel19Layout.createSequentialGroup()
-                                .addComponent(jLabel103)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TF_ASSIST_THROTTLE_MIN, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel110)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TF_ASSIST_THROTTLE_MAX, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel19Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(TF_NUM_DATA_AUTO_DISPLAY, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TF_DELAY_MENU, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap())))
-            .addGroup(jPanel19Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel87, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel90, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(56, 56, 56))
-            .addGroup(jPanel19Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel91, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel19Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelCoasterBrakeThreshld, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(TF_COASTER_BRAKE_THRESHOLD, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(jPanel19Layout.createSequentialGroup()
-                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel87, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel90, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(69, 69, 69))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
+                        .addComponent(jLabelCoasterBrakeThreshld, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(75, 75, 75))
                     .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel101)
+                            .addGroup(jPanel19Layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(CB_TEMP_ERR_MIN_LIM)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel19Layout.createSequentialGroup()
+                        .addComponent(jLabel103)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TF_ASSIST_THROTTLE_MIN, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel110)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TF_ASSIST_THROTTLE_MAX, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel19Layout.createSequentialGroup()
+                        .addComponent(jLabel102)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(TF_ADC_THROTTLE_MIN, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel109)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TF_ADC_THROTTLE_MAX, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31))))
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel19Layout.createSequentialGroup()
                         .addComponent(RB_STARTUP_NONE)
                         .addGap(26, 26, 26)
                         .addComponent(RB_STARTUP_SOC)
                         .addGap(18, 18, 18)
                         .addComponent(RB_STARTUP_VOLTS))
                     .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel101)))
+                        .addComponent(RB_SOC_AUTO)
+                        .addGap(31, 31, 31)
+                        .addComponent(RB_SOC_WH)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(RB_SOC_VOLTS)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel19Layout.setVerticalGroup(
@@ -3559,7 +3820,14 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                     .addComponent(RB_STARTUP_NONE)
                     .addComponent(RB_STARTUP_SOC)
                     .addComponent(RB_STARTUP_VOLTS))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel94)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RB_SOC_AUTO)
+                    .addComponent(RB_SOC_WH)
+                    .addComponent(RB_SOC_VOLTS))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel101)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -3567,17 +3835,18 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                     .addComponent(jLabelCoasterBrakeThreshld))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TF_ADC_THROTTLE_MIN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel102)
+                        .addComponent(TF_ADC_THROTTLE_MIN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(TF_ADC_THROTTLE_MAX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel109)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TF_ASSIST_THROTTLE_MIN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TF_ASSIST_THROTTLE_MAX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel110)
-                    .addComponent(jLabel103))
+                    .addComponent(jLabel103)
+                    .addComponent(jLabel110))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CB_TEMP_ERR_MIN_LIM)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -3592,16 +3861,18 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TF_MOTOR_BLOCK_TIME, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel106))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TF_MOTOR_BLOCK_CURR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel107))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TF_MOTOR_BLOCK_ERPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel108))
-                .addContainerGap())
+                .addGap(10, 10, 10))
         );
+
+        TF_MOTOR_BLOCK_ERPS.setText("20");
+        TF_MOTOR_BLOCK_ERPS.setToolTipText("Value 10 to 30 (ERPS)");
+
+        TF_MOTOR_BLOCK_CURR.setText("30");
+        TF_MOTOR_BLOCK_CURR.setToolTipText("Value 1 to 5 (0.1 A)");
+
+        jLabelMOTOR_BLOCK_CURR.setText("Motor blocked error - threshold current");
+
+        jLabelMOTOR_BLOCK_ERPS.setText("Motor blocked error - threshold ERPS");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -3610,21 +3881,41 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabelMOTOR_BLOCK_CURR)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(TF_MOTOR_BLOCK_CURR, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabelMOTOR_BLOCK_ERPS, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(TF_MOTOR_BLOCK_ERPS, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(50, 50, 50))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(96, Short.MAX_VALUE))
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TF_MOTOR_BLOCK_CURR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelMOTOR_BLOCK_CURR))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TF_MOTOR_BLOCK_ERPS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelMOTOR_BLOCK_ERPS))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Advanced settings", jPanel8);
@@ -3714,16 +4005,11 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 
     private void CB_COASTER_BRAKEStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_CB_COASTER_BRAKEStateChanged
            TF_COASTER_BRAKE_THRESHOLD.setEnabled(CB_COASTER_BRAKE.isSelected());
+           RB_THROTTLE.setEnabled(CB_BRAKE_SENSOR.isSelected()&&(!(CB_COASTER_BRAKE.isSelected())));
+           if(CB_COASTER_BRAKE.isSelected()&&RB_THROTTLE.isSelected()) {
+               RB_ADC_OPTION_DIS.setSelected(true);
+           }  
     }//GEN-LAST:event_CB_COASTER_BRAKEStateChanged
-
-    private void CB_DISPLAY_DOUBLE_DATAStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_CB_DISPLAY_DOUBLE_DATAStateChanged
-        TF_DATA_4.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
-        TF_DATA_5.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
-        TF_DATA_6.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
-        TF_DELAY_DATA_4.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
-        TF_DELAY_DATA_5.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
-        TF_DELAY_DATA_6.setEnabled(CB_DISPLAY_DOUBLE_DATA.isSelected());
-    }//GEN-LAST:event_CB_DISPLAY_DOUBLE_DATAStateChanged
 
     private void CB_WALK_TIME_ENAStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_CB_WALK_TIME_ENAStateChanged
         TF_WALK_ASS_TIME.setEnabled(CB_WALK_TIME_ENA.isSelected() && CB_BRAKE_SENSOR.isSelected() && CB_WALK_ASSIST.isSelected());
@@ -3733,41 +4019,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         TF_WALK_ASS_TIME.setEnabled(CB_WALK_TIME_ENA.isSelected() && CB_BRAKE_SENSOR.isSelected() && CB_WALK_ASSIST.isSelected());
         CB_CRUISE_WHITOUT_PED.setEnabled(CB_BRAKE_SENSOR.isSelected());
         CB_WALK_TIME_ENA.setEnabled(CB_BRAKE_SENSOR.isSelected() && CB_WALK_ASSIST.isSelected());
-        RB_THROTTLE.setEnabled(CB_BRAKE_SENSOR.isSelected());
+        RB_THROTTLE.setEnabled(CB_BRAKE_SENSOR.isSelected()&&(!(CB_COASTER_BRAKE.isSelected())));
     }//GEN-LAST:event_CB_BRAKE_SENSORStateChanged
-
-    private void RB_VLCD5StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_VLCD5StateChanged
-        TF_BAT_CELL_5_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_4_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_3_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_2_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_1_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_3_4.setEnabled(!(RB_VLCD5.isSelected()));
-        TF_BAT_CELL_2_4.setEnabled(!(RB_VLCD5.isSelected()));
-        TF_BAT_CELL_1_4.setEnabled(!(RB_VLCD5.isSelected()));
-    }//GEN-LAST:event_RB_VLCD5StateChanged
-
-    private void RB_VLCD6StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_VLCD6StateChanged
-        TF_BAT_CELL_5_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_4_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_3_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_2_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_1_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_3_4.setEnabled(!(RB_VLCD5.isSelected()));
-        TF_BAT_CELL_2_4.setEnabled(!(RB_VLCD5.isSelected()));
-        TF_BAT_CELL_1_4.setEnabled(!(RB_VLCD5.isSelected()));
-    }//GEN-LAST:event_RB_VLCD6StateChanged
-
-    private void RB_XH18StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_XH18StateChanged
-        TF_BAT_CELL_5_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_4_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_3_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_2_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_1_6.setEnabled(RB_VLCD5.isSelected());
-        TF_BAT_CELL_3_4.setEnabled(!(RB_VLCD5.isSelected()));
-        TF_BAT_CELL_2_4.setEnabled(!(RB_VLCD5.isSelected()));
-        TF_BAT_CELL_1_4.setEnabled(!(RB_VLCD5.isSelected()));
-    }//GEN-LAST:event_RB_XH18StateChanged
 
     private void RB_THROTTLEStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_THROTTLEStateChanged
         TF_ADC_THROTTLE_MIN.setEnabled(RB_THROTTLE.isSelected());
@@ -3809,11 +4062,11 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         int index = Integer.parseInt(TF_DATA_2.getText());
         if ((index >= 0)&&(index <= 10)) {
             jLabelData2.setText("Data 2 - " + displayDataArray[index]); }
-        else {
+        else { 
             jLabelData2.setText("Data 2");	}
         }
         catch(NumberFormatException ex){
-            jLabelData1.setText("Data 2");
+            jLabelData2.setText("Data 2");
         }
     }//GEN-LAST:event_TF_DATA_2KeyReleased
 
@@ -3911,7 +4164,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private void TF_LIGHT_MODE_3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_LIGHT_MODE_3KeyReleased
         try {
         int index = Integer.parseInt(TF_LIGHT_MODE_3.getText());
-        if ((index >= 0)&&(index <= 10)) {
+        if (((index >= 0)&&(index <= 8))||(index == 10)) {
             jLabelLights3.setText("<html>Mode 3 - " + lightModeArray[Integer.parseInt(TF_LIGHT_MODE_3.getText())] + "</html>"); }
         else {
             jLabelLights3.setText("Mode 3");	}
@@ -3941,11 +4194,11 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     }//GEN-LAST:event_CB_LIGHTSStateChanged
 
     private void CB_WALK_ASSISTStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_CB_WALK_ASSISTStateChanged
-        TF_WALK_ASS_1.setEnabled(CB_WALK_ASSIST.isSelected());
-        TF_WALK_ASS_2.setEnabled(CB_WALK_ASSIST.isSelected());
-        TF_WALK_ASS_3.setEnabled(CB_WALK_ASSIST.isSelected());
-        TF_WALK_ASS_4.setEnabled(CB_WALK_ASSIST.isSelected());
-        TF_WALK_ASS_SPEED.setEnabled(CB_WALK_ASSIST.isSelected());
+        TF_WALK_ASS_SPEED_1.setEnabled(CB_WALK_ASSIST.isSelected());
+        TF_WALK_ASS_SPEED_2.setEnabled(CB_WALK_ASSIST.isSelected());
+        TF_WALK_ASS_SPEED_3.setEnabled(CB_WALK_ASSIST.isSelected());
+        TF_WALK_ASS_SPEED_4.setEnabled(CB_WALK_ASSIST.isSelected());
+        TF_WALK_ASS_SPEED_LIMIT.setEnabled(CB_WALK_ASSIST.isSelected());
         TF_WALK_ASS_TIME.setEnabled(CB_WALK_TIME_ENA.isSelected() && CB_BRAKE_SENSOR.isSelected() && CB_WALK_ASSIST.isSelected());
         CB_WALK_TIME_ENA.setEnabled(CB_BRAKE_SENSOR.isSelected() && CB_WALK_ASSIST.isSelected());
         CB_STREET_WALK.setEnabled(CB_WALK_ASSIST.isSelected());
@@ -3955,55 +4208,21 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         TF_NUM_DATA_AUTO_DISPLAY.setEnabled(CB_AUTO_DISPLAY_DATA.isSelected());
     }//GEN-LAST:event_CB_AUTO_DISPLAY_DATAStateChanged
 
-    private void RB_UNIT_KILOMETERSStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_UNIT_KILOMETERSStateChanged
-        if (RB_UNIT_KILOMETERS.isSelected()) {
-            jLabelMaxSpeed.setText("Max speed offroad mode (km/h)");
-            jLabelStreetSpeed.setText("Street speed limit (km/h)");
-            jLabelWalkSpeed.setText("Walk assist speed (km/h)");
-            jLabelCruiseSpeedUnits.setText("km/h");
-            TF_MAX_SPEED.setText(String.valueOf(varMaxSpeed));
-            TF_STREET_SPEED_LIM.setText(String.valueOf(varStreetSpeed));
-            TF_WALK_ASS_SPEED.setText(String.valueOf(varWalkSpeed));
-            TF_CRUISE_SPEED_ENA.setText(String.valueOf(varCruiseSpeed));
-            TF_CRUISE_ASS_1.setText(String.valueOf(varCruiseSpeed1));
-            TF_CRUISE_ASS_2.setText(String.valueOf(varCruiseSpeed2));
-            TF_CRUISE_ASS_3.setText(String.valueOf(varCruiseSpeed3));
-            TF_CRUISE_ASS_4.setText(String.valueOf(varCruiseSpeed4));
-        }
-    }//GEN-LAST:event_RB_UNIT_KILOMETERSStateChanged
-
-    private void RB_UNIT_MILESStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_UNIT_MILESStateChanged
-        if (RB_UNIT_MILES.isSelected()) {
-            jLabelMaxSpeed.setText("Max speed offroad mode (mph)");
-            jLabelStreetSpeed.setText("Street speed limit (mph)");
-            jLabelWalkSpeed.setText("Walk assist speed (mph)");
-            jLabelCruiseSpeedUnits.setText("mph");
-            TF_MAX_SPEED.setText(String.valueOf((varMaxSpeed * 10 + 5) / 16));
-            TF_STREET_SPEED_LIM.setText(String.valueOf((varStreetSpeed * 10 + 5) / 16));
-            TF_WALK_ASS_SPEED.setText(String.valueOf((varWalkSpeed * 10 + 5) / 16));
-            TF_CRUISE_SPEED_ENA.setText(String.valueOf((varCruiseSpeed * 10 + 5) / 16));
-            TF_CRUISE_ASS_1.setText(String.valueOf((varCruiseSpeed1 * 10 + 5) / 16));
-            TF_CRUISE_ASS_2.setText(String.valueOf((varCruiseSpeed2 * 10 + 5) / 16));
-            TF_CRUISE_ASS_3.setText(String.valueOf((varCruiseSpeed3 * 10 + 5) / 16));
-            TF_CRUISE_ASS_4.setText(String.valueOf((varCruiseSpeed4 * 10 + 5) / 16));
-        }
-    }//GEN-LAST:event_RB_UNIT_MILESStateChanged
-
     private void TF_MAX_SPEEDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_MAX_SPEEDKeyReleased
         if (RB_UNIT_KILOMETERS.isSelected()) {
-            varMaxSpeed = Integer.parseInt(TF_MAX_SPEED.getText());
+            intMaxSpeed = Integer.parseInt(TF_MAX_SPEED.getText());
         }
         if (RB_UNIT_MILES.isSelected()) {
-            varMaxSpeed = Integer.parseInt(TF_MAX_SPEED.getText()) * 16 / 10;
+            intMaxSpeed = Integer.parseInt(TF_MAX_SPEED.getText()) * 16 / 10;
         }
     }//GEN-LAST:event_TF_MAX_SPEEDKeyReleased
 
     private void TF_STREET_SPEED_LIMKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_STREET_SPEED_LIMKeyReleased
         if (RB_UNIT_KILOMETERS.isSelected()) {
-            varStreetSpeed = Integer.parseInt(TF_STREET_SPEED_LIM.getText());
+            intStreetSpeed = Integer.parseInt(TF_STREET_SPEED_LIM.getText());
         }
         if (RB_UNIT_MILES.isSelected()) {
-            varStreetSpeed = Integer.parseInt(TF_STREET_SPEED_LIM.getText()) * 16 / 10;
+            intStreetSpeed = Integer.parseInt(TF_STREET_SPEED_LIM.getText()) * 16 / 10;
         }
     }//GEN-LAST:event_TF_STREET_SPEED_LIMKeyReleased
 
@@ -4018,83 +4237,307 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 
     private void CB_TORQUE_CALIBRATIONStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_CB_TORQUE_CALIBRATIONStateChanged
         TF_TORQ_ADC_OFFSET.setEnabled(CB_TORQUE_CALIBRATION.isSelected());
+        TF_TORQ_ADC_RANGE_ADJ.setEnabled(CB_TORQUE_CALIBRATION.isSelected());
+        TF_TORQ_ADC_ANGLE_ADJ.setEnabled(CB_TORQUE_CALIBRATION.isSelected());
         TF_TORQUE_ADC_MAX.setEnabled(CB_TORQUE_CALIBRATION.isSelected());
+        CB_ADC_STEP_ESTIM.setEnabled(CB_TORQUE_CALIBRATION.isSelected());
+        TF_TORQ_PER_ADC_STEP_ADV.setEnabled(CB_TORQUE_CALIBRATION.isSelected());
     }//GEN-LAST:event_CB_TORQUE_CALIBRATIONStateChanged
 
-    private void RB_STARTUP_VOLTSStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_STARTUP_VOLTSStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RB_STARTUP_VOLTSStateChanged
-
-    private void RB_STARTUP_SOCStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_STARTUP_SOCStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RB_STARTUP_SOCStateChanged
-
-    private void RB_STARTUP_NONEStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_STARTUP_NONEStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RB_STARTUP_NONEStateChanged
-
-    private void RB_HYBRID_ON_STARTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RB_HYBRID_ON_STARTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RB_HYBRID_ON_STARTActionPerformed
-
-    private void TF_WALK_ASS_SPEEDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_WALK_ASS_SPEEDKeyReleased
+    private void TF_WALK_ASS_SPEED_LIMITKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_WALK_ASS_SPEED_LIMITKeyReleased
         if (RB_UNIT_KILOMETERS.isSelected()) {
-            varWalkSpeed = Integer.parseInt(TF_WALK_ASS_SPEED.getText());
+            intWalkSpeedLimit = Integer.parseInt(TF_WALK_ASS_SPEED_LIMIT.getText());
         }
         if (RB_UNIT_MILES.isSelected()) {
-            varWalkSpeed = Integer.parseInt(TF_WALK_ASS_SPEED.getText()) * 16 / 10;
+            intWalkSpeedLimit = Integer.parseInt(TF_WALK_ASS_SPEED_LIMIT.getText()) * 16 / 10;
         }
-    }//GEN-LAST:event_TF_WALK_ASS_SPEEDKeyReleased
+    }//GEN-LAST:event_TF_WALK_ASS_SPEED_LIMITKeyReleased
 
     private void TF_CRUISE_ASS_1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_CRUISE_ASS_1KeyReleased
         if (RB_UNIT_KILOMETERS.isSelected()) {
-            varCruiseSpeed1 = Integer.parseInt(TF_CRUISE_ASS_1.getText());
+            intCruiseSpeed1 = Integer.parseInt(TF_CRUISE_ASS_1.getText());
         }
         if (RB_UNIT_MILES.isSelected()) {
-            varCruiseSpeed1 = Integer.parseInt(TF_CRUISE_ASS_1.getText()) * 16 / 10;
+            intCruiseSpeed1 = Integer.parseInt(TF_CRUISE_ASS_1.getText()) * 16 / 10;
         }
     }//GEN-LAST:event_TF_CRUISE_ASS_1KeyReleased
 
     private void TF_CRUISE_ASS_2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_CRUISE_ASS_2KeyReleased
         if (RB_UNIT_KILOMETERS.isSelected()) {
-            varCruiseSpeed2 = Integer.parseInt(TF_CRUISE_ASS_2.getText());
+            intCruiseSpeed2 = Integer.parseInt(TF_CRUISE_ASS_2.getText());
         }
         if (RB_UNIT_MILES.isSelected()) {
-            varCruiseSpeed2 = Integer.parseInt(TF_CRUISE_ASS_2.getText()) * 16 / 10;
+            intCruiseSpeed2 = Integer.parseInt(TF_CRUISE_ASS_2.getText()) * 16 / 10;
         }
     }//GEN-LAST:event_TF_CRUISE_ASS_2KeyReleased
 
     private void TF_CRUISE_ASS_3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_CRUISE_ASS_3KeyReleased
         if (RB_UNIT_KILOMETERS.isSelected()) {
-            varCruiseSpeed3 = Integer.parseInt(TF_CRUISE_ASS_3.getText());
+            intCruiseSpeed3 = Integer.parseInt(TF_CRUISE_ASS_3.getText());
         }
         if (RB_UNIT_MILES.isSelected()) {
-            varCruiseSpeed3 = Integer.parseInt(TF_CRUISE_ASS_3.getText()) * 16 / 10;
+            intCruiseSpeed3 = Integer.parseInt(TF_CRUISE_ASS_3.getText()) * 16 / 10;
         }
     }//GEN-LAST:event_TF_CRUISE_ASS_3KeyReleased
 
     private void TF_CRUISE_ASS_4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_CRUISE_ASS_4KeyReleased
         if (RB_UNIT_KILOMETERS.isSelected()) {
-            varCruiseSpeed4 = Integer.parseInt(TF_CRUISE_ASS_4.getText());
+            intCruiseSpeed4 = Integer.parseInt(TF_CRUISE_ASS_4.getText());
         }
         if (RB_UNIT_MILES.isSelected()) {
-            varCruiseSpeed4 = Integer.parseInt(TF_CRUISE_ASS_4.getText()) * 16 / 10;
+            intCruiseSpeed4 = Integer.parseInt(TF_CRUISE_ASS_4.getText()) * 16 / 10;
         }
     }//GEN-LAST:event_TF_CRUISE_ASS_4KeyReleased
 
     private void TF_CRUISE_SPEED_ENAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_CRUISE_SPEED_ENAKeyReleased
         if (RB_UNIT_KILOMETERS.isSelected()) {
-            varCruiseSpeed = Integer.parseInt(TF_CRUISE_SPEED_ENA.getText());
+            intCruiseSpeed = Integer.parseInt(TF_CRUISE_SPEED_ENA.getText());
         }
         if (RB_UNIT_MILES.isSelected()) {
-            varCruiseSpeed = Integer.parseInt(TF_CRUISE_SPEED_ENA.getText()) * 16 / 10;
+            intCruiseSpeed = Integer.parseInt(TF_CRUISE_SPEED_ENA.getText()) * 16 / 10;
         }
     }//GEN-LAST:event_TF_CRUISE_SPEED_ENAKeyReleased
 
-    private void TF_ASS_WITHOUT_PED_THRESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_ASS_WITHOUT_PED_THRESActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TF_ASS_WITHOUT_PED_THRESActionPerformed
+    private void TF_TORQ_ADC_OFFSET_ADJKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_TORQ_ADC_OFFSET_ADJKeyReleased
+        int value = 0;
+        int length = TF_TORQ_ADC_OFFSET_ADJ.getText().length();
+        String sign = TF_TORQ_ADC_OFFSET_ADJ.getText().substring(0, 1);
+        String empty = TF_TORQ_ADC_OFFSET_ADJ.getText();
+        
+        if (sign.equals("-")) {
+            value = Integer.parseInt(TF_TORQ_ADC_OFFSET_ADJ.getText().substring(1, length)); }
+        else if (empty.equals("")) {
+            value = 0; }
+        else {
+            value = Integer.parseInt(TF_TORQ_ADC_OFFSET_ADJ.getText()); }
+        
+        if ((value >= 0)&&(value <= MIDDLE_OFFSET_ADJ)) {
+            if (empty.equals("")) {
+                intTorqueOffsetAdj = MIDDLE_OFFSET_ADJ; }
+            else if (sign.equals("-")) {
+                intTorqueOffsetAdj = MIDDLE_OFFSET_ADJ - value; }
+            else {
+                intTorqueOffsetAdj = MIDDLE_OFFSET_ADJ + value; 
+                if (intTorqueOffsetAdj > OFFSET_MAX_VALUE) {
+                    intTorqueOffsetAdj = OFFSET_MAX_VALUE;
+                    TF_TORQ_ADC_OFFSET_ADJ.setText(String.valueOf(OFFSET_MAX_VALUE - MIDDLE_OFFSET_ADJ));
+                }
+            }
+        }
+        else {
+            TF_TORQ_ADC_OFFSET_ADJ.setText("0");
+            intTorqueOffsetAdj = MIDDLE_OFFSET_ADJ;
+        }
+    }//GEN-LAST:event_TF_TORQ_ADC_OFFSET_ADJKeyReleased
+    
+    private void CB_FIELD_WEAKENING_ENABLEDStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_CB_FIELD_WEAKENING_ENABLEDStateChanged
+    /*    if (CB_FIELD_WEAKENING_ENABLED.isSelected()) {
+            CB_FIELD_WEAKENING_ENABLED.setText("Field weakening enabled - PWM 18.0 kHz"); }
+        else {
+            CB_FIELD_WEAKENING_ENABLED.setText("Field weakening disabled - PWM 15.6 kHz"); }
+    */
+    }//GEN-LAST:event_CB_FIELD_WEAKENING_ENABLEDStateChanged
 
+    private void TF_WALK_ASS_SPEED_1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_WALK_ASS_SPEED_1KeyReleased
+        if (RB_UNIT_KILOMETERS.isSelected()) {
+            intWalkSpeed1 = Integer.parseInt(TF_WALK_ASS_SPEED_1.getText());
+        }
+        if (RB_UNIT_MILES.isSelected()) {
+            intWalkSpeed1 = Integer.parseInt(TF_WALK_ASS_SPEED_1.getText()) * 16 / 10;
+        }
+    }//GEN-LAST:event_TF_WALK_ASS_SPEED_1KeyReleased
+
+    private void TF_WALK_ASS_SPEED_2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_WALK_ASS_SPEED_2KeyReleased
+        if (RB_UNIT_KILOMETERS.isSelected()) {
+            intWalkSpeed2 = Integer.parseInt(TF_WALK_ASS_SPEED_2.getText());
+        }
+        if (RB_UNIT_MILES.isSelected()) {
+            intWalkSpeed2 = Integer.parseInt(TF_WALK_ASS_SPEED_2.getText()) * 16 / 10;
+        }
+    }//GEN-LAST:event_TF_WALK_ASS_SPEED_2KeyReleased
+
+    private void TF_WALK_ASS_SPEED_3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_WALK_ASS_SPEED_3KeyReleased
+        if (RB_UNIT_KILOMETERS.isSelected()) {
+            intWalkSpeed3 = Integer.parseInt(TF_WALK_ASS_SPEED_3.getText());
+        }
+        if (RB_UNIT_MILES.isSelected()) {
+            intWalkSpeed3 = Integer.parseInt(TF_WALK_ASS_SPEED_3.getText()) * 16 / 10;
+        }
+    }//GEN-LAST:event_TF_WALK_ASS_SPEED_3KeyReleased
+
+    private void TF_WALK_ASS_SPEED_4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_WALK_ASS_SPEED_4KeyReleased
+        if (RB_UNIT_KILOMETERS.isSelected()) {
+            intWalkSpeed4 = Integer.parseInt(TF_WALK_ASS_SPEED_4.getText());
+        }
+        if (RB_UNIT_MILES.isSelected()) {
+            intWalkSpeed4 = Integer.parseInt(TF_WALK_ASS_SPEED_4.getText()) * 16 / 10;
+        }
+    }//GEN-LAST:event_TF_WALK_ASS_SPEED_4KeyReleased
+
+    private void RB_UNIT_MILESStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_UNIT_MILESStateChanged
+        if (RB_UNIT_MILES.isSelected()) {
+            jLabelMaxSpeed.setText("Max speed offroad mode (mph)");
+            jLabelStreetSpeed.setText("Street speed limit (mph)");
+            jLabelCruiseSpeedUnits.setText("mph");
+            jLabelWalkSpeedUnits.setText("mph x10");
+            TF_MAX_SPEED.setText(String.valueOf((intMaxSpeed * 10 + 5) / 16));
+            TF_STREET_SPEED_LIM.setText(String.valueOf((intStreetSpeed * 10 + 5) / 16));
+            TF_WALK_ASS_SPEED_1.setText(String.valueOf((intWalkSpeed1 * 10 + 5) / 16));
+            TF_WALK_ASS_SPEED_2.setText(String.valueOf((intWalkSpeed2 * 10 + 5) / 16));
+            TF_WALK_ASS_SPEED_3.setText(String.valueOf((intWalkSpeed3 * 10 + 5) / 16));
+            TF_WALK_ASS_SPEED_4.setText(String.valueOf((intWalkSpeed4 * 10 + 5) / 16));
+            TF_WALK_ASS_SPEED_LIMIT.setText(String.valueOf((intWalkSpeedLimit * 10 + 5) / 16));
+            TF_CRUISE_SPEED_ENA.setText(String.valueOf((intCruiseSpeed * 10 + 5) / 16));
+            TF_CRUISE_ASS_1.setText(String.valueOf((intCruiseSpeed1 * 10 + 5) / 16));
+            TF_CRUISE_ASS_2.setText(String.valueOf((intCruiseSpeed2 * 10 + 5) / 16));
+            TF_CRUISE_ASS_3.setText(String.valueOf((intCruiseSpeed3 * 10 + 5) / 16));
+            TF_CRUISE_ASS_4.setText(String.valueOf((intCruiseSpeed4 * 10 + 5) / 16));
+        }
+    }//GEN-LAST:event_RB_UNIT_MILESStateChanged
+
+    private void RB_XH18StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_XH18StateChanged
+        TF_BAT_CELL_5_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_4_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_3_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_2_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_1_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_3_4.setEnabled(!(RB_VLCD5.isSelected()));
+        TF_BAT_CELL_2_4.setEnabled(!(RB_VLCD5.isSelected()));
+        TF_BAT_CELL_1_4.setEnabled(!(RB_VLCD5.isSelected()));
+    }//GEN-LAST:event_RB_XH18StateChanged
+
+    private void RB_VLCD5StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_VLCD5StateChanged
+        TF_BAT_CELL_5_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_4_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_3_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_2_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_1_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_3_4.setEnabled(!(RB_VLCD5.isSelected()));
+        TF_BAT_CELL_2_4.setEnabled(!(RB_VLCD5.isSelected()));
+        TF_BAT_CELL_1_4.setEnabled(!(RB_VLCD5.isSelected()));
+    }//GEN-LAST:event_RB_VLCD5StateChanged
+
+    private void RB_VLCD6StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_VLCD6StateChanged
+        TF_BAT_CELL_5_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_4_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_3_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_2_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_1_6.setEnabled(RB_VLCD5.isSelected());
+        TF_BAT_CELL_3_4.setEnabled(!(RB_VLCD5.isSelected()));
+        TF_BAT_CELL_2_4.setEnabled(!(RB_VLCD5.isSelected()));
+        TF_BAT_CELL_1_4.setEnabled(!(RB_VLCD5.isSelected()));
+    }//GEN-LAST:event_RB_VLCD6StateChanged
+
+    private void TF_TORQ_ADC_RANGE_ADJKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_TORQ_ADC_RANGE_ADJKeyReleased
+        int value = 0;
+        int length = TF_TORQ_ADC_RANGE_ADJ.getText().length();
+        String sign = TF_TORQ_ADC_RANGE_ADJ.getText().substring(0, 1);
+        String empty = TF_TORQ_ADC_RANGE_ADJ.getText();
+        
+        if (sign.equals("-")) {
+            value = Integer.parseInt(TF_TORQ_ADC_RANGE_ADJ.getText().substring(1, length)); }
+        else if (empty.equals("")) {
+            value = 0; }
+        else {
+            value = Integer.parseInt(TF_TORQ_ADC_RANGE_ADJ.getText()); }
+        
+        if ((value >= 0)&&(value <= MIDDLE_RANGE_ADJ)) {
+            if (empty.equals("")) {
+                intTorqueRangeAdj = MIDDLE_RANGE_ADJ; }
+            else if (sign.equals("-")) {
+                intTorqueRangeAdj = MIDDLE_RANGE_ADJ - value; }
+            else {
+                intTorqueRangeAdj = MIDDLE_RANGE_ADJ + value; }
+        }
+        else {
+            TF_TORQ_ADC_RANGE_ADJ.setText("0");
+            intTorqueRangeAdj = MIDDLE_RANGE_ADJ;
+        } 
+    }//GEN-LAST:event_TF_TORQ_ADC_RANGE_ADJKeyReleased
+
+    private void CB_ADC_STEP_ESTIMStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_CB_ADC_STEP_ESTIMStateChanged
+        TF_TORQ_PER_ADC_STEP.setEnabled(!CB_ADC_STEP_ESTIM.isSelected());
+        
+        if(CB_ADC_STEP_ESTIM.isSelected()) {
+            intTorqueAdcOffset = Integer.parseInt(TF_TORQ_ADC_OFFSET.getText());
+            intTorqueAdcMax = Integer.parseInt(TF_TORQUE_ADC_MAX.getText());
+            intTorqueAdcOnWeight = intTorqueAdcOffset + ((intTorqueAdcMax - intTorqueAdcOffset) * 75) / 100;
+            intTorqueAdcStepCalc = (WEIGHT_ON_PEDAL * 167) / (intTorqueAdcOnWeight - intTorqueAdcOffset);
+            TF_TORQ_PER_ADC_STEP.setText(String.valueOf(intTorqueAdcStepCalc));
+        }
+        else {
+            TF_TORQ_PER_ADC_STEP.setText(String.valueOf(intTorqueAdcStep));
+        }
+    }//GEN-LAST:event_CB_ADC_STEP_ESTIMStateChanged
+
+    private void TF_TORQ_ADC_OFFSETKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_TORQ_ADC_OFFSETKeyReleased
+        if(CB_ADC_STEP_ESTIM.isSelected()) {
+            intTorqueAdcOffset = Integer.parseInt(TF_TORQ_ADC_OFFSET.getText());
+            intTorqueAdcMax = Integer.parseInt(TF_TORQUE_ADC_MAX.getText());
+            intTorqueAdcOnWeight = intTorqueAdcOffset + ((intTorqueAdcMax - intTorqueAdcOffset) * 75) / 100;
+            intTorqueAdcStepCalc = (WEIGHT_ON_PEDAL * 167) / (intTorqueAdcOnWeight - intTorqueAdcOffset);
+            TF_TORQ_PER_ADC_STEP.setText(String.valueOf(intTorqueAdcStepCalc));
+        }
+    }//GEN-LAST:event_TF_TORQ_ADC_OFFSETKeyReleased
+
+    private void TF_TORQUE_ADC_MAXKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_TORQUE_ADC_MAXKeyReleased
+        if(CB_ADC_STEP_ESTIM.isSelected()) {
+            intTorqueAdcOffset = Integer.parseInt(TF_TORQ_ADC_OFFSET.getText());
+            intTorqueAdcMax = Integer.parseInt(TF_TORQUE_ADC_MAX.getText());
+            intTorqueAdcOnWeight = intTorqueAdcOffset + ((intTorqueAdcMax - intTorqueAdcOffset) * 75) / 100;
+            intTorqueAdcStepCalc = (WEIGHT_ON_PEDAL * 167) / (intTorqueAdcOnWeight - intTorqueAdcOffset);
+            TF_TORQ_PER_ADC_STEP.setText(String.valueOf(intTorqueAdcStepCalc));
+        }
+    }//GEN-LAST:event_TF_TORQUE_ADC_MAXKeyReleased
+
+    private void TF_TORQ_ADC_ANGLE_ADJKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_TORQ_ADC_ANGLE_ADJKeyReleased
+        int value = 0;
+        int length = TF_TORQ_ADC_ANGLE_ADJ.getText().length();
+        String sign = TF_TORQ_ADC_ANGLE_ADJ.getText().substring(0, 1);
+        String empty = TF_TORQ_ADC_ANGLE_ADJ.getText();
+        
+        if (sign.equals("-")) {
+            value = Integer.parseInt(TF_TORQ_ADC_ANGLE_ADJ.getText().substring(1, length)); }
+        else if (empty.equals("")) {
+            value = 0; }
+        else {
+            value = Integer.parseInt(TF_TORQ_ADC_ANGLE_ADJ.getText()); }
+        
+        if ((value >= 0)&&(value <= MIDDLE_ANGLE_ADJ)) {
+            if (empty.equals("")) {
+                intTorqueAngleAdj = MIDDLE_ANGLE_ADJ; }
+            else if (sign.equals("-")) {
+                intTorqueAngleAdj = MIDDLE_ANGLE_ADJ - value; }
+            else {
+                intTorqueAngleAdj = MIDDLE_ANGLE_ADJ + value; }
+        }
+        else {
+            TF_TORQ_ADC_ANGLE_ADJ.setText("0");
+            intTorqueAngleAdj = MIDDLE_ANGLE_ADJ;
+        } 
+    }//GEN-LAST:event_TF_TORQ_ADC_ANGLE_ADJKeyReleased
+
+    private void RB_UNIT_KILOMETERSStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_UNIT_KILOMETERSStateChanged
+        if (RB_UNIT_KILOMETERS.isSelected()) {
+            jLabelMaxSpeed.setText("Max speed offroad mode (km/h)");
+            jLabelStreetSpeed.setText("Street speed limit (km/h)");
+            jLabelCruiseSpeedUnits.setText("km/h");
+            jLabelWalkSpeedUnits.setText("km/h x10");
+            TF_MAX_SPEED.setText(String.valueOf(intMaxSpeed));
+            TF_STREET_SPEED_LIM.setText(String.valueOf(intStreetSpeed));
+            TF_WALK_ASS_SPEED_1.setText(String.valueOf(intWalkSpeed1));
+            TF_WALK_ASS_SPEED_2.setText(String.valueOf(intWalkSpeed2));
+            TF_WALK_ASS_SPEED_3.setText(String.valueOf(intWalkSpeed3));
+            TF_WALK_ASS_SPEED_4.setText(String.valueOf(intWalkSpeed4));
+            TF_WALK_ASS_SPEED_LIMIT.setText(String.valueOf(intWalkSpeedLimit));
+            TF_CRUISE_SPEED_ENA.setText(String.valueOf(intCruiseSpeed));
+            TF_CRUISE_ASS_1.setText(String.valueOf(intCruiseSpeed1));
+            TF_CRUISE_ASS_2.setText(String.valueOf(intCruiseSpeed2));
+            TF_CRUISE_ASS_3.setText(String.valueOf(intCruiseSpeed3));
+            TF_CRUISE_ASS_4.setText(String.valueOf(intCruiseSpeed4));
+        }
+    }//GEN-LAST:event_RB_UNIT_KILOMETERSStateChanged
+    
     /*
      * @param args the command line arguments
      */
@@ -4131,16 +4574,18 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox CB_ADC_STEP_ESTIM;
     private javax.swing.JCheckBox CB_ASS_WITHOUT_PED;
     private javax.swing.JCheckBox CB_AUTO_DISPLAY_DATA;
     private javax.swing.JCheckBox CB_BRAKE_SENSOR;
     private javax.swing.JCheckBox CB_COASTER_BRAKE;
     private javax.swing.JCheckBox CB_CRUISE_WHITOUT_PED;
-    private javax.swing.JCheckBox CB_DISPLAY_DOUBLE_DATA;
+    private javax.swing.JCheckBox CB_FIELD_WEAKENING_ENABLED;
     private javax.swing.JCheckBox CB_LIGHTS;
     private javax.swing.JCheckBox CB_MAX_SPEED_DISPLAY;
     private javax.swing.JCheckBox CB_ODO_COMPENSATION;
     private javax.swing.JCheckBox CB_SET_PARAM_ON_START;
+    private javax.swing.JCheckBox CB_STARTUP_ASSIST_ENABLED;
     private javax.swing.JCheckBox CB_STARTUP_BOOST_ON_START;
     private javax.swing.JCheckBox CB_STREET_CRUISE;
     private javax.swing.JCheckBox CB_STREET_MODE_ON_START;
@@ -4156,9 +4601,10 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.JLabel Label_Parameter1;
     private javax.swing.JLabel Label_Parameter2;
     private javax.swing.JLabel Label_Parameter3;
-    private javax.swing.JLabel Label_Parameter4;
     private javax.swing.JLabel Label_Parameter5;
     private javax.swing.JRadioButton RB_ADC_OPTION_DIS;
+    private javax.swing.JRadioButton RB_BOOST_AT_ZERO_CADENCE;
+    private javax.swing.JRadioButton RB_BOOST_AT_ZERO_SPEED;
     private javax.swing.JRadioButton RB_CADENCE_ON_START;
     private javax.swing.JRadioButton RB_DISPLAY_ALWAY_ON;
     private javax.swing.JRadioButton RB_DISPLAY_WORK_ON;
@@ -4167,6 +4613,9 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.JRadioButton RB_MOTOR_36V;
     private javax.swing.JRadioButton RB_MOTOR_48V;
     private javax.swing.JRadioButton RB_POWER_ON_START;
+    private javax.swing.JRadioButton RB_SOC_AUTO;
+    private javax.swing.JRadioButton RB_SOC_VOLTS;
+    private javax.swing.JRadioButton RB_SOC_WH;
     private javax.swing.JRadioButton RB_STARTUP_NONE;
     private javax.swing.JRadioButton RB_STARTUP_SOC;
     private javax.swing.JRadioButton RB_STARTUP_VOLTS;
@@ -4236,11 +4685,11 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.JTextField TF_LIGHT_MODE_3;
     private javax.swing.JTextField TF_LIGHT_MODE_ON_START;
     private javax.swing.JTextField TF_MAX_SPEED;
-    private javax.swing.JTextField TF_MIN_CURRENT_ADC;
     private javax.swing.JTextField TF_MOTOR_ACC;
     private javax.swing.JTextField TF_MOTOR_BLOCK_CURR;
     private javax.swing.JTextField TF_MOTOR_BLOCK_ERPS;
     private javax.swing.JTextField TF_MOTOR_BLOCK_TIME;
+    private javax.swing.JTextField TF_MOTOR_DEC;
     private javax.swing.JTextField TF_NUM_DATA_AUTO_DISPLAY;
     private javax.swing.JTextField TF_POWER_ASS_1;
     private javax.swing.JTextField TF_POWER_ASS_2;
@@ -4255,13 +4704,17 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.JTextField TF_TORQUE_ASS_2;
     private javax.swing.JTextField TF_TORQUE_ASS_3;
     private javax.swing.JTextField TF_TORQUE_ASS_4;
+    private javax.swing.JTextField TF_TORQ_ADC_ANGLE_ADJ;
     private javax.swing.JTextField TF_TORQ_ADC_OFFSET;
+    private javax.swing.JTextField TF_TORQ_ADC_OFFSET_ADJ;
+    private javax.swing.JTextField TF_TORQ_ADC_RANGE_ADJ;
     private javax.swing.JTextField TF_TORQ_PER_ADC_STEP;
-    private javax.swing.JTextField TF_WALK_ASS_1;
-    private javax.swing.JTextField TF_WALK_ASS_2;
-    private javax.swing.JTextField TF_WALK_ASS_3;
-    private javax.swing.JTextField TF_WALK_ASS_4;
-    private javax.swing.JTextField TF_WALK_ASS_SPEED;
+    private javax.swing.JTextField TF_TORQ_PER_ADC_STEP_ADV;
+    private javax.swing.JTextField TF_WALK_ASS_SPEED_1;
+    private javax.swing.JTextField TF_WALK_ASS_SPEED_2;
+    private javax.swing.JTextField TF_WALK_ASS_SPEED_3;
+    private javax.swing.JTextField TF_WALK_ASS_SPEED_4;
+    private javax.swing.JTextField TF_WALK_ASS_SPEED_LIMIT;
     private javax.swing.JTextField TF_WALK_ASS_TIME;
     private javax.swing.JTextField TF_WHEEL_CIRCUMF;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -4271,6 +4724,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.ButtonGroup buttonGroup6;
     private javax.swing.ButtonGroup buttonGroup7;
+    private javax.swing.ButtonGroup buttonGroup8;
+    private javax.swing.ButtonGroup buttonGroup9;
     private javax.swing.JList<String> expSet;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -4282,14 +4737,13 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel104;
     private javax.swing.JLabel jLabel105;
     private javax.swing.JLabel jLabel106;
-    private javax.swing.JLabel jLabel107;
-    private javax.swing.JLabel jLabel108;
     private javax.swing.JLabel jLabel109;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel110;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -4297,6 +4751,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
@@ -4306,6 +4761,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
@@ -4324,7 +4780,6 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
@@ -4367,6 +4822,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel91;
     private javax.swing.JLabel jLabel92;
     private javax.swing.JLabel jLabel93;
+    private javax.swing.JLabel jLabel94;
     private javax.swing.JLabel jLabel96;
     private javax.swing.JLabel jLabel97;
     private javax.swing.JLabel jLabel98;
@@ -4383,10 +4839,13 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelLights1;
     private javax.swing.JLabel jLabelLights2;
     private javax.swing.JLabel jLabelLights3;
+    private javax.swing.JLabel jLabelMOTOR_BLOCK_CURR;
+    private javax.swing.JLabel jLabelMOTOR_BLOCK_ERPS;
     private javax.swing.JLabel jLabelMaxSpeed;
-    private javax.swing.JLabel jLabelMinCurrentADC;
+    private javax.swing.JLabel jLabelMotorFastStop;
     private javax.swing.JLabel jLabelStreetSpeed;
     private javax.swing.JLabel jLabelWalkSpeed;
+    private javax.swing.JLabel jLabelWalkSpeedUnits;
     private javax.swing.JLabel jLabel_TORQ_ADC_MAX;
     private javax.swing.JLabel jLabel_TORQ_ADC_OFFSET;
     private javax.swing.JPanel jPanel1;

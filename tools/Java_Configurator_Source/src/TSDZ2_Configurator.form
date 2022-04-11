@@ -21,13 +21,14 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="buttonGroup7">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup8">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup9">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="TSDZ2 Parameter Configurator 3.0 for Open Source Firmware v20.1C"/>
-    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1192, 608]"/>
-    </Property>
+    <Property name="title" type="java.lang.String" value="TSDZ2 Parameter Configurator 4.1 for Open Source Firmware v20.1C.2"/>
     <Property name="resizable" type="boolean" value="false"/>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1192, 608]"/>
@@ -135,26 +136,17 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                          <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jPanel3" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                              <Component id="jPanel5" max="32767" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jPanel3" max="32767" attributes="0"/>
+                              <Component id="jPanel5" alignment="0" max="32767" attributes="0"/>
                           </Group>
+                          <Component id="jPanel7" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                              <Component id="CB_DISPLAY_DOUBLE_DATA" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -162,28 +154,21 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace pref="32" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                          <Component id="jPanel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="jPanel6" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="CB_DISPLAY_DOUBLE_DATA" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel7" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                                  <Component id="jPanel5" min="-2" pref="110" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="33" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -193,68 +178,19 @@
 
               <Layout>
                 <DimensionLayout dim="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="CB_TORQUE_CALIBRATION" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          <Component id="jLabel_TORQ_ADC_OFFSET" min="-2" pref="212" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="TF_TORQ_ADC_OFFSET" min="-2" pref="49" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jLabel5" alignment="1" max="32767" attributes="0"/>
-                                              <Component id="jLabel6" alignment="1" max="32767" attributes="0"/>
-                                              <Component id="jLabel20" alignment="1" max="32767" attributes="0"/>
-                                              <Group type="102" attributes="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="jLabel22" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
-                                                      <Component id="jLabel3" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <Component id="jLabel_TORQ_ADC_MAX" max="32767" attributes="0"/>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="TF_ASS_WITHOUT_PED_THRES" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
-                                              <Component id="TF_MOTOR_ACC" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
-                                              <Component id="TF_BOOST_CADENCE_STEP" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
-                                              <Component id="TF_BOOST_TORQUE_FACTOR" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
-                                              <Component id="TF_TORQUE_ADC_MAX" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
-                                              <Component id="TF_TORQ_PER_ADC_STEP" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jLabelMinCurrentADC" max="32767" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="TF_MIN_CURRENT_ADC" min="-2" pref="48" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Component id="Label_Parameter1" max="32767" attributes="0"/>
-                                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="CB_ASS_WITHOUT_PED" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <Component id="Label_Parameter1" max="32767" attributes="0"/>
+                                          <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="103" groupAlignment="1" attributes="0">
@@ -262,6 +198,87 @@
                                       <Component id="RB_MOTOR_48V" min="-2" pref="60" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="jLabel6" min="-2" pref="135" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="CB_ADC_STEP_ESTIM" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="TF_TORQ_PER_ADC_STEP" min="-2" pref="48" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <Component id="jLabel3" min="-2" pref="207" max="-2" attributes="0"/>
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          <Component id="TF_MOTOR_ACC" min="-2" pref="48" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="CB_ASS_WITHOUT_PED" max="32767" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="TF_ASS_WITHOUT_PED_THRES" min="-2" pref="48" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabelMotorFastStop" min="-2" pref="207" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="TF_MOTOR_DEC" min="-2" pref="48" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel15" max="32767" attributes="0"/>
+                                              <Component id="jLabel23" max="32767" attributes="0"/>
+                                              <Component id="jLabel32" max="32767" attributes="0"/>
+                                              <Component id="jLabel_TORQ_ADC_MAX" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel_TORQ_ADC_OFFSET" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel22" alignment="0" min="-2" pref="207" max="-2" attributes="0"/>
+                                              <Component id="jLabel20" alignment="0" min="-2" pref="214" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="TF_TORQUE_ADC_MAX" min="-2" pref="48" max="-2" attributes="0"/>
+                                              <Component id="TF_TORQ_ADC_OFFSET" min="-2" pref="48" max="-2" attributes="0"/>
+                                              <Component id="TF_BOOST_TORQUE_FACTOR" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
+                                              <Component id="TF_BOOST_CADENCE_STEP" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="TF_TORQ_ADC_RANGE_ADJ" alignment="1" min="-2" pref="48" max="-2" attributes="0"/>
+                                              <Component id="TF_TORQ_ADC_OFFSET_ADJ" alignment="1" min="-2" pref="48" max="-2" attributes="0"/>
+                                              <Component id="TF_TORQ_PER_ADC_STEP_ADV" alignment="1" min="-2" pref="48" max="-2" attributes="0"/>
+                                              <Component id="TF_TORQ_ADC_ANGLE_ADJ" alignment="1" min="-2" pref="48" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="16" pref="16" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel31" alignment="0" min="-2" pref="209" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel33" min="-2" pref="115" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                          <Component id="RB_BOOST_AT_ZERO_CADENCE" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="RB_BOOST_AT_ZERO_SPEED" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -283,34 +300,55 @@
                                   <Component id="RB_MOTOR_48V" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="TF_MOTOR_ACC" alignment="3" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="CB_ASS_WITHOUT_PED" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabelMotorFastStop" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
+                              <Component id="TF_MOTOR_DEC" alignment="3" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="CB_ASS_WITHOUT_PED" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="TF_ASS_WITHOUT_PED_THRES" alignment="3" max="-2" attributes="0"/>
-                              <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                                  <Component id="CB_ADC_STEP_ESTIM" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="TF_TORQ_PER_ADC_STEP" alignment="3" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="TF_MIN_CURRENT_ADC" alignment="3" max="32767" attributes="0"/>
-                              <Component id="jLabelMinCurrentADC" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
+                              <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="TF_TORQ_PER_ADC_STEP_ADV" alignment="3" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="TF_TORQ_PER_ADC_STEP" alignment="3" max="-2" attributes="0"/>
-                              <Component id="jLabel6" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
+                              <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="TF_TORQ_ADC_OFFSET_ADJ" alignment="3" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="CB_TORQUE_CALIBRATION" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel23" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
+                              <Component id="TF_TORQ_ADC_RANGE_ADJ" alignment="3" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="TF_TORQ_ADC_OFFSET" alignment="3" max="-2" attributes="0"/>
+                              <Component id="jLabel32" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
+                              <Component id="TF_TORQ_ADC_ANGLE_ADJ" alignment="3" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel_TORQ_ADC_OFFSET" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="TF_TORQ_ADC_OFFSET" alignment="3" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -327,6 +365,13 @@
                               <Component id="TF_BOOST_CADENCE_STEP" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel33" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="RB_BOOST_AT_ZERO_CADENCE" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="RB_BOOST_AT_ZERO_SPEED" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -361,7 +406,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CB_ASS_WITHOUT_PED">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Startup assistance without pedaling"/>
+                    <Property name="text" type="java.lang.String" value="Startup assist without pedaling thres."/>
                   </Properties>
                   <Events>
                     <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="CB_ASS_WITHOUT_PEDStateChanged"/>
@@ -371,6 +416,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="67"/>
                     <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Default value 67&lt;br&gt;&#xa;Optional calibration&#xa;&lt;/html&gt;"/>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="!CB_ADC_STEP_ESTIM.isSelected()" type="code"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel20">
@@ -392,7 +440,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="0" green="0" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Motor acceleration"/>
+                    <Property name="text" type="java.lang.String" value="Motor acceleration (%)"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="TF_MOTOR_ACC">
@@ -404,11 +452,6 @@
                     <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="TSDZ2_Configurator_TF_MOTOR_ACC"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel5">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Assist without pedaling threshold"/>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JTextField" name="TF_ASS_WITHOUT_PED_THRES">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="20"/>
@@ -417,9 +460,6 @@
                       <Connection code="CB_ASS_WITHOUT_PED.isSelected()" type="code"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TF_ASS_WITHOUT_PED_THRESActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel22">
                   <Properties>
@@ -443,6 +483,9 @@
                       <Connection code="CB_TORQUE_CALIBRATION.isSelected()" type="code"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_TORQUE_ADC_MAXKeyReleased"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel6">
                   <Properties>
@@ -470,30 +513,124 @@
                       <Connection code="CB_TORQUE_CALIBRATION.isSelected()" type="code"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_TORQ_ADC_OFFSETKeyReleased"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel_TORQ_ADC_OFFSET">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Pedal torque ADC offset (no weight)"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JCheckBox" name="CB_TORQUE_CALIBRATION">
+                <Component class="javax.swing.JLabel" name="jLabelMotorFastStop">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Torque sensor calibrated"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Enable after calibration"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="CB_TORQUE_CALIBRATIONStateChanged"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabelMinCurrentADC">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Min current ADC step"/>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="11" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="0" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Motor deceleration (%)"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="TF_MIN_CURRENT_ADC">
+                <Component class="javax.swing.JTextField" name="TF_MOTOR_DEC">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="0"/>
-                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;Min current value (in ADC steps)&lt;br&gt;&#xa;while pedaling, from 0 to 3&lt;br&gt;&#xa;0 = 0 Amp&lt;br&gt;&#xa;1 = 0.16 Amp&lt;br&gt;&#xa;2 = 0.32 Amp&lt;br&gt;&#xa;3 = 0.48 Amp&#xa;&lt;/html&gt;"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;Max value 100&lt;br&gt;&#xa;Recommended range 0 to 50&#xa;&lt;/html&gt;"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="TF_TORQ_ADC_OFFSET_ADJ">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="0"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Value -20 to 14&lt;br&gt;&#xa;Default 0&#xa;&lt;/html&gt;"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_TORQ_ADC_OFFSET_ADJKeyReleased"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel15">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Pedal torque ADC offset adjustment"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel23">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Pedal torque ADC range adjustment"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="TF_TORQ_ADC_RANGE_ADJ">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="0"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Value -20 to 20&lt;br&gt;&#xa;Default 0&#xa;&lt;/html&gt;"/>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="CB_TORQUE_CALIBRATION.isSelected()" type="code"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_TORQ_ADC_RANGE_ADJKeyReleased"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="CB_ADC_STEP_ESTIM">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Estimated"/>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="CB_TORQUE_CALIBRATION.isSelected()" type="code"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="CB_ADC_STEP_ESTIMStateChanged"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel31">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Pedal torque ADC step advanced"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="TF_TORQ_PER_ADC_STEP_ADV">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="34"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Default value 34&lt;br&gt;&#xa;Optional calibration&#xa;&lt;/html&gt;"/>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="CB_TORQUE_CALIBRATION.isSelected()" type="code"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel32">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Pedal torque ADC angle adjustment"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="TF_TORQ_ADC_ANGLE_ADJ">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="0"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Value -20 to 20&lt;br&gt;&#xa;Default 0&#xa;&lt;/html&gt;"/>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="CB_TORQUE_CALIBRATION.isSelected()" type="code"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_TORQ_ADC_ANGLE_ADJKeyReleased"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel33">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Startup boost at zero"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="RB_BOOST_AT_ZERO_CADENCE">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="buttonGroup9"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="cadence"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="RB_BOOST_AT_ZERO_SPEED">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="buttonGroup9"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="speed"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -504,7 +641,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel9" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel11" alignment="0" max="32767" attributes="0"/>
@@ -518,7 +655,7 @@
                               <Component id="jLabel25" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel12" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="TF_BAT_CUR_MAX" alignment="1" min="-2" pref="48" max="-2" attributes="0"/>
@@ -531,9 +668,9 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                       <Component id="TF_BATT_VOLT_CAL" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="TF_BATT_VOLT_CUT_OFF" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
+                                      <Component id="TF_BATT_VOLT_CUT_OFF" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="TF_BATT_CAPACITY_CAL" alignment="1" min="-2" pref="45" max="-2" attributes="0"/>
+                                  <Component id="TF_BATT_CAPACITY_CAL" alignment="1" min="-2" pref="48" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -711,46 +848,34 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel16" min="-2" pref="150" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="Label_Parameter5" min="-2" pref="63" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                          <Component id="RB_UNIT_KILOMETERS" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="Label_Parameter2" max="32767" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="Label_Parameter3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="Label_Parameter4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                              <Component id="jLabel16" min="-2" pref="150" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="Label_Parameter2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="RB_VLCD5" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="RB_VLCD6" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="RB_XH18" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="Label_Parameter5" min="-2" pref="63" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="RB_UNIT_KILOMETERS" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                                  <Component id="RB_UNIT_MILES" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="Label_Parameter3" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="RB_DISPLAY_WORK_ON" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="RB_DISPLAY_ALWAY_ON" min="-2" pref="88" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="RB_DISPLAY_WORK_ON" max="-2" attributes="0"/>
-                              <Component id="RB_DISPLAY_ALWAY_ON" alignment="0" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="RB_XH18" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="RB_VLCD5" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="RB_VLCD6" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="RB_UNIT_MILES" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -758,38 +883,28 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel16" max="-2" attributes="0"/>
-                          <EmptySpace pref="6" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="RB_VLCD5" alignment="3" max="-2" attributes="0"/>
                               <Component id="Label_Parameter2" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="RB_VLCD6" alignment="3" max="-2" attributes="0"/>
+                              <Component id="RB_XH18" alignment="3" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="RB_VLCD6" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="RB_XH18" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace pref="9" max="32767" attributes="0"/>
-                                  <Component id="Label_Parameter3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                  <Component id="Label_Parameter4" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="RB_DISPLAY_WORK_ON" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="RB_DISPLAY_ALWAY_ON" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                              </Group>
+                          <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="Label_Parameter3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="RB_DISPLAY_WORK_ON" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="RB_DISPLAY_ALWAY_ON" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace type="unrelated" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="Label_Parameter5" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                                   <Component id="RB_UNIT_KILOMETERS" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="RB_UNIT_MILES" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -797,12 +912,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="Label_Parameter3">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Display working on"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="Label_Parameter4">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Display always on"/>
+                    <Property name="text" type="java.lang.String" value="Mode"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel16">
@@ -857,7 +967,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="0" green="0" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Display type"/>
+                    <Property name="text" type="java.lang.String" value="Type"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="RB_DISPLAY_WORK_ON">
@@ -865,6 +975,7 @@
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="buttonGroup4"/>
                     </Property>
+                    <Property name="text" type="java.lang.String" value="Working on"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="RB_DISPLAY_ALWAY_ON">
@@ -872,6 +983,7 @@
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="buttonGroup4"/>
                     </Property>
+                    <Property name="text" type="java.lang.String" value="Always on"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="Label_Parameter5">
@@ -896,7 +1008,6 @@
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="buttonGroup6"/>
                     </Property>
-                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="km/h"/>
                     <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;Also set on the display&lt;br&gt;&#xa;If you set miles in display&lt;br&gt;&#xa;set max wheel available&#xa;&lt;/html&gt;"/>
                   </Properties>
@@ -912,37 +1023,39 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="jLabel13" max="32767" attributes="0"/>
-                              <Component id="jLabel14" alignment="1" pref="179" max="32767" attributes="0"/>
-                              <Component id="jLabelMaxSpeed" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="TF_WHEEL_CIRCUMF" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
-                              <Component id="TF_MAX_SPEED" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
+                              <Component id="jLabel13" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabelMaxSpeed" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="TF_MAX_SPEED" min="-2" pref="48" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="12" max="32767" attributes="0"/>
+                                  <Component id="TF_WHEEL_CIRCUMF" min="-2" pref="48" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="TF_WHEEL_CIRCUMF" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="TF_MAX_SPEED" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabelMaxSpeed" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -998,40 +1111,40 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="CB_STARTUP_ASSIST_ENABLED" min="-2" max="-2" attributes="0"/>
+                              <Component id="CB_FIELD_WEAKENING_ENABLED" min="-2" max="-2" attributes="0"/>
                               <Component id="CB_COASTER_BRAKE" min="-2" max="-2" attributes="0"/>
                               <Component id="CB_MAX_SPEED_DISPLAY" min="-2" max="-2" attributes="0"/>
                               <Component id="CB_AUTO_DISPLAY_DATA" min="-2" max="-2" attributes="0"/>
-                              <Component id="CB_STREET_MODE_ON_START" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="CB_STARTUP_BOOST_ON_START" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="CB_ODO_COMPENSATION" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="CB_SET_PARAM_ON_START" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                              <Component id="jLabel30" min="-2" pref="140" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="jLabel31" alignment="1" min="-2" pref="140" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="jLabel33" alignment="1" min="-2" pref="140" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="CB_TOR_SENSOR_ADV" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="CB_TORQUE_CALIBRATION" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="RB_ADC_OPTION_DIS" max="-2" attributes="0"/>
-                                      <Component id="RB_THROTTLE" max="-2" attributes="0"/>
-                                      <Component id="RB_TEMP_LIMIT" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="RB_ADC_OPTION_DIS" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="RB_THROTTLE" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="RB_TEMP_LIMIT" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jLabel30" min="-2" pref="140" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="jLabel39" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="CB_LIGHTS" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                               <Component id="CB_WALK_ASSIST" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                               <Component id="CB_BRAKE_SENSOR" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                              <Component id="CB_STARTUP_BOOST_ON_START" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="CB_TOR_SENSOR_ADV" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="CB_ODO_COMPENSATION" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="CB_SET_PARAM_ON_START" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="CB_STREET_MODE_ON_START" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="14" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1048,27 +1161,27 @@
                           <Component id="CB_BRAKE_SENSOR" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="CB_COASTER_BRAKE" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="RB_ADC_OPTION_DIS" alignment="0" max="-2" attributes="0"/>
-                              <Component id="jLabel30" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel31" min="-2" max="-2" attributes="0"/>
-                              <Component id="RB_THROTTLE" max="-2" attributes="0"/>
+                          <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="RB_ADC_OPTION_DIS" alignment="3" max="-2" attributes="0"/>
+                              <Component id="RB_THROTTLE" alignment="3" max="-2" attributes="0"/>
+                              <Component id="RB_TEMP_LIMIT" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
-                              <Component id="RB_TEMP_LIMIT" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" pref="7" max="32767" attributes="0"/>
                           <Component id="CB_STREET_MODE_ON_START" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="CB_STARTUP_BOOST_ON_START" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="CB_TOR_SENSOR_ADV" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="CB_TOR_SENSOR_ADV" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="CB_TORQUE_CALIBRATION" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="CB_FIELD_WEAKENING_ENABLED" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" pref="8" max="32767" attributes="0"/>
+                          <Component id="CB_STARTUP_ASSIST_ENABLED" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="CB_ODO_COMPENSATION" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -1077,7 +1190,7 @@
                           <Component id="CB_AUTO_DISPLAY_DATA" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="CB_MAX_SPEED_DISPLAY" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1117,7 +1230,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel30">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ADC optional disabled"/>
+                    <Property name="text" type="java.lang.String" value="Optional ADC function"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="RB_ADC_OPTION_DIS">
@@ -1125,6 +1238,7 @@
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="buttonGroup3"/>
                     </Property>
+                    <Property name="text" type="java.lang.String" value="None"/>
                   </Properties>
                   <Events>
                     <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="RB_ADC_OPTION_DISStateChanged"/>
@@ -1135,24 +1249,21 @@
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="buttonGroup3"/>
                     </Property>
+                    <Property name="text" type="java.lang.String" value="Throttle"/>
                     <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="CB_BRAKE_SENSOR.isSelected()" type="code"/>
+                      <Connection code="CB_BRAKE_SENSOR.isSelected()&amp;&amp;(!(CB_COASTER_BRAKE.isSelected()))" type="code"/>
                     </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="RB_THROTTLEStateChanged"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel31">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Throttle"/>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JRadioButton" name="RB_TEMP_LIMIT">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="buttonGroup3"/>
                     </Property>
+                    <Property name="text" type="java.lang.String" value="Temp. sensor"/>
                   </Properties>
                   <Events>
                     <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="RB_TEMP_LIMITStateChanged"/>
@@ -1175,12 +1286,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CB_TOR_SENSOR_ADV">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Torque sensor adv. on startup"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel33">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Temperature sensor"/>
+                    <Property name="text" type="java.lang.String" value="Torque sensor adv."/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CB_AUTO_DISPLAY_DATA">
@@ -1212,16 +1318,31 @@
                     <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="CB_COASTER_BRAKEStateChanged"/>
                   </Events>
                 </Component>
+                <Component class="javax.swing.JCheckBox" name="CB_FIELD_WEAKENING_ENABLED">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Field weakening enabled"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="CB_FIELD_WEAKENING_ENABLEDStateChanged"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="CB_STARTUP_ASSIST_ENABLED">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Startup assist enabled"/>
+                    <Property name="toolTipText" type="java.lang.String" value=""/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="CB_TORQUE_CALIBRATION">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Calibrated"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Enable after calibration"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="CB_TORQUE_CALIBRATIONStateChanged"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JCheckBox" name="CB_DISPLAY_DOUBLE_DATA">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Display double data"/>
-              </Properties>
-              <Events>
-                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="CB_DISPLAY_DOUBLE_DATAStateChanged"/>
-              </Events>
-            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel4">
@@ -1242,27 +1363,27 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="26" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanel15" max="32767" attributes="0"/>
                           <Component id="jPanel9" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" pref="26" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanel12" max="32767" attributes="0"/>
                           <Component id="jPanel10" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" pref="26" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanel13" max="32767" attributes="0"/>
                           <Component id="jPanel16" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" pref="26" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanel17" max="32767" attributes="0"/>
                           <Component id="jPanel14" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="27" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1600,7 +1721,7 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel51" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                                  <EmptySpace type="unrelated" pref="12" max="32767" attributes="0"/>
                                   <Component id="TF_CADENCE_ASS_3" min="-2" pref="46" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -1872,34 +1993,34 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel62" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="CB_WALK_TIME_ENA" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jLabel68" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabelWalkSpeed" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel66" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel65" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel64" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel63" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="TF_WALK_ASS_1" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
-                                              <Component id="TF_WALK_ASS_2" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
-                                              <Component id="TF_WALK_ASS_3" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
-                                              <Component id="TF_WALK_ASS_4" alignment="1" min="-2" pref="46" max="-2" attributes="0"/>
-                                              <Component id="TF_WALK_ASS_SPEED" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
-                                              <Component id="TF_WALK_ASS_TIME" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                      <Component id="jLabel68" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelWalkSpeed" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel66" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel65" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel64" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel63" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="10" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="TF_WALK_ASS_SPEED_1" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
+                                      <Component id="TF_WALK_ASS_SPEED_2" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
+                                      <Component id="TF_WALK_ASS_SPEED_3" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
+                                      <Component id="TF_WALK_ASS_SPEED_4" alignment="1" min="-2" pref="46" max="-2" attributes="0"/>
+                                      <Component id="TF_WALK_ASS_SPEED_LIMIT" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
+                                      <Component id="TF_WALK_ASS_TIME" alignment="0" min="-2" pref="46" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="CB_WALK_TIME_ENA" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel62" min="-2" pref="112" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="32767" attributes="0"/>
+                                  <Component id="jLabelWalkSpeedUnits" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -1908,31 +2029,34 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel62" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel62" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="jLabelWalkSpeedUnits" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel63" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="TF_WALK_ASS_1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="TF_WALK_ASS_SPEED_1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel64" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="TF_WALK_ASS_2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="TF_WALK_ASS_SPEED_2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel65" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="TF_WALK_ASS_3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="TF_WALK_ASS_SPEED_3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel66" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="TF_WALK_ASS_4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="TF_WALK_ASS_SPEED_4" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabelWalkSpeed" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="TF_WALK_ASS_SPEED" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="TF_WALK_ASS_SPEED_LIMIT" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -1957,75 +2081,87 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel63">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Assist level 1 - ECO"/>
+                    <Property name="text" type="java.lang.String" value="Speed level 1 - ECO"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="TF_WALK_ASS_1">
+                <Component class="javax.swing.JTextField" name="TF_WALK_ASS_SPEED_1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="30"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Max value 80"/>
-                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="CB_WALK_ASSIST.isSelected()" type="code"/>
-                    </Property>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel64">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Assist level 2 - TOUR"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="TF_WALK_ASS_2">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="40"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Max value 80"/>
-                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="CB_WALK_ASSIST.isSelected()" type="code"/>
-                    </Property>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel65">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Assist level 3 - SPORT"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="TF_WALK_ASS_3">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="50"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Max value 80"/>
-                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="CB_WALK_ASSIST.isSelected()" type="code"/>
-                    </Property>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="TF_WALK_ASS_4">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="60"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Max value 80"/>
-                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="CB_WALK_ASSIST.isSelected()" type="code"/>
-                    </Property>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel66">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Assist level 4 -TURBO"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabelWalkSpeed">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Walk assist speed (km/h)"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="TF_WALK_ASS_SPEED">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="6"/>
-                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;km/h or mph&lt;br&gt;&#xa;Max value in EU 6 km/h&#xa;&lt;/html&gt;"/>
+                    <Property name="text" type="java.lang.String" value="35"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;km/h x10 or mph x10&lt;br&gt;&#xa;Value 35 to 50 (3.5 to 5.0 km/h)&#xa;&lt;/html&gt;"/>
                     <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="CB_WALK_ASSIST.isSelected()" type="code"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_WALK_ASS_SPEEDKeyReleased"/>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_WALK_ASS_SPEED_1KeyReleased"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel64">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Speed level 2 - TOUR"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="TF_WALK_ASS_SPEED_2">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="40"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;km/h x10 or mph x10&lt;br&gt;&#xa;Value 35 to 50 (3.5 to 5.0 km/h)&#xa;&lt;/html&gt;"/>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="CB_WALK_ASSIST.isSelected()" type="code"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_WALK_ASS_SPEED_2KeyReleased"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel65">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Speed level 3 - SPORT"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="TF_WALK_ASS_SPEED_3">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="45"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;km/h x10 or mph x10&lt;br&gt;&#xa;Value 35 to 50 (3.5 to 5.0 km/h)&#xa;&lt;/html&gt;"/>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="CB_WALK_ASSIST.isSelected()" type="code"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_WALK_ASS_SPEED_3KeyReleased"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="TF_WALK_ASS_SPEED_4">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="50"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;km/h x10 or mph x10&lt;br&gt;&#xa;Value 35 to 50 (3.5 to 5.0 km/h)&#xa;&lt;/html&gt;"/>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="CB_WALK_ASSIST.isSelected()" type="code"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_WALK_ASS_SPEED_4KeyReleased"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel66">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Speed level 4 -TURBO"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabelWalkSpeed">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Walk assist speed limit"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="TF_WALK_ASS_SPEED_LIMIT">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="60"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;km/h x10 or mph x10&lt;br&gt;&#xa;Max value 60 (in EU 6 km/h)&#xa;&lt;/html&gt;"/>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="CB_WALK_ASSIST.isSelected()" type="code"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_WALK_ASS_SPEED_LIMITKeyReleased"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="TF_WALK_ASS_TIME">
@@ -2054,6 +2190,11 @@
                     <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="CB_WALK_TIME_ENAStateChanged"/>
                   </Events>
                 </Component>
+                <Component class="javax.swing.JLabel" name="jLabelWalkSpeedUnits">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="km/h x10"/>
+                  </Properties>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel16">
@@ -2064,44 +2205,48 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel70" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="TF_CRUISE_ASS_1" min="-2" pref="46" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel71" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="TF_CRUISE_ASS_2" min="-2" pref="46" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel72" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="32767" attributes="0"/>
-                                  <Component id="TF_CRUISE_ASS_3" min="-2" pref="46" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jLabel73" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="TF_CRUISE_ASS_4" min="-2" pref="46" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel74" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="TF_CRUISE_SPEED_ENA" min="-2" pref="46" max="-2" attributes="0"/>
-                              </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="CB_CRUISE_WHITOUT_PED" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" attributes="0">
-                                          <Component id="jLabel69" min="-2" pref="129" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="jLabel69" min="-2" pref="125" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
                                           <Component id="jLabelCruiseSpeedUnits" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel70" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="TF_CRUISE_ASS_1" min="-2" pref="46" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel71" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="TF_CRUISE_ASS_2" min="-2" pref="46" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel72" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" pref="17" max="32767" attributes="0"/>
+                                          <Component id="TF_CRUISE_ASS_3" min="-2" pref="46" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="jLabel73" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="TF_CRUISE_ASS_4" min="-2" pref="46" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel74" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="TF_CRUISE_SPEED_ENA" min="-2" pref="46" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2443,9 +2588,6 @@
                         </Property>
                         <Property name="toolTipText" type="java.lang.String" value="Torque &amp; Power"/>
                       </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RB_HYBRID_ON_STARTActionPerformed"/>
-                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -2551,7 +2693,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CB_STREET_POWER_LIM">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Street power limit enebled"/>
+                    <Property name="text" type="java.lang.String" value="Street power limit enabled"/>
                   </Properties>
                   <Events>
                     <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="CB_STREET_POWER_LIMStateChanged"/>
@@ -2599,11 +2741,27 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jPanel11" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="32767" attributes="0"/>
-                      <Component id="jPanel18" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="32767" attributes="0"/>
-                      <Component id="jPanel19" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jPanel18" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jPanel19" min="-2" pref="275" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jLabelMOTOR_BLOCK_CURR" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="TF_MOTOR_BLOCK_CURR" min="-2" pref="48" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jLabelMOTOR_BLOCK_ERPS" min="-2" pref="179" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="TF_MOTOR_BLOCK_ERPS" min="-2" pref="48" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -2611,12 +2769,22 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel19" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanel18" min="-2" max="-2" attributes="0"/>
-                          <Component id="jPanel11" min="-2" max="-2" attributes="0"/>
+                          <Component id="jPanel11" max="32767" attributes="0"/>
+                          <Component id="jPanel19" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="96" max="32767" attributes="0"/>
+                      <EmptySpace pref="54" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="TF_MOTOR_BLOCK_CURR" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelMOTOR_BLOCK_CURR" alignment="3" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="TF_MOTOR_BLOCK_ERPS" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelMOTOR_BLOCK_ERPS" alignment="3" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -3130,9 +3298,6 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="4"/>
                     <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;  1 - battery SOC remaining (%)&lt;br&gt;&#xa;  2 - battery voltage (V)&lt;br&gt;&#xa;  3 - battery current (A)&lt;br&gt;&#xa;  4 - motor power (Watt/10)&lt;br&gt;&#xa;  5 - adc throttle (8 bit)&lt;br&gt;&#xa;  6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;  7 - pedal cadence (rpm)&lt;br&gt;&#xa;  8 - human power(W/10)&lt;br&gt;&#xa;  9 - pedal torque adc delta&lt;br&gt;&#xa;10 - consumed Wh/10&#xa;&lt;/html&gt;"/>
-                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="CB_DISPLAY_DOUBLE_DATA.isSelected()" type="code"/>
-                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_DATA_4KeyReleased"/>
@@ -3142,9 +3307,6 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="7"/>
                     <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;  1 - battery SOC remaining (%)&lt;br&gt;&#xa;  2 - battery voltage (V)&lt;br&gt;&#xa;  3 - battery current (A)&lt;br&gt;&#xa;  4 - motor power (Watt/10)&lt;br&gt;&#xa;  5 - adc throttle (8 bit)&lt;br&gt;&#xa;  6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;  7 - pedal cadence (rpm)&lt;br&gt;&#xa;  8 - human power(W/10)&lt;br&gt;&#xa;  9 - pedal torque adc delta&lt;br&gt;&#xa;10 - consumed Wh/10&#xa;&lt;/html&gt;"/>
-                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="CB_DISPLAY_DOUBLE_DATA.isSelected()" type="code"/>
-                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_DATA_5KeyReleased"/>
@@ -3164,9 +3326,6 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="0"/>
                     <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;0 - motor temperature (&#xb0;C)&lt;br&gt;&#xa;  1 - battery SOC remaining (%)&lt;br&gt;&#xa;  2 - battery voltage (V)&lt;br&gt;&#xa;  3 - battery current (A)&lt;br&gt;&#xa;  4 - motor power (Watt/10)&lt;br&gt;&#xa;  5 - adc throttle (8 bit)&lt;br&gt;&#xa;  6 - adc torque sensor (10 bit)&lt;br&gt;&#xa;  7 - pedal cadence (rpm)&lt;br&gt;&#xa;  8 - human power(W/10)&lt;br&gt;&#xa;  9 - pedal torque adc delta&lt;br&gt;&#xa;10 - consumed Wh/10&#xa;&lt;/html&gt;"/>
-                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="CB_DISPLAY_DOUBLE_DATA.isSelected()" type="code"/>
-                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TF_DATA_6KeyReleased"/>
@@ -3203,9 +3362,6 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="50"/>
                     <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;Max value 255 (0.1 sec)&lt;br&gt;&#xa;continuous display at zero value&#xa;&lt;/html&gt;"/>
-                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="CB_DISPLAY_DOUBLE_DATA.isSelected()" type="code"/>
-                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel99">
@@ -3217,9 +3373,6 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="50"/>
                     <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;Max value 255 (0.1 sec)&lt;br&gt;&#xa;continuous display at zero value&#xa;&lt;/html&gt;"/>
-                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="CB_DISPLAY_DOUBLE_DATA.isSelected()" type="code"/>
-                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel100">
@@ -3231,10 +3384,10 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="50"/>
                     <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;Max value 255 (0.1 sec)&lt;br&gt;&#xa;continuous display at zero value&#xa;&lt;/html&gt;"/>
-                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="CB_DISPLAY_DOUBLE_DATA.isSelected()" type="code"/>
-                    </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="TSDZ2_Configurator_TF_DELAY_DATA_6"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -3243,104 +3396,93 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel91" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel104" max="32767" attributes="0"/>
+                                      <Component id="jLabel105" max="32767" attributes="0"/>
+                                      <Component id="jLabel106" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="TF_MOTOR_BLOCK_TIME" min="-2" pref="48" max="-2" attributes="0"/>
+                                      <Component id="TF_TEMP_MAX_LIM" min="-2" pref="48" max="-2" attributes="0"/>
+                                      <Component id="TF_TEMP_MIN_LIM" min="-2" pref="48" max="-2" attributes="0"/>
+                                      <Component id="TF_COASTER_BRAKE_THRESHOLD" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
+                                      <Component id="TF_DELAY_MENU" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
+                                      <Component id="TF_NUM_DATA_AUTO_DISPLAY" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                              </Group>
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                  <Component id="CB_TEMP_ERR_MIN_LIM" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel94" max="32767" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jLabel87" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="jLabel90" alignment="1" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jLabelCoasterBrakeThreshld" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel101" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel102" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="TF_ADC_THROTTLE_MIN" min="-2" pref="48" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jLabel109" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="TF_ADC_THROTTLE_MAX" min="-2" pref="48" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jLabel104" max="32767" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="TF_TEMP_MIN_LIM" min="-2" pref="48" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel105" max="32767" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="TF_TEMP_MAX_LIM" min="-2" pref="48" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel106" max="32767" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="TF_MOTOR_BLOCK_TIME" min="-2" pref="48" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel107" max="32767" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="TF_MOTOR_BLOCK_CURR" min="-2" pref="48" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel108" max="32767" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="TF_MOTOR_BLOCK_ERPS" min="-2" pref="48" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel103" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="TF_ASSIST_THROTTLE_MIN" min="-2" pref="48" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="jLabel110" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="TF_ASSIST_THROTTLE_MAX" min="-2" pref="48" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          <Group type="103" groupAlignment="1" attributes="0">
-                                              <Component id="TF_NUM_DATA_AUTO_DISPLAY" min="-2" pref="48" max="-2" attributes="0"/>
-                                              <Component id="TF_DELAY_MENU" min="-2" pref="48" max="-2" attributes="0"/>
-                                          </Group>
+                                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                          <Component id="CB_TEMP_ERR_MIN_LIM" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel103" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="TF_ASSIST_THROTTLE_MIN" min="-2" pref="48" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jLabel110" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="TF_ASSIST_THROTTLE_MAX" min="-2" pref="48" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel102" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="TF_ADC_THROTTLE_MIN" min="-2" pref="48" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jLabel109" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="TF_ADC_THROTTLE_MAX" min="-2" pref="48" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jLabel87" alignment="1" max="32767" attributes="0"/>
-                              <Component id="jLabel90" alignment="1" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="56" pref="56" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel91" max="32767" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabelCoasterBrakeThreshld" max="32767" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="TF_COASTER_BRAKE_THRESHOLD" min="-2" pref="48" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
                                   <Component id="RB_STARTUP_NONE" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                   <Component id="RB_STARTUP_SOC" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="RB_STARTUP_VOLTS" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel101" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="RB_SOC_AUTO" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                  <Component id="RB_SOC_WH" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="RB_SOC_VOLTS" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -3368,7 +3510,15 @@
                               <Component id="RB_STARTUP_SOC" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="RB_STARTUP_VOLTS" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jLabel94" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="RB_SOC_AUTO" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="RB_SOC_WH" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="RB_SOC_VOLTS" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="jLabel101" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -3377,9 +3527,11 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="TF_ADC_THROTTLE_MIN" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel102" alignment="3" max="-2" attributes="0"/>
+                                  <Component id="TF_ADC_THROTTLE_MIN" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="TF_ADC_THROTTLE_MAX" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel109" alignment="3" max="-2" attributes="0"/>
                               </Group>
@@ -3388,8 +3540,8 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="TF_ASSIST_THROTTLE_MIN" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="TF_ASSIST_THROTTLE_MAX" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel110" alignment="3" max="-2" attributes="0"/>
                               <Component id="jLabel103" alignment="3" max="-2" attributes="0"/>
+                              <Component id="jLabel110" alignment="3" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="CB_TEMP_ERR_MIN_LIM" min="-2" max="-2" attributes="0"/>
@@ -3408,17 +3560,7 @@
                               <Component id="TF_MOTOR_BLOCK_TIME" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel106" alignment="3" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="TF_MOTOR_BLOCK_CURR" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel107" alignment="3" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="TF_MOTOR_BLOCK_ERPS" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel108" alignment="3" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -3434,7 +3576,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel102">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ADC throttle value       min"/>
+                    <Property name="text" type="java.lang.String" value="ADC throttle value      min"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="TF_ADC_THROTTLE_MIN">
@@ -3457,7 +3599,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel103">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Throttle assist value    min"/>
+                    <Property name="text" type="java.lang.String" value="Throttle assist value   min"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CB_TEMP_ERR_MIN_LIM">
@@ -3505,28 +3647,6 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="2"/>
                     <Property name="toolTipText" type="java.lang.String" value="Value 1 to 10 (0.1 s)"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel107">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Motor blocked error - threshold current"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="TF_MOTOR_BLOCK_CURR">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="30"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Value 1 to 5 (0.1 A)"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel108">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Motor blocked error - threshold ERPS"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="TF_MOTOR_BLOCK_ERPS">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="20"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Value 10 to 30 (ERPS)"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="TF_DELAY_MENU">
@@ -3595,22 +3715,15 @@
                     <Property name="text" type="java.lang.String" value="None"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="RB_STARTUP_NONEStateChanged"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="RB_STARTUP_SOC">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="buttonGroup7"/>
                     </Property>
-                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Soc %"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="RB_STARTUP_SOCStateChanged"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="RB_STARTUP_VOLTS">
                   <Properties>
@@ -3620,9 +3733,6 @@
                     <Property name="text" type="java.lang.String" value="Volts"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="RB_STARTUP_VOLTSStateChanged"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabelCoasterBrakeThreshld">
                   <Properties>
@@ -3638,8 +3748,63 @@
                     </Property>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JLabel" name="jLabel94">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Soc % calculation"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="RB_SOC_AUTO">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="buttonGroup8"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Auto"/>
+                    <Property name="toolTipText" type="java.lang.String" value=""/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="RB_SOC_WH">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="buttonGroup8"/>
+                    </Property>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" value="Wh"/>
+                    <Property name="toolTipText" type="java.lang.String" value=""/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="RB_SOC_VOLTS">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="buttonGroup8"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Volts"/>
+                    <Property name="toolTipText" type="java.lang.String" value=""/>
+                  </Properties>
+                </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JTextField" name="TF_MOTOR_BLOCK_ERPS">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="20"/>
+                <Property name="toolTipText" type="java.lang.String" value="Value 10 to 30 (ERPS)"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="TF_MOTOR_BLOCK_CURR">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="30"/>
+                <Property name="toolTipText" type="java.lang.String" value="Value 1 to 5 (0.1 A)"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabelMOTOR_BLOCK_CURR">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Motor blocked error - threshold current"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabelMOTOR_BLOCK_ERPS">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Motor blocked error - threshold ERPS"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

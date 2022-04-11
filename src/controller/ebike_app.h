@@ -12,15 +12,36 @@
 #include <stdint.h>
 #include "main.h"
 
+// startup boost mode
+#define CADENCE						0
+#define SPEED						1
+
+// for check features
+extern volatile uint8_t ui8_lights_state;
+
 // for oem display
 extern volatile uint8_t ui8_display_fault_code;
-extern volatile uint8_t ui8_assist_level;
+extern volatile uint8_t ui8_system_state;
+
+// torque sensor
+extern volatile uint8_t ui8_riding_torque_mode;
+extern volatile uint16_t ui16_adc_pedal_torque_offset_cal;
 
 // cadence sensor
-extern uint16_t ui16_cadence_sensor_ticks_counter_min_speed_adjusted;
+extern uint16_t ui16_cadence_ticks_count_min_speed_adj;
+extern uint8_t ui8_pedal_cadence_fast_stop;
 
 // Torque sensor coaster brake engaged threshold value
 extern volatile uint16_t ui16_adc_coaster_brake_threshold;
+
+// ADC motor phase current max
+extern volatile uint8_t ui8_adc_motor_phase_current_max;
+
+// ADC battery current target
+extern volatile uint8_t ui8_adc_battery_current_target;
+
+// Motor enabled
+extern volatile uint8_t ui8_motor_enabled;
 
 typedef struct _configuration_variables
 {
@@ -30,10 +51,10 @@ typedef struct _configuration_variables
   uint16_t ui16_wheel_perimeter;
   uint8_t ui8_wheel_speed_max;
   uint8_t ui8_motor_type;
-  uint8_t ui8_pedal_torque_per_10_bit_ADC_step_x100;
+  uint8_t ui8_avaiable_for_future_use;
   // for oem display
   uint8_t ui8_assist_without_pedal_rotation_enabled;
-  uint8_t ui8_assist_whit_error_enabled;
+  uint8_t ui8_assist_with_error_enabled;
   uint8_t ui8_battery_SOC_percentage_8b;
   uint8_t ui8_set_parameter_enabled;
   uint8_t ui8_street_mode_enabled;
@@ -42,7 +63,7 @@ typedef struct _configuration_variables
   uint8_t ui8_startup_boost_enabled;
   uint8_t ui8_auto_display_data_enabled;
   uint8_t ui8_torque_sensor_adv_enabled; 
-  uint8_t ui8_torque_sensor_calibrated; // not used
+  uint8_t ui8_soc_percent_calculation;
 } struct_configuration_variables;
 
 void ebike_app_controller(void);

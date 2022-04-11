@@ -1,4 +1,26 @@
 TSDZ2 Open Source Firmware
+for stock displays XH18 - VLCD5 - VLCD6
+
+List of changes v20.1C.2
+ 1 - Added "Motor deceleration", adjustable 0-100%.
+ 2 - Improved torque sensor calibration.
+ 3 - Added adjustment of the adc offset of the pedal torque.
+ 4 - Added adjustment of the adc range of the pedal torque.
+ 5 - Added adjustment of the adc angle of the pedal torque.
+ 6 - Added estimated calculation "Pedal torque adc step".
+ 7 - Added "Startup assist", for starting from a stationary on difficult climbs.
+ 8 - Added "Walk Assist" speed settings, one for each level.
+ 9 - Added choice Startup boost mode, at zero cadence or at zero speed.
+10 - Improved progressivity in "Cadence Assist" mode.
+11 - Added choice of soc % calculation mode.
+12 - Improved the problem of delay in restarting with bike in motion (from mspider65 v12)
+13 - Modified standing start, softer.
+14 - Fixed an overflow issue in power assist mode.
+15 - Fixed calculation of human power.
+16 - Fixed, coaster brake feature.
+17 - Display of TE and TE1 torque sensor values (VLCD5 only).
+18 - Changed "dead time" value to 2.0 us.
+19 - Cross-check motor current variables, with assistance stop in the presence of incompatible values (possible cause of motor operation without pedaling).
 
 List of changes v20.1C.1
  1 - Torque sensor calibration bug fixed.
@@ -7,7 +29,6 @@ List of changes v20.1C.1
  4 - Eliminated potential phantom pedaling risk in "rx buffer".
  5 - Changed "dead time" value to 1.5 us.
  6 - Torque offset fix.
- 7 - Coaster brake fix.
 
 List of changes v20.1C
  1 - Added field weakening function to increase the motor speed (by mspider65).
