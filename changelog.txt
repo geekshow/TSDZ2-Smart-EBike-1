@@ -1,6 +1,12 @@
 TSDZ2 Open Source Firmware
 for stock displays XH18 - VLCD5 - VLCD6
 
+List of changes v20.1C.2 update 1
+  1 - Fixed "Startup assist" feature.
+  2 - Assist without pedaling, can also be activated with negative torque offset.
+  3 - E08 error speed sensor failure, disabled in Walk assist mode.
+  4 - E05 error motor check, monitoring time increased.
+
 List of changes v20.1C.2
  1 - Added "Motor deceleration", adjustable 0-100%.
  2 - Improved torque sensor calibration.

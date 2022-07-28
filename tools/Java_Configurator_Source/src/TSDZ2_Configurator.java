@@ -3137,6 +3137,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
             }
         });
 
+        jLabel34.setForeground(new java.awt.Color(255, 0, 0));
         jLabel34.setText("Street power limit (W)");
 
         TF_STREET_POWER_LIM.setText("500");

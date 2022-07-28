@@ -350,7 +350,7 @@ volatile uint16_t ui16_ebike_check_counter = 0;
 // torque sensor check
 static uint16_t ui16_adc_torque_sensor_check = 0;
 static uint16_t ui16_motor_check_counter = 0;
-#define MOTOR_CHECK_COUNTER_THRESHOLD	20000 // 1 sec
+#define MOTOR_CHECK_COUNTER_THRESHOLD	40000 // 2 sec
 
 // system functions
 void read_battery_voltage(void);
@@ -589,11 +589,13 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
             ui8_brake_state = 1;
         } else {
             // set brake state
-            ui8_brake_state = ((BRAKE__PORT->IDR & BRAKE__PIN) ^ BRAKE__PIN);
+            //ui8_brake_state = ((BRAKE__PORT->IDR & BRAKE__PIN) ^ BRAKE__PIN);
+			ui8_brake_state = ((BRAKE__PORT->IDR & (uint8_t)BRAKE__PIN) == 0);
         }
 		#else
 		// set brake state
-        ui8_brake_state = ((BRAKE__PORT->IDR & BRAKE__PIN) ^ BRAKE__PIN);
+        //ui8_brake_state = ((BRAKE__PORT->IDR & BRAKE__PIN) ^ BRAKE__PIN);
+		ui8_brake_state = ((BRAKE__PORT->IDR & (uint8_t)BRAKE__PIN) == 0);
 		#endif
 
         /****************************************************************************/
@@ -612,6 +614,7 @@ void TIM1_CAP_COM_IRQHandler(void) __interrupt(TIM1_CAP_COM_IRQHANDLER)
 			
 			if((ui16_adc_torque_sensor_check < ui16_adc_pedal_torque_offset_cal)||(!ui8_adc_battery_current_target)) {
 				if((ui16_motor_speed_erps)
+				&&(!ui16_cadence_sensor_ticks)
 				#if OPTIONAL_ADC_FUNCTION == THROTTLE_CONTROL
 				&&(UI8_ADC_THROTTLE < ADC_THROTTLE_MIN_VALUE)
 				#endif

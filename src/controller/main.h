@@ -86,6 +86,9 @@
  interpolation 60 degrees. Must be found experimentally
  but a value of 25 may be good.
  ---------------------------------------------------------*/
+ 
+// adc torque offset gap value for error
+#define ADC_TORQUE_SENSOR_OFFSET_THRESHOLD		25
 
 // Torque sensor range values
 #define ADC_TORQUE_SENSOR_RANGE					(uint16_t)(PEDAL_TORQUE_ADC_MAX - PEDAL_TORQUE_ADC_OFFSET)
@@ -313,7 +316,7 @@
 #define BATTERY_LOW_VOLTAGE_CUT_OFF_X10_0		(uint8_t) ((uint16_t)(BATTERY_LOW_VOLTAGE_CUT_OFF * 10) & 0x00FF)
 #define BATTERY_LOW_VOLTAGE_CUT_OFF_X10_1		(uint8_t) (((uint16_t)(BATTERY_LOW_VOLTAGE_CUT_OFF * 10) >> 8) & 0x00FF)
 // battery voltage to be subtracted from the cut-off 8bit
-#define DIFFERENCE_CUT_OFF_SHUTDOWN_8_BIT			24
+#define DIFFERENCE_CUT_OFF_SHUTDOWN_8_BIT			26
 // battery voltage for saving battery capacity at shutdown
 #define BATTERY_VOLTAGE_SHUTDOWN_8_BIT			(uint8_t) ((uint16_t)(BATTERY_LOW_VOLTAGE_CUT_OFF * 250 / BATTERY_VOLTAGE_PER_10_BIT_ADC_STEP_X1000)) - ((uint16_t) DIFFERENCE_CUT_OFF_SHUTDOWN_8_BIT)
 // max battery power div25
