@@ -382,8 +382,9 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 		experimentalSettingsDir = new File(experimentalSettingsDir.getAbsolutePath() + File.separator + "experimental settings");
 
 
-
-		for (File file : provenSettingsDir.listFiles()) {
+        File[] provenSettingsFiles = provenSettingsDir.listFiles();
+        Arrays.sort(provenSettingsFiles);
+		for (File file : provenSettingsFiles) {
 			provenSettingsFilesModel.addElement(new TSDZ2_Configurator.FileContainer(file));
 
 			if (lastSettingsFile == null) {
@@ -396,14 +397,16 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 		}
  		
 
-                for (File file : experimentalSettingsDir.listFiles()) {
+        File[] experimentalSettingsFiles = experimentalSettingsDir.listFiles();
+        Arrays.sort(experimentalSettingsFiles);
+        for (File file : experimentalSettingsFiles) {
             experimentalSettingsFilesModel.addElement(new TSDZ2_Configurator.FileContainer(file));
-	}
-        	experimentalSettingsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	    }
+        experimentalSettingsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		experimentalSettingsList.setLayoutOrientation(JList.VERTICAL);
 		experimentalSettingsList.setVisibleRowCount(-1); 
                 
-                expSet.setModel(experimentalSettingsFilesModel);
+        expSet.setModel(experimentalSettingsFilesModel);
         
 		JList provenSettingsList = new JList(provenSettingsFilesModel);
 		provenSettingsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
