@@ -14,3 +14,5 @@ Debug
 **/Result.log
 
 **/*.launch
+.vscode
+experimental settings/*.ini

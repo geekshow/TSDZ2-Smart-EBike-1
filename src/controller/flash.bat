@@ -7,6 +7,7 @@ if errorlevel == 1 goto FAIL
 :PASS
 goto EXIT
 :FAIL
+echo Flashing error!!
 pause
 :EXIT
-exit
+exit /b %ERRORLEVEL%

@@ -7,12 +7,13 @@
 .PHONY: all clean
 
 #Compiler
-CC = sdcc
+CC = sdcc -V
 OBJCOPY = stm8-objcopy
 SIZE = stm8-size
 
 #Platform
 PLATFORM = stm8
+DEVICE = STM8S105
 
 #Product name
 PNAME = main
@@ -62,8 +63,8 @@ ebike_app.h pins.h eeprom.h lights.h config.h
 # The list of .rel files can be derived from the list of their source files
 RELS = $(EXTRASRCS:.c=.rel)
 
-INCLUDES = -I$(IDIR) -I$(IDIR1) -I. -I../
-CFLAGS = -m$(PLATFORM) -Ddouble=float --std-c99 --nolospre 
+INCLUDES = -I$(IDIR) -I$(IDIR1)
+CFLAGS = -m$(PLATFORM) -D$(DEVICE) -Ddouble=float --std-c99 --nolospre 
 ELF_FLAGS = --out-fmt-ihx --debug
 LIBS =
 
@@ -91,9 +92,43 @@ hex:
 	$(OBJCOPY) -O ihex $(ELF_SECTIONS_TO_REMOVE) $(PNAME).elf $(PNAME).ihx
 
 # flash:
-#	stm8flash -cstlinkv2 -pstm8s105?6 -w$(PNAME).ihx
+# 	stm8flash -cstlinkv2 -pstm8s105?6 -w$(ODIR)/$(PNAME).ihx
 
 clean:
 	@echo "Cleaning files..."
-	@cmd /C clean.bat
+	@rm -rf $(SDIR)/*.asm
+	@rm -rf $(SDIR)/*.rel
+	@rm -rf $(SDIR)/*.lk
+	@rm -rf $(SDIR)/*.lst
+	@rm -rf $(SDIR)/*.rst
+	@rm -rf $(SDIR)/*.sym
+	@rm -rf $(SDIR)/*.cdb
+	@rm -rf $(SDIR)/*.map
+	@rm -rf $(SDIR)/*.elf
+	@rm -rf $(SDIR)/*.bin
+	@rm -rf $(SDIR)/*.adb
+	@rm -rf $(SDIR1)/*.asm
+	@rm -rf $(SDIR1)/*.rel
+	@rm -rf $(SDIR1)/*.lk
+	@rm -rf $(SDIR1)/*.lst
+	@rm -rf $(SDIR1)/*.rst
+	@rm -rf $(SDIR1)/*.sym
+	@rm -rf $(SDIR1)/*.cdb
+	@rm -rf $(SDIR1)/*.map
+	@rm -rf $(SDIR1)/*.elf
+	@rm -rf $(SDIR1)/*.bin
+	@rm -rf $(SDIR1)/*.adb
+	@rm -rf *.asm
+	@rm -rf *.rel
+	@rm -rf *.lk
+	@rm -rf *.lst
+	@rm -rf *.rst
+	@rm -rf *.sym
+	@rm -rf *.cdb
+	@rm -rf *.map
+	@rm -rf *.adb
+	@rm -rf *.elf
+	@rm -rf main.hex
+	@rm -rf main.ihx
+	@rm -rf *.hex
 	@echo "Done."
