@@ -1,0 +1,21 @@
+{
+  "name": "tool-stm8flash",
+  "version": "1.1.20170616",
+  "description": "stm8flash is an application for programing stm8 devices with SWIM/stlinkv(1,2).",
+  "keywords": [
+    "tools",
+    "uploader",
+    "stmicroelectronics",
+    "stm8"
+  ],
+  "license": "GPL-2.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vdudouyt/stm8flash"
+  },
+  "system": [
+    "windows",
+    "windows_x86",
+    "windows_amd64"
+  ]
+}

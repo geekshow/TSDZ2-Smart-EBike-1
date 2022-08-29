@@ -100,8 +100,12 @@ $(ODIR)/%.rel: $(SDIR)/%.c
 # 	@cd $(ODIR)
 # 	$(OBJCOPY) -O ihex $(ELF_SECTIONS_TO_REMOVE) $(PNAME).elf $(PNAME).ihx
 
-# flash:
-# 	stm8flash -cstlinkv2 -pstm8s105?6 -w$(ODIR)/$(PNAME).ihx
+flash:
+	stm8flash -c stlinkv2 -p stm8s105?6 -w $(ODIR)/$(PNAME).ihx
+# This is 
+clear_eeprom:
+	stm8flash -c stlinkv2 -p stm8s105?6 -w data_empty.ihx
+
 
 clean:
 	@echo "Cleaning files..."

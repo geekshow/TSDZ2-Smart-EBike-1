@@ -1,7 +1,8 @@
 @echo off
-PATH = %PATH%;C:\STMicroelectronics\st_toolset\stvp;"C:\Program Files (x86)\STMicroelectronics\st_toolset\stvp"
+PATH = %PATH%;%~dp0..\..\tools\cygwin\bin;%~dp0..\..\tools\tool-stm8flash;
 
-STVP_CmdLine -BoardName=ST-LINK -ProgMode=SWIM -Port=USB -Device=STM8S105x6 -FileProg=../../bin/main.ihx -FileData=data.ihx -verbose -no_loop -verif -no_warn_protect
+make flash
+@REM make clear_eeprom
 if errorlevel == 1 goto FAIL
 
 :PASS
