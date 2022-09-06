@@ -1,5 +1,4 @@
 @echo off
-CALL clean.bat
 
 PATH = %PATH%;%~dp0..\..\tools\cygwin\bin;C:\SDCC\usr\local\bin;C:\SDCC\bin;C:\Program Files\SDCC\usr\local\bin;C:\Program Files\SDCC\bin;
 echo Build started...

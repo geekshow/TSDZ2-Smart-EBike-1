@@ -456,12 +456,12 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
           public void actionPerformed(ActionEvent arg0) {
           			PrintWriter iWriter = null;
                                 PrintWriter pWriter = null;
+                                
+                                File newFile = new File(experimentalSettingsDir + File.separator + new SimpleDateFormat("yyyyMMdd-HHmmssz").format(new Date()) + ".ini");
 				try {
 					//FileWriter fw = new FileWriter("settings.ini");
 					//BufferedWriter bw = new BufferedWriter(fw);
-                                        
-                                        
-					File newFile = new File(experimentalSettingsDir + File.separator + new SimpleDateFormat("yyyyMMdd-HHmmssz").format(new Date()) + ".ini");
+                                        					
 					//TSDZ2_Configurator ConfiguratorObject = new TSDZ2_Configurator();
                                         //ConfiguratorObject.AddListItem(newFile);
                                         experimentalSettingsFilesModel.add(0, new FileContainer(newFile)); //hier wird nur die neue Datei in die Liste geschrieben...
@@ -1254,7 +1254,9 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 					}
 				}  
                                 try {
-					Process process = Runtime.getRuntime().exec("cmd /c start compile_and_flash_20");
+                                        String backup_name = newFile.getName();
+                                        backup_name = backup_name.substring(0, backup_name.lastIndexOf('.')); //remove ini extension
+                                        Process process = Runtime.getRuntime().exec("cmd /c start compile_and_flash_20 " + backup_name);
 				} catch (IOException e1) {
 					e1.printStackTrace(System.err);
 				}
