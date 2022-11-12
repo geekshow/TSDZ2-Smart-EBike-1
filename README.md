@@ -3,7 +3,8 @@ This repository is updated by mbrusa.
 This fork is based on the TSDZ2-v0.20beta1 adapted for Tongsheng protocol displays, like stock VLCD5, VLCD6, XH18 or other displays with the same protocol and 6-pin Tonsheng connector, SW102, DZ41 from Enerprof or 850C for TSDZ2.
 With these last displays, the visualization of data and errors must be checked..
 
-An Italian language forum thread is published at [jobike.it.](http://www.jobike.it/forum/topic.asp?TOPIC_ID=76426&whichpage=61).
+Endless Sphere forum reference thread: [endless-sphere.com.](https://endless-sphere.com/forums/viewtopic.php?f=30&t=110682).
+Italian forum reference thread: [jobike.it.](http://www.jobike.it/forum/topic.asp?TOPIC_ID=76426&whichpage=61).
 
 See the [wiki](https://github.com/emmebrusa/TSDZ2-Smart-EBike-1/wiki) for instructions
 
