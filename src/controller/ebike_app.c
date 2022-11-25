@@ -2184,11 +2184,21 @@ void ebike_control_lights(void)
 // and disable the interrupt. The interrupt should be enable again on main loop, after the package being processed
 void UART2_IRQHandler(void) __interrupt(UART2_IRQHANDLER)
 {
-	if(UART2_GetFlagStatus(UART2_FLAG_RXNE) == SET)
+	// Interrupt is received when Data is received or when overrun occured because UART2_IT_RXNE_OR interrupt is used
+	// test error flags : OverRun, Noise and Framing error flags
+    if ((UART2->SR & (uint8_t)(UART2_FLAG_OR_LHE|UART2_FLAG_NF|UART2_FLAG_FE)) != (uint8_t)0x00)
 	{
-		UART2->SR &= (uint8_t)~(UART2_FLAG_RXNE); // this may be redundant
-
-		ui8_byte_received = UART2_ReceiveData8();
+	    // There is an error
+		// Clear error bits
+		ui8_byte_received = (uint8_t)UART2->DR; // According to datasheet : The Error bits (OR, NF, FE) are reset by a read to the UART_SR register followed by a UART_DR
+		// Trash all received data and wait for next message
+	 	ui8_rx_counter = 0;
+		ui8_state_machine = 0;
+	}
+	else if((UART2->SR & (uint8_t)(UART2_FLAG_RXNE)) != (uint8_t)0x00)
+	{
+		// Read data : Reading data clear UART2_FLAG_RXNE flag
+		ui8_byte_received = (uint8_t)UART2->DR;
 
 		switch(ui8_state_machine)
 		{
