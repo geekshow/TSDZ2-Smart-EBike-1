@@ -1,14 +1,26 @@
 @ECHO OFF
 
-SET home_dir=%~dp0
-SET release_folder=releases\20.1
+SET Version = 20.1
+SET settings_date=%1
 
-    CD src\controller
-    CALL compile_and_flash.bat || GOTO :error
-    CD %home_dir%                
-    COPY .\src\controller\main.ihx %release_folder%\TSDZ2-mb.20beta1.B-PROGRAM.hex
+SET release_folder=%~dp0releases\%Version%
+SET backup_folder=%~dp0releases\backup
 
-ECHO:
-EXIT /b %errorlevel%
+CD src\controller
+CALL clean.bat      || GOTO :EXIT
+CALL compile.bat    || GOTO :EXIT
 
-@ECHO ON
+ECHO Copying firmware to release folder.
+ECHO %release_folder%\TSDZ2-mb.20beta1.B-PROGRAM.hex
+MKDIR %release_folder%
+COPY ..\..\bin\main.ihx %release_folder%\TSDZ2-mb.20beta1.hex
+MKDIR %backup_folder%
+COPY ..\..\bin\main.ihx %backup_folder%\TSDZ2-%settings_date%.ihx
+
+echo Press any key to flash... (Ctl+C to stop)
+pause > nul
+CALL flash.bat
+    
+
+:EXIT
+EXIT

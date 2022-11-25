@@ -1,3 +1,5 @@
+[![Build Action](../../actions/workflows/build.yaml/badge.svg)](../../actions/workflows/build.yaml)
+
 This repository is updated by mbrusa.
 
 This fork is based on the TSDZ2-v0.20beta1 adapted for Tongsheng protocol displays, like stock VLCD5, VLCD6, XH18 or other displays with the same protocol and 6-pin Tonsheng connector, SW102, DZ41 from Enerprof or 850C for TSDZ2.
@@ -7,7 +9,6 @@ Endless Sphere forum reference thread: [endless-sphere.com.](https://endless-sph
 
 Italian forum reference thread: [jobike.it.](http://www.jobike.it/forum/topic.asp?TOPIC_ID=76426&whichpage=61).
 
-See the [wiki](https://github.com/emmebrusa/TSDZ2-Smart-EBike-1/wiki) for instructions
 
 This ebike motor controller firmware project is to be used with the Tongsheng TSDZ2 mid drive motor. 
 Note: firmware can't be written to Enerdan sold TSDZ2 motors and controllers because they are equipped with V2 controller with XMC1300 microprocessor instead of STM8.
@@ -20,7 +21,21 @@ It has the following benefits compared to the stock firmware:
 
 This project is being developed and maintained for free by a community of users. Some of them are developers who work professionally developing this type of technology for very well known companies.
 
-For more details, see the project page: https://github.com/OpenSource-EBike-firmware/TSDZ2_wiki/wiki 
+## Building and flashing
+### Windows 
+- Install [SDCC](http://sdcc.sourceforge.net/index.php#Download).
+- Install [Java](https://www.java.com/endownload/).
+- Open JavaConfigurator.jar
+- Or use supplied .bat scripts, e.g. `src/controller/compile_and_flash.bat` 
+
+### Linux
+```
+cd src/controller
+make
+```
+
+# For more information, go to the [wiki](https://github.com/emmebrusa/TSDZ2-Smart-EBike-1/wiki) instructions.
+
 
 **IMPORTANT NOTES**
 * Installing this firmware will void your warranty of the TSDZ2 mid drive.

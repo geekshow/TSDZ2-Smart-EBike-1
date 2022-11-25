@@ -1,16 +1,9 @@
-**/*.asm
-**/*.elf
-**/*.cdb
-**/*.lk
-**/*.map
-**/*.adb
-**/*.lst
-**/*.rel
-**/*.rst
-**/*.sym
-
+experimental settings
+bin
 Debug
 
-**/Result.log
-
 **/*.launch
+.vscode
+releases
+tools/Java_Configurator_Source/
+!tools/Java_Configurator_Source/src
