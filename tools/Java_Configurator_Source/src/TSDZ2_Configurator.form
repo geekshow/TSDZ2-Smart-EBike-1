@@ -28,7 +28,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="TSDZ2 Parameter Configurator 4.1 for Open Source Firmware v20.1C.2"/>
+    <Property name="title" type="java.lang.String" value="TSDZ2 Parameter Configurator 4.2 for Open Source Firmware v20.1C.2-2"/>
     <Property name="resizable" type="boolean" value="false"/>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1192, 608]"/>
@@ -850,16 +850,6 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel16" min="-2" pref="150" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="Label_Parameter2" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="RB_VLCD5" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="RB_VLCD6" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="RB_XH18" min="-2" max="-2" attributes="0"/>
-                              </Group>
                               <Group type="102" attributes="0">
                                   <Component id="Label_Parameter5" min="-2" pref="63" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -874,6 +864,23 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="RB_DISPLAY_ALWAY_ON" min="-2" pref="88" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="Label_Parameter2" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="RB_VLCD5" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="RB_VLCD6" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jLabel16" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="RB_850C" min="-2" max="-2" attributes="0"/>
+                                      <Component id="RB_XH18" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -882,8 +889,11 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabel16" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel16" alignment="3" max="-2" attributes="0"/>
+                              <Component id="RB_850C" alignment="3" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="RB_VLCD5" alignment="3" max="-2" attributes="0"/>
                               <Component id="Label_Parameter2" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
@@ -1013,6 +1023,17 @@
                   </Properties>
                   <Events>
                     <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="RB_UNIT_KILOMETERSStateChanged"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="RB_850C">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="buttonGroup2"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="850C"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="RB_850CStateChanged"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -1371,7 +1392,7 @@
                       <EmptySpace type="unrelated" pref="26" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanel12" max="32767" attributes="0"/>
-                          <Component id="jPanel10" max="32767" attributes="0"/>
+                          <Component id="jPanel10" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" pref="26" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -2602,15 +2623,9 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel17" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="CB_STREET_WALK" min="-2" max="-2" attributes="0"/>
-                                      <Component id="CB_STREET_POWER_LIM" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="CB_STREET_THROTTLE" min="-2" max="-2" attributes="0"/>
-                                      <Component id="CB_STREET_CRUISE" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="CB_STREET_WALK" min="-2" max="-2" attributes="0"/>
+                              <Component id="CB_STREET_POWER_LIM" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="CB_STREET_CRUISE" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                       <Component id="jLabelStreetSpeed" max="32767" attributes="0"/>
@@ -2621,6 +2636,11 @@
                                       <Component id="TF_STREET_POWER_LIM" alignment="1" min="-2" pref="46" max="-2" attributes="0"/>
                                       <Component id="TF_STREET_SPEED_LIM" alignment="1" min="-2" pref="46" max="-2" attributes="0"/>
                                   </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="CB_STREET_THROTTLE" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="CB_THROTTLE_LEGAL" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -2644,12 +2664,15 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="CB_STREET_POWER_LIM" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="CB_STREET_THROTTLE" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="CB_STREET_THROTTLE" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="CB_THROTTLE_LEGAL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="CB_STREET_CRUISE" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="CB_STREET_WALK" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="40" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2704,7 +2727,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CB_STREET_THROTTLE">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Throttle on street mode"/>
+                    <Property name="text" type="java.lang.String" value="Throttle on street"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CB_STREET_CRUISE">
@@ -2718,6 +2741,11 @@
                     <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="CB_WALK_ASSIST.isSelected()" type="code"/>
                     </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="CB_THROTTLE_LEGAL">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Legal"/>
                   </Properties>
                 </Component>
               </SubComponents>

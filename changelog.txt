@@ -1,6 +1,17 @@
 TSDZ2 Open Source Firmware
 for stock displays XH18 - VLCD5 - VLCD6
 
+List of changes v20.1C.2 update 2
+  1 - Improved Walk assist speed adjustment.
+  2 - Added legal throttle, only works when pedaling, in street mode.
+  3 - Added 850C display support (6 pin connector & TSDZ2 protocol).
+  4 - Added fifth level, for display with 5 levels.
+  5 - Fixed data display with units = miles.
+  6 - Fixed Startup assist max time (10 sec).
+  7 - Fixed comms error detection (by lcha78).
+  8 - Added manuals in Spanish (by ashrambo).
+  9 - Building script improvements (by dzid26)
+
 List of changes v20.1C.2 update 1
   1 - Fixed "Startup assist" feature.
   2 - Assist without pedaling, can also be activated with negative torque offset.

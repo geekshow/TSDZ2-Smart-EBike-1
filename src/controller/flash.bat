@@ -1,14 +1,14 @@
 @echo off
-PATH = %PATH%;%~dp0..\..\tools\cygwin\bin;%~dp0..\..\tools\tool-stm8flash;
+PATH = %PATH%;C:\STMicroelectronics\st_toolset\stvp;"C:\Program Files (x86)\STMicroelectronics\st_toolset\stvp"
 
-make flash
-@REM make clear_eeprom
+STVP_CmdLine -BoardName=ST-LINK -ProgMode=SWIM -Port=USB -Device=STM8S105x6 -FileProg=main.ihx -FileData=data_empty.ihx -verbose -no_loop -verif -no_warn_protect
 if errorlevel == 1 goto FAIL
 
 :PASS
 goto EXIT
 :FAIL
 echo Flashing error!!
-:EXIT
 pause
+:EXIT
+@echo on
 exit /b %ERRORLEVEL%

@@ -12,7 +12,7 @@
 #include "config.h"
 #include "common.h"
 
-//#define FW_VERSION 7 // mspider65 
+//#define FW_VERSION 7 // mspider65
 
 // PWM related values
 // motor
@@ -60,12 +60,12 @@
  ---------------------------------------------------------*/
 
 #define MOTOR_ROTOR_OFFSET_ANGLE                                  10
+#define MOTOR_ROTOR_ANGLE_30                                      (20  + MOTOR_ROTOR_OFFSET_ANGLE)
 #define MOTOR_ROTOR_ANGLE_90                                      (63  + MOTOR_ROTOR_OFFSET_ANGLE)
 #define MOTOR_ROTOR_ANGLE_150                                     (106 + MOTOR_ROTOR_OFFSET_ANGLE)
 #define MOTOR_ROTOR_ANGLE_210                                     (148 + MOTOR_ROTOR_OFFSET_ANGLE)
 #define MOTOR_ROTOR_ANGLE_270                                     (191 + MOTOR_ROTOR_OFFSET_ANGLE)
 #define MOTOR_ROTOR_ANGLE_330                                     (233 + MOTOR_ROTOR_OFFSET_ANGLE)
-#define MOTOR_ROTOR_ANGLE_30                                      (20  + MOTOR_ROTOR_OFFSET_ANGLE)
 
 /*---------------------------------------------------------
  NOTE: regarding motor rotor offset
@@ -88,7 +88,7 @@
  ---------------------------------------------------------*/
  
 // adc torque offset gap value for error
-#define ADC_TORQUE_SENSOR_OFFSET_THRESHOLD		25
+#define ADC_TORQUE_SENSOR_OFFSET_THRESHOLD		30
 
 // Torque sensor range values
 #define ADC_TORQUE_SENSOR_RANGE					(uint16_t)(PEDAL_TORQUE_ADC_MAX - PEDAL_TORQUE_ADC_OFFSET)
@@ -257,10 +257,13 @@
 
 // assist pedal level mask
 #define ASSIST_PEDAL_LEVEL0							0x10
+#define ASSIST_PEDAL_LEVEL01						0x80
 #define ASSIST_PEDAL_LEVEL1							0x40
 #define ASSIST_PEDAL_LEVEL2							0x02
 #define ASSIST_PEDAL_LEVEL3							0x04
 #define ASSIST_PEDAL_LEVEL4							0x08
+
+#define ASSIST_PEDAL_LEVEL01_PERCENT				70
 
 // oem display fault & function code
 #define CLEAR_DISPLAY								0
@@ -339,7 +342,7 @@
 #define LI_ION_CELL_VOLTS_2_X100		(uint16_t)((float)LI_ION_CELL_VOLTS_2_OF_4 * 100)
 #define LI_ION_CELL_VOLTS_1_X100		(uint16_t)((float)LI_ION_CELL_VOLTS_1_OF_4 * 100)
 #define LI_ION_CELL_VOLTS_0_X100		(uint16_t)((float)LI_ION_CELL_VOLTS_EMPTY * 100)
-#else // ENABLE_VLCD5
+#else // ENABLE_VLCD5 or 850C
 #define LI_ION_CELL_VOLTS_8_X100		(uint16_t)((float)LI_ION_CELL_OVERVOLT * 100)
 #define LI_ION_CELL_VOLTS_7_X100		(uint16_t)((float)LI_ION_CELL_RESET_SOC_PERCENT * 100)
 #define LI_ION_CELL_VOLTS_6_X100		(uint16_t)((float)LI_ION_CELL_VOLTS_FULL * 100)
@@ -368,13 +371,16 @@
 // walk assist
 //#define WALK_ASSIST_THRESHOLD_SPEED_X10	(uint8_t)(WALK_ASSIST_THRESHOLD_SPEED * 10)
 #define WALK_ASSIST_THRESHOLD_SPEED_X10	(uint8_t)(WALK_ASSIST_THRESHOLD_SPEED)
-#define WALK_ASSIST_PROP_GAIN					12
+#define WALK_ASSIST_ERPS_THRESHOLD				20
 #define WALK_ASSIST_ADJ_DELAY_MIN				4
+#define WALK_ASSIST_ADJ_DELAY_STARTUP			10
 #define WALK_ASSIST_DUTY_CYCLE_MIN              40
-#define WALK_ASSIST_DUTY_CYCLE_MAX              120
-#define WALK_ASSIST_ADC_BATTERY_CURRENT_MAX     80
-#define WALK_ASSIST_SPEED_MIN_DETECTABLE		38
-#define WALK_ASSIST_SPEED_NO_DETECTED_COEFF		3
+#define WALK_ASSIST_DUTY_CYCLE_STARTUP			50
+#define WALK_ASSIST_DUTY_CYCLE_MAX              130
+#define WALK_ASSIST_ADC_BATTERY_CURRENT_MAX     40
+
+// startup assist
+#define STARTUP_ASSIST_MAX_TIME					100 // 10.0 sec
 
 // cruise threshold (speed limit min km/h x10)
 #define CRUISE_THRESHOLD_SPEED_X10		(uint8_t)(CRUISE_THRESHOLD_SPEED * 10)

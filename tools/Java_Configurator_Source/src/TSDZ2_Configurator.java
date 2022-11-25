@@ -245,6 +245,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 CB_ADC_STEP_ESTIM.setSelected(Boolean.parseBoolean(in.readLine()));
                 RB_BOOST_AT_ZERO_CADENCE.setSelected(Boolean.parseBoolean(in.readLine()));
                 RB_BOOST_AT_ZERO_SPEED.setSelected(Boolean.parseBoolean(in.readLine()));
+                RB_850C.setSelected(Boolean.parseBoolean(in.readLine()));
+                CB_THROTTLE_LEGAL.setSelected(Boolean.parseBoolean(in.readLine()));
                 
 		in.close();
                 
@@ -382,8 +384,9 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 		experimentalSettingsDir = new File(experimentalSettingsDir.getAbsolutePath() + File.separator + "experimental settings");
 
 
-        File[] provenSettingsFiles = provenSettingsDir.listFiles();
-        Arrays.sort(provenSettingsFiles);
+
+                File[] provenSettingsFiles = provenSettingsDir.listFiles();
+                Arrays.sort(provenSettingsFiles);
 		for (File file : provenSettingsFiles) {
 			provenSettingsFilesModel.addElement(new TSDZ2_Configurator.FileContainer(file));
 
@@ -397,16 +400,16 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 		}
  		
 
-        File[] experimentalSettingsFiles = experimentalSettingsDir.listFiles();
-        Arrays.sort(experimentalSettingsFiles);
-        for (File file : experimentalSettingsFiles) {
-            experimentalSettingsFilesModel.addElement(new TSDZ2_Configurator.FileContainer(file));
-	    }
-        experimentalSettingsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                File[] experimentalSettingsFiles = experimentalSettingsDir.listFiles();
+                 Arrays.sort(experimentalSettingsFiles);
+                for (File file : experimentalSettingsFiles) {
+                    experimentalSettingsFilesModel.addElement(new TSDZ2_Configurator.FileContainer(file));
+                }
+                experimentalSettingsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		experimentalSettingsList.setLayoutOrientation(JList.VERTICAL);
 		experimentalSettingsList.setVisibleRowCount(-1); 
                 
-        expSet.setModel(experimentalSettingsFilesModel);
+                expSet.setModel(experimentalSettingsFilesModel);
         
 		JList provenSettingsList = new JList(provenSettingsFilesModel);
 		provenSettingsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -461,7 +464,9 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 				try {
 					//FileWriter fw = new FileWriter("settings.ini");
 					//BufferedWriter bw = new BufferedWriter(fw);
-                                        					
+                                        
+                                        
+					//File newFile = new File(experimentalSettingsDir + File.separator + new SimpleDateFormat("yyyyMMdd-HHmmssz").format(new Date()) + ".ini");
 					//TSDZ2_Configurator ConfiguratorObject = new TSDZ2_Configurator();
                                         //ConfiguratorObject.AddListItem(newFile);
                                         experimentalSettingsFilesModel.add(0, new FileContainer(newFile)); //hier wird nur die neue Datei in die Liste geschrieben...
@@ -1240,6 +1245,26 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 						pWriter.println(text_to_save);
 					}
 					iWriter.println(RB_BOOST_AT_ZERO_SPEED.isSelected());
+                                        
+                                        if (RB_850C.isSelected()) {
+						text_to_save = "#define ENABLE_850C 1";
+						pWriter.println(text_to_save);
+					}
+                                        else {
+						text_to_save = "#define ENABLE_850C 0";
+						pWriter.println(text_to_save);
+					}
+					iWriter.println(RB_850C.isSelected());
+                                        
+                                        if (CB_THROTTLE_LEGAL.isSelected()) {
+						text_to_save = "#define STREET_MODE_THROTTLE_LEGAL 1";
+						pWriter.println(text_to_save);
+					}
+                                        else {
+						text_to_save = "#define STREET_MODE_THROTTLE_LEGAL 0";
+						pWriter.println(text_to_save);
+					}
+					iWriter.println(CB_THROTTLE_LEGAL.isSelected());
 
                                         pWriter.println("\r\n#endif /* CONFIG_H_ */");
 
@@ -1254,6 +1279,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 					}
 				}  
                                 try {
+					//Process process = Runtime.getRuntime().exec("cmd /c start compile_and_flash_20");
                                         String backup_name = newFile.getName();
                                         backup_name = backup_name.substring(0, backup_name.lastIndexOf('.')); //remove ini extension
                                         Process process = Runtime.getRuntime().exec("cmd /c start compile_and_flash_20 " + backup_name);
@@ -1361,6 +1387,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         Label_Parameter5 = new javax.swing.JLabel();
         RB_UNIT_MILES = new javax.swing.JRadioButton();
         RB_UNIT_KILOMETERS = new javax.swing.JRadioButton();
+        RB_850C = new javax.swing.JRadioButton();
         jPanel7 = new javax.swing.JPanel();
         jLabelMaxSpeed = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -1490,6 +1517,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         CB_STREET_THROTTLE = new javax.swing.JCheckBox();
         CB_STREET_CRUISE = new javax.swing.JCheckBox();
         CB_STREET_WALK = new javax.swing.JCheckBox();
+        CB_THROTTLE_LEGAL = new javax.swing.JCheckBox();
         jPanel8 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
@@ -1592,7 +1620,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jRadioButton1.setText("jRadioButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("TSDZ2 Parameter Configurator 4.1 for Open Source Firmware v20.1C.2");
+        setTitle("TSDZ2 Parameter Configurator 4.2 for Open Source Firmware v20.1C.2-2");
         setResizable(false);
         setSize(new java.awt.Dimension(1192, 608));
 
@@ -2056,21 +2084,20 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup2.add(RB_850C);
+        RB_850C.setText("850C");
+        RB_850C.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                RB_850CStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(Label_Parameter2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RB_VLCD5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RB_VLCD6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RB_XH18))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(Label_Parameter5, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -2082,14 +2109,29 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(RB_DISPLAY_WORK_ON)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RB_DISPLAY_ALWAY_ON, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(RB_DISPLAY_ALWAY_ON, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(Label_Parameter2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RB_VLCD5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RB_VLCD6))
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(RB_850C)
+                            .addComponent(RB_XH18))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addComponent(jLabel16)
-                .addGap(10, 10, 10)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(RB_850C))
+                .addGap(5, 5, 5)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(RB_VLCD5)
                     .addComponent(Label_Parameter2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -3156,12 +3198,14 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
             }
         });
 
-        CB_STREET_THROTTLE.setText("Throttle on street mode");
+        CB_STREET_THROTTLE.setText("Throttle on street");
 
         CB_STREET_CRUISE.setText("Cruise on street mode");
 
         CB_STREET_WALK.setText("Walk assist on street mode");
         CB_STREET_WALK.setEnabled(CB_WALK_ASSIST.isSelected());
+
+        CB_THROTTLE_LEGAL.setText("Legal");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -3171,13 +3215,9 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CB_STREET_WALK)
-                            .addComponent(CB_STREET_POWER_LIM)
-                            .addComponent(CB_STREET_THROTTLE)
-                            .addComponent(CB_STREET_CRUISE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(CB_STREET_WALK)
+                    .addComponent(CB_STREET_POWER_LIM)
+                    .addComponent(CB_STREET_CRUISE)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabelStreetSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -3185,7 +3225,11 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(TF_STREET_POWER_LIM, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TF_STREET_SPEED_LIM, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(TF_STREET_SPEED_LIM, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(CB_STREET_THROTTLE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CB_THROTTLE_LEGAL)))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -3203,12 +3247,14 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CB_STREET_POWER_LIM)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(CB_STREET_THROTTLE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CB_STREET_THROTTLE)
+                    .addComponent(CB_THROTTLE_LEGAL))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CB_STREET_CRUISE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CB_STREET_WALK)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -3223,7 +3269,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -4543,6 +4589,17 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
             TF_CRUISE_ASS_4.setText(String.valueOf(intCruiseSpeed4));
         }
     }//GEN-LAST:event_RB_UNIT_KILOMETERSStateChanged
+
+    private void RB_850CStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RB_850CStateChanged
+        TF_BAT_CELL_5_6.setEnabled(RB_850C.isSelected());
+        TF_BAT_CELL_4_6.setEnabled(RB_850C.isSelected());
+        TF_BAT_CELL_3_6.setEnabled(RB_850C.isSelected());
+        TF_BAT_CELL_2_6.setEnabled(RB_850C.isSelected());
+        TF_BAT_CELL_1_6.setEnabled(RB_850C.isSelected());
+        TF_BAT_CELL_3_4.setEnabled(!(RB_850C.isSelected()));
+        TF_BAT_CELL_2_4.setEnabled(!(RB_850C.isSelected()));
+        TF_BAT_CELL_1_4.setEnabled(!(RB_850C.isSelected()));
+    }//GEN-LAST:event_RB_850CStateChanged
     
     /*
      * @param args the command line arguments
@@ -4599,6 +4656,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.JCheckBox CB_STREET_THROTTLE;
     private javax.swing.JCheckBox CB_STREET_WALK;
     private javax.swing.JCheckBox CB_TEMP_ERR_MIN_LIM;
+    private javax.swing.JCheckBox CB_THROTTLE_LEGAL;
     private javax.swing.JCheckBox CB_TORQUE_CALIBRATION;
     private javax.swing.JCheckBox CB_TOR_SENSOR_ADV;
     private javax.swing.JCheckBox CB_WALK_ASSIST;
@@ -4608,6 +4666,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     private javax.swing.JLabel Label_Parameter2;
     private javax.swing.JLabel Label_Parameter3;
     private javax.swing.JLabel Label_Parameter5;
+    private javax.swing.JRadioButton RB_850C;
     private javax.swing.JRadioButton RB_ADC_OPTION_DIS;
     private javax.swing.JRadioButton RB_BOOST_AT_ZERO_CADENCE;
     private javax.swing.JRadioButton RB_BOOST_AT_ZERO_SPEED;

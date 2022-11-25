@@ -1,0 +1,35 @@
+----------------------------------------------------------
+new log session
+date:				11/25/22
+time:				10:26:18
+----------------------------------------------------------
+STVP_CmdLine version 1.6
+
+Verbose ON
+Log activity ON
+Display Progress OFF
+Message box warning if protect option byte OFF
+Loop mode OFF
+Erase device OFF
+Blank check device OFF
+Verify device ON
+
+Configuration:
+BoardName=ST-LINK ST-LINK_ID=0 Device=STM8S105x6 Port=USB ProgMode=SWIM
+
+>>> Filling PROGRAM MEMORY image in computer with Blank Value
+<<< Filling PROGRAM MEMORY image in computer succeeds
+
+>>> Loading file main.ihx in PROGRAM MEMORY image in computer
+<<< Loading file succeeds
+
+>>> Filling DATA MEMORY image in computer with Blank Value
+<<< Filling DATA MEMORY image in computer succeeds
+
+>>> Loading file data_empty.ihx in DATA MEMORY image in computer
+<<< Loading file succeeds
+
+>>> Programming PROGRAM MEMORY
+Cannot communicate with the tool.
+Wrong tool selection or check tool power supply or check that a previous session is closed.
+<<< Programming PROGRAM MEMORY fails

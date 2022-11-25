@@ -3,13 +3,36 @@
 // 1 cycle and 2 bytes less
 // -----------------------------------------------------------------------------
 replace restart {
+	ld %1, %2
+	tnz %1
+} by {
+    ; peephole replaced ld + tnz with ld
+	ld %1, %2
+}
+
+// -----------------------------------------------------------------------------
+// REMOVE USELESS TNZ
+// 1 cycle and 2 bytes less
+// -----------------------------------------------------------------------------
+replace restart {
+	inc %1
+	tnz %1
+} by {
+    ; peephole replaced inc + tnz with inc
+	inc %1
+}
+
+// -----------------------------------------------------------------------------
+// REMOVE USELESS TNZ
+// 1 cycle and 2 bytes less
+// -----------------------------------------------------------------------------
+replace restart {
 	dec %1
 	tnz %1
 } by {
-    ; peephole replaced dec + tnz + jrne with dec + jrne
+    ; peephole replaced dec + tnz with dec
 	dec %1
 }
-
 
 // -----------------------------------------------------------------------------
 // REMOVE USELESS LD a
