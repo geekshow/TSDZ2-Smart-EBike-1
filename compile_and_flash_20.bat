@@ -12,9 +12,9 @@ CALL compile.bat    || GOTO :EXIT
 
 ECHO Copying firmware to release folder.
 ECHO %release_folder%\TSDZ2-%version%-PROGRAM.hex
-MKDIR %release_folder%
+MKDIR %release_folder% >NUL 2>NUL
 COPY ..\..\bin\main.ihx %release_folder%\TSDZ2-%version%.hex
-MKDIR %backup_folder%
+MKDIR %backup_folder% >NUL 2>NUL
 COPY ..\..\bin\main.ihx %backup_folder%\TSDZ2-%settings_date%.ihx >NUL 2>NUL
 COPY ..\..\bin\main.ihx main.ihx >NUL 2>NUL
 
