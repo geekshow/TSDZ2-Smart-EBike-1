@@ -10,8 +10,8 @@ backup_folder=$(pwd)/releases/backup
 cd src/controller
 
 # Clean existing
-rm -rf main.ihx
-make clean
+rm -rf main.ihx || true
+make clean || true
 
 # Build firmware
 echo Build started...
@@ -24,11 +24,11 @@ mkdir -p $release_folder
 yes | cp -rf ../../bin/main.ihx $release_folder/TSDZ2-$version-$settings_date.hex
 
 while true; do
-read -p "Do you want to flash the motor ? (yes/no) " yn
-case $yn in 
-	yes ) break;;
-	no ) exit;;
-	* ) echo invalid response;;
+read -p "Do you want to flash the motor ? [Y/n]" yn
+case $yn in
+	y ) break;;
+	n ) exit;;
+	* ) break;;
 esac
 done
 
