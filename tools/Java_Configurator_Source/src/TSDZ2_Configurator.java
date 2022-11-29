@@ -37,6 +37,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class TSDZ2_Configurator extends javax.swing.JFrame {
 
@@ -1279,10 +1280,25 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 					}
 				}  
                                 try {
-					//Process process = Runtime.getRuntime().exec("cmd /c start compile_and_flash_20");
-                                        String backup_name = newFile.getName();
-                                        backup_name = backup_name.substring(0, backup_name.lastIndexOf('.')); //remove ini extension
-                                        Process process = Runtime.getRuntime().exec("cmd /c start compile_and_flash_20 " + backup_name);
+                                    String backup_name = newFile.getName();
+                                    backup_name = backup_name.substring(0, backup_name.lastIndexOf('.')); //remove ini extension
+                                    
+                                    // Detect OS
+                                    OSType os = getOperatingSystem();
+                                    Process process;
+                                    switch(os) {
+                                        case OSType.Windows:
+                                            process = Runtime.getRuntime().exec("cmd /c start compile_and_flash_20 " + backup_name);
+                                            break;
+                                        case OSType.Mac:
+                                        case OSType.Linux:
+                                            process = Runtime.getRuntime().exec("compile_and_flash_20.sh " + backup_name);
+                                            break;
+                                        case OSType.Other:
+                                        default:
+                                            JOptionPane.showMessageDialog(null, " Unknown OS.\n Please run:\ncd src/controller && make && make flash\nto compile and flash your TSDZ2.");
+                                            break;
+                                    }
 				} catch (IOException e1) {
 					e1.printStackTrace(System.err);
 				}
@@ -1302,6 +1318,20 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 			experimentalSettingsList.clearSelection();
 			//updateDependiencies(false);
 		}
+    }
+    
+    /**
+     * This method detect the current operating system used
+     */
+    public enum OSType {
+        Windows, MacOS, Linux, Other
+    };
+    private OSType getOperatingSystem() {
+        String OS = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH);
+        if ((OS.indexOf("mac") >= 0) || (OS.indexOf("darwin") >= 0)) return OSType.MacOS;
+        else if (OS.indexOf("win") >= 0) return OSType.Windows;
+        else if (OS.indexOf("nux") >= 0) return OSType.Linux;
+        return OSType.Other;
     }
     
 
