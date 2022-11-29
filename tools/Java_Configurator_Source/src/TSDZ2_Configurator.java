@@ -1296,7 +1296,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                                             break;
                                         case OSType.Other:
                                         default:
-                                            JOptionPane.showMessageDialog(null, " Unknown OS.\n Please run:\ncd src/controller && make && make flash\nto compile and flash your TSDZ2.");
+                                            JOptionPane.showMessageDialog(null, " Unknown OS.\n Please run:\ncd src/controller && make && make clear_eeprom && make flash\nto compile and flash your TSDZ2.");
                                             break;
                                     }
 				} catch (IOException e1) {
