@@ -37,6 +37,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class TSDZ2_Configurator extends javax.swing.JFrame {
 
@@ -51,7 +52,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     DefaultListModel experimentalSettingsFilesModel = new DefaultListModel();
     JList experimentalSettingsList = new JList(experimentalSettingsFilesModel);
                   
-    	public class FileContainer {
+    public class FileContainer {
 
 		public FileContainer(File file) {
 			this.file = file;
@@ -62,6 +63,10 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 		public String toString() {
 			return file.getName();
 		}
+
+        public File getFile() {
+            return file;
+        }
 	}
 
     String[] displayDataArray = {"motor temperature", "battery SOC rem. %", "battery voltage", "battery current", "motor power", "adc throttle 8b", "adc torque sensor 10b", "pedal cadence rpm", "human power", "adc pedal torque delta", "consumed Wh"};   
@@ -363,10 +368,9 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
     public void AddListItem(File newFile) {
         
         experimentalSettingsFilesModel.add(0, new FileContainer(newFile));
-    
-       // ListModel<String> Liste = expSet.getModel();
+        expSet.setSelectedIndex(0);
         expSet.repaint();
-        JOptionPane.showMessageDialog(null,experimentalSettingsFilesModel.toString(),"Titel", JOptionPane.PLAIN_MESSAGE);
+        // JOptionPane.showMessageDialog(null,experimentalSettingsFilesModel.toString(),"Titel", JOptionPane.PLAIN_MESSAGE);
     }
 
     public TSDZ2_Configurator() {
@@ -376,7 +380,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                
         // update lists
         
-                        experimentalSettingsDir = new File(Paths.get(".").toAbsolutePath().normalize().toString());
+        experimentalSettingsDir = new File(Paths.get(".").toAbsolutePath().normalize().toString());
 		while (!Arrays.asList(experimentalSettingsDir.list()).contains("experimental settings")) {
 			experimentalSettingsDir = experimentalSettingsDir.getParentFile();
 		}
@@ -385,8 +389,8 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 
 
 
-                File[] provenSettingsFiles = provenSettingsDir.listFiles();
-                Arrays.sort(provenSettingsFiles);
+        File[] provenSettingsFiles = provenSettingsDir.listFiles();
+        Arrays.sort(provenSettingsFiles);
 		for (File file : provenSettingsFiles) {
 			provenSettingsFilesModel.addElement(new TSDZ2_Configurator.FileContainer(file));
 
@@ -400,16 +404,24 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
 		}
  		
 
-                File[] experimentalSettingsFiles = experimentalSettingsDir.listFiles();
-                 Arrays.sort(experimentalSettingsFiles);
-                for (File file : experimentalSettingsFiles) {
-                    experimentalSettingsFilesModel.addElement(new TSDZ2_Configurator.FileContainer(file));
-                }
-                experimentalSettingsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        File[] experimentalSettingsFiles = experimentalSettingsDir.listFiles();
+            Arrays.sort(experimentalSettingsFiles, Collections.reverseOrder());
+        for (File file : experimentalSettingsFiles) {
+            experimentalSettingsFilesModel.addElement(new TSDZ2_Configurator.FileContainer(file));
+            if (lastSettingsFile == null) {
+				lastSettingsFile = file;
+			} else {
+				if(file.lastModified()>lastSettingsFile.lastModified()){
+					lastSettingsFile = file;
+				}
+			}
+        }
+        
+        experimentalSettingsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		experimentalSettingsList.setLayoutOrientation(JList.VERTICAL);
 		experimentalSettingsList.setVisibleRowCount(-1); 
                 
-                expSet.setModel(experimentalSettingsFilesModel);
+        expSet.setModel(experimentalSettingsFilesModel);
         
 		JList provenSettingsList = new JList(provenSettingsFilesModel);
 		provenSettingsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -419,13 +431,16 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         provSet.setModel(provenSettingsFilesModel);
         jScrollPane2.setViewportView(provSet);
         
+        expSet.setSelectedIndex(0);
+
+
 
         expSet.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-                            	try {
-                                int selectedIndex = expSet.getSelectedIndex();
-                                experimentalSettingsList.setSelectedIndex(selectedIndex);
+                try {
+                    int selectedIndex = expSet.getSelectedIndex();
+                    experimentalSettingsList.setSelectedIndex(selectedIndex);
 					loadSettings(((FileContainer) experimentalSettingsList.getSelectedValue()).file);
 					experimentalSettingsList.clearSelection();
 				} catch (IOException ex) {
@@ -462,14 +477,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                                 
                                 File newFile = new File(experimentalSettingsDir + File.separator + new SimpleDateFormat("yyyyMMdd-HHmmssz").format(new Date()) + ".ini");
 				try {
-					//FileWriter fw = new FileWriter("settings.ini");
-					//BufferedWriter bw = new BufferedWriter(fw);
-                                        
-                                        
-					//File newFile = new File(experimentalSettingsDir + File.separator + new SimpleDateFormat("yyyyMMdd-HHmmssz").format(new Date()) + ".ini");
-					//TSDZ2_Configurator ConfiguratorObject = new TSDZ2_Configurator();
-                                        //ConfiguratorObject.AddListItem(newFile);
-                                        experimentalSettingsFilesModel.add(0, new FileContainer(newFile)); //hier wird nur die neue Datei in die Liste geschrieben...
+                    AddListItem(newFile);
 
 					iWriter = new PrintWriter(new BufferedWriter(new FileWriter(newFile)));
 					pWriter = new PrintWriter(new BufferedWriter(new FileWriter("src/controller/config.h")));
@@ -1292,11 +1300,11 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
           
           });
                   
-         		if (lastSettingsFile != null) {
+            if (lastSettingsFile != null) {
 			try {
 				loadSettings(lastSettingsFile);
 			} catch (Exception ex) {
-                            JOptionPane.showMessageDialog(null, " " + ex);
+                JOptionPane.showMessageDialog(null, " " + ex);
 			}
 			provenSettingsList.clearSelection();
 			experimentalSettingsList.clearSelection();
@@ -2360,7 +2368,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                     .addComponent(RB_ADC_OPTION_DIS)
                     .addComponent(RB_THROTTLE)
                     .addComponent(RB_TEMP_LIMIT))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(CB_STREET_MODE_ON_START)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CB_STARTUP_BOOST_ON_START)
@@ -2370,7 +2378,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                     .addComponent(CB_TORQUE_CALIBRATION))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CB_FIELD_WEAKENING_ENABLED)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(CB_STARTUP_ASSIST_ENABLED)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CB_ODO_COMPENSATION)
@@ -2403,7 +2411,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -2414,7 +2422,7 @@ public class TSDZ2_Configurator extends javax.swing.JFrame {
                             .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Basic settings", jPanel1);
