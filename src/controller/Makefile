@@ -98,7 +98,12 @@ $(ODIR)/%.rel: $(SDIR)/%.c
 
 # hex:
 # 	@cd $(ODIR)
-# 	$(OBJCOPY) -O ihex $(ELF_SECTIONS_TO_REMOVE) $(PNAME).elf $(PNAME).ihx
+# 	$(OBJCOPY) -O ihex $(ELF_SECTIONS_TO_REMOVE) $(PNAME).elf $(PNAME).ihx*
+
+backup:
+	stm8flash -c stlinkv2 -p stm8s105?6 -s opt -r $(ODIR)/TSDZ_orig_opt.bin
+	stm8flash -c stlinkv2 -p stm8s105?6 -r $(ODIR)/TSDZ_orig.bin
+	stm8flash -c stlinkv2 -p stm8s105?6 -s eeprom -r $(ODIR)/TSDZ_orig_eeprom.bin
 
 flash:
 	stm8flash -c stlinkv2 -p stm8s105?6 -w $(ODIR)/$(PNAME).ihx
