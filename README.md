@@ -29,13 +29,11 @@ This project is being developed and maintained for free by a community of users.
 - Open JavaConfigurator.jar
 - Or use supplied .bat scripts, e.g. `src/controller/compile_and_flash.bat` 
 
-### Linux
-```
-java -jar JavaConfigurator.jar
-cd src/controller
-make
-make flash
-```
+### Linux and MacOS
+- Install Stm8flash `git clone https://github.com/vdudouyt/stm8flash.git && cd stm8flash && make && sudo make install`
+- Install [Java](https://www.java.com/endownload/).
+- Open JavaConfigurator.jar
+- Or use supplied shell script `compile_and_flash_20.sh` 
 
 # For more information, go to the [wiki](https://github.com/emmebrusa/TSDZ2-Smart-EBike-1/wiki) instructions.
 
