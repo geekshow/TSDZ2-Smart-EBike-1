@@ -154,7 +154,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace pref="32" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jPanel2" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
@@ -168,7 +168,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="33" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1190,7 +1190,7 @@
                               <Component id="RB_THROTTLE" alignment="3" max="-2" attributes="0"/>
                               <Component id="RB_TEMP_LIMIT" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" pref="7" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="32767" attributes="0"/>
                           <Component id="CB_STREET_MODE_ON_START" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="CB_STARTUP_BOOST_ON_START" min="-2" max="-2" attributes="0"/>
@@ -1201,7 +1201,7 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="CB_FIELD_WEAKENING_ENABLED" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" pref="8" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="32767" attributes="0"/>
                           <Component id="CB_STARTUP_ASSIST_ENABLED" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="CB_ODO_COMPENSATION" min="-2" max="-2" attributes="0"/>
@@ -3866,7 +3866,12 @@
                 <StringItem index="4" value="Item 5"/>
               </StringArray>
             </Property>
+            <Property name="selectionMode" type="int" value="0"/>
+            <Property name="focusCycleRoot" type="boolean" value="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="expSetValueChanged"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
