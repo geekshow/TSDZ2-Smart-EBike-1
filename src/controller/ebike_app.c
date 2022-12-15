@@ -1501,7 +1501,7 @@ static void apply_throttle()
 		ui8_throttle_adc = 0;
 	}
 	
-    // map ADC throttle value from 0 to max battery current
+	// map ADC throttle value from 0 to max battery current
     uint8_t ui8_adc_battery_current_target_throttle = map_ui8((uint8_t) ui8_throttle_adc,
             (uint8_t) 0,
             (uint8_t) 255,
@@ -1812,10 +1812,8 @@ static void check_system()
 		
 		// set speed sensor error code
 		ui8_system_state = ERROR_SPEED_SENSOR;
-		
 	}
 	else if (ui8_system_state == ERROR_SPEED_SENSOR) {
-		
 		// increment speed sensor error reset counter
         ui16_error_speed_sensor_counter++;
 
@@ -2246,9 +2244,6 @@ static void uart_receive_package(void)
 			// Reset the safety counter when a valid message from the LCD is received
             no_rx_counter = 0;
 			
-			// display ready
-			ui8_display_ready_flag = 1;
-			
 			// mask assist level from display
 			//ui8_assist_level_mask = ui8_rx_buffer[1] & 0x5E; // mask: 01011110
 			ui8_assist_level_mask = ui8_rx_buffer[1] & 0xDE; // mask: 11011110
@@ -2267,6 +2262,13 @@ static void uart_receive_package(void)
 				case ASSIST_PEDAL_LEVEL3: ui8_assist_level = SPORT; break;
 				case ASSIST_PEDAL_LEVEL4: ui8_assist_level = TURBO; break;
 			}
+			
+			if(!ui8_display_ready_flag)
+				// assist level temp at power on
+				ui8_assist_level_temp = ui8_assist_level;
+			
+			// display ready
+			ui8_display_ready_flag = 1;
 			
 			// display lights button pressed:
 			if(ui8_rx_buffer[1] & 0x01)
@@ -3219,6 +3221,7 @@ static void uart_send_package(void)
 		{
 			// data values
 			ui16_data_value_array[0] = (uint16_t) ui16_display_data_factor / ui16_motor_temperature_filtered_x10;
+			//ui16_data_value_array[0] = (uint16_t) ui16_display_data_factor / (ui8_g_foc_angle * 10);
 			//ui16_data_value_array[0] = (uint16_t) ui16_display_data_factor / (ui8_walk_assist_duty_cycle_target * 10);
 			//ui16_data_value_array[0] = (uint16_t) ui16_display_data_factor / (ui8_pedal_torque_per_10_bit_ADC_step_calc_x100 * 10);
 			ui16_data_value_array[1] = (uint16_t) ui16_display_data_factor / ui16_battery_SOC_percentage_x10;
@@ -3263,6 +3266,8 @@ static void uart_send_package(void)
 			else
 				ui16_display_data = ui16_data_value_array[ui8_data_index_array[ui8_data_index]];
 
+			// todo filter for 500C display
+			
 			// valid value
 			if(ui16_display_data)
 			{
