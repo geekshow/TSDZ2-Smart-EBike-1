@@ -3,7 +3,7 @@ PATH = %PATH%;C:\STMicroelectronics\st_toolset\stvp;"C:\Program Files (x86)\STMi
 
 STVP_CmdLine -BoardName=ST-LINK -ProgMode=SWIM -Port=USB -Device=STM8S105x6 -FileProg=main.ihx -FileData=data_empty.ihx -verbose -no_loop -verif -no_warn_protect
 if errorlevel == 1 goto FAIL
-echo Press any key to close...
+echo Flash successful, press any key to close...
 pause > nul
 
 :PASS
